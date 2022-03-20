@@ -7,7 +7,10 @@ import "uno.css";
 
 // Set actual vh on mobile
 const onResize = () =>
-  document.body.style.setProperty("--vh", `${window.innerHeight * 0.01}px`);
+  document.documentElement.style.setProperty(
+    "--vh",
+    `${window.innerHeight * 0.01}px`
+  );
 
 // Resize for scaling the board size
 window.addEventListener("resize", onResize);
