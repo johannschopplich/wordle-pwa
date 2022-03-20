@@ -1,6 +1,12 @@
-# Vue 3 + Typescript + Vite
+# Vue Wordle
 
-This template should help get you started developing with Vue 3 and Typescript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+> Forked from [VVordle](https://github.com/yyx990803/vue-wordle)
+
+A Vue implementation of the [Wordle game](https://www.powerlanguage.co.uk/wordle/). This is just for fun and doesn't aim to 100% replicate the original.
+
+You can make your own Wordle and send it to friends by base64-encoding a word and include it as the URL query, e.g. `vue-wordle.netlify.app/?YmxpbXA=` (this will also allow words that are not in the dictionary.)
+
+This repository is open sourced for learning purposes only - the original creator(s) of Wordle own all applicable rights to the game itself.
 
 ## Recommended IDE Setup
 

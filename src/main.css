@@ -13,19 +13,18 @@ body {
 .correct,
 .present,
 .absent {
-  @apply !text-white;
 }
 
 .correct {
-  @apply !bg-lime-600;
+  @apply !bg-lime-600 !text-white;
 }
 
 .present {
-  @apply !bg-yellow-600;
+  @apply !bg-yellow-500;
 }
 
 .absent {
-  @apply !bg-gray-500;
+  @apply !bg-gray-500 !text-white;
 }
 
 @keyframes zoom {
