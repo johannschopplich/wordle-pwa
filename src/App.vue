@@ -183,8 +183,8 @@ function genResultGrid() {
           :key="boardIndex"
           :class="[
             'grid grid-cols-5 gap-2',
-            shakeRowIndex === boardIndex && 'shake',
-            success && currentRowIndex === boardIndex && 'jump',
+            shakeRowIndex === boardIndex &&
+              'animate-[shake] animate-duration-500ms',
           ]"
         >
           <div
@@ -213,6 +213,9 @@ function genResultGrid() {
                 tile.state === 'correct' &&
                   'outline outline-2 outline-current -outline-offset-4',
                 tile.state,
+                success &&
+                  currentRowIndex === boardIndex &&
+                  'animate-[jump] animate-duration-500ms',
               ]"
               :style="{
                 transitionDelay: `${index * 300}ms`,
@@ -226,7 +229,7 @@ function genResultGrid() {
       </div>
     </div>
 
-    <Keyboard :letter-states="letterStates" @key="onKey" />
+    <Keyboard :letter-states="letterStates" :umlauts="true" @key="onKey" />
   </div>
 
   <Transition>
@@ -270,13 +273,5 @@ function genResultGrid() {
 .tile-front,
 .tile-back {
   @apply absolute inset-0 inline-flex justify-center items-center transition-transform-600 backface-hidden;
-}
-
-.shake {
-  animation: shake 0.5s;
-}
-
-.jump .tile-back {
-  animation: jump 0.5s;
 }
 </style>

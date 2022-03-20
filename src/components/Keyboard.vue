@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { LetterState } from "~/types";
 
-defineProps<{
+const props = defineProps<{
   letterStates: Record<string, LetterState>;
+  umlauts: boolean;
 }>();
 
 defineEmits<{
@@ -10,8 +11,8 @@ defineEmits<{
 }>();
 
 const rows = [
-  "qwertyuiopü".split(""),
-  "asdfghjklöä".split(""),
+  `qwertyuiop${props.umlauts ? "ü" : ""}`.split(""),
+  `asdfghjkl${props.umlauts ? "öä" : ""}`.split(""),
   ["Enter", ..."zxcvbnm".split(""), "Backspace"],
 ];
 </script>
@@ -23,13 +24,18 @@ const rows = [
       :key="i"
       class="w-full flex gap-1 mx-auto touch-manipulation"
     >
-      <!-- <div v-if="i === 1" style="flex-grow: 0.5" /> -->
+      <div v-if="!umlauts && i === 1" style="flex-grow: 0.5" />
+
       <button
         v-for="key in row"
         :key="key"
         :class="[
           'button h-12 p-0 flex justify-center items-center bg-gray-300 text-gray-900 select-none uppercase hover:bg-gray-300 transition-color,background-color-200 transition-delay-1500',
-          key.length > 1 ? 'flex-[2_1_0%] pr-1' : 'flex-1',
+          key.length > 1
+            ? umlauts
+              ? 'flex-[2_1_0%] px-0.5'
+              : 'flex-[1.5_1_0%] px-0.5'
+            : 'flex-1',
           letterStates[key],
         ]"
         @click="$emit('key', key)"
@@ -37,7 +43,8 @@ const rows = [
         <span v-if="key !== 'Backspace'">{{ key }}</span>
         <TeenyiconsBackspaceOutline v-else class="text-3xl" />
       </button>
-      <!-- <div v-if="i === 1" style="flex-grow: 0.5" /> -->
+
+      <div v-if="!umlauts && i === 1" style="flex-grow: 0.5" />
     </div>
   </div>
 </template>
