@@ -229,7 +229,12 @@ function genResultGrid() {
       </div>
     </div>
 
-    <Keyboard :letter-states="letterStates" :umlauts="true" @key="onKey" />
+    <Keyboard
+      class="-mx-3 sm:mx-0"
+      :letter-states="letterStates"
+      :umlauts="true"
+      @key="onKey"
+    />
   </div>
 
   <Transition>
