@@ -3,7 +3,11 @@ import { answers } from "~/data/answers";
 
 const defaultMessage = "Using word of the day instead.";
 
-export const allWords = [...answers, ...allowedGuesses];
+export const allWords = [
+  ...answers,
+  ...(import.meta.env.VITE_ANSWERS?.split(",") ?? []),
+  ...allowedGuesses,
+];
 
 export function getWordOfTheDay() {
   if (location.search) {
@@ -23,20 +27,21 @@ export function getWordOfTheDay() {
   let start = new Date(2022, 0, 0);
   let currentAnswers = answers;
 
-  if (import.meta.env.VITE_STARTS_AT) {
-    start = new Date(import.meta.env.VITE_STARTS_AT);
-    if (isNaN(start.getTime())) {
-      alert(`Invalid custom date in "VITE_STARTS_AT". ${defaultMessage}`);
-      start = new Date(2022, 0, 0);
+  const customStart = import.meta.env.VITE_STARTS_AT;
+  if (customStart) {
+    if (isNaN(new Date(customStart).getTime())) {
+      alert(`Malformed custom date in "VITE_STARTS_AT". ${defaultMessage}`);
+    } else {
+      start = new Date(customStart);
     }
   }
 
-  if (import.meta.env.VITE_ANSWERS) {
-    currentAnswers = import.meta.env.VITE_ANSWERS.split(",");
-    if (!Array.isArray(currentAnswers)) {
-      alert(
-        `Malformed custom answers list in "VITE_ANSWERS". ${defaultMessage}`
-      );
+  const customAnswers = import.meta.env.VITE_ANSWERS;
+  if (customAnswers) {
+    if (!customAnswers.includes(",")) {
+      alert(`Malformed custom answers in "VITE_ANSWERS". ${defaultMessage}`);
+    } else {
+      currentAnswers = customAnswers.split(",");
     }
   }
 
