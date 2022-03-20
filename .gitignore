@@ -3,4 +3,5 @@ dist
 dist-ssr
 *.local
 .DS_Store
+.env
 components.d.ts

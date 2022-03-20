@@ -20,14 +20,32 @@ export function getWordOfTheDay() {
   }
 
   const now = new Date();
-  // const start = new Date(2022, 0, 0);
-  const start = new Date(2022, 3, 12);
-  const diff = Number(now) - Number(start);
+  let start = new Date(2022, 0, 0);
+  let currentAnswers = answers;
 
-  let day = Math.floor(diff / (1000 * 60 * 60 * 24));
-  while (day > answers.length) {
-    day -= answers.length;
+  if (import.meta.env.VITE_STARTS_AT) {
+    start = new Date(import.meta.env.VITE_STARTS_AT);
+    if (isNaN(start.getTime())) {
+      alert(`Invalid custom date in "VITE_STARTS_AT". ${defaultMessage}`);
+      start = new Date(2022, 0, 0);
+    }
   }
 
-  return answers[day];
+  if (import.meta.env.VITE_ANSWERS) {
+    currentAnswers = import.meta.env.VITE_ANSWERS.split(",");
+    if (!Array.isArray(currentAnswers)) {
+      alert(
+        `Malformed custom answers list in "VITE_ANSWERS". ${defaultMessage}`
+      );
+    }
+  }
+
+  const diff = Number(now) - Number(start);
+  let day = Math.floor(diff / (1000 * 60 * 60 * 24));
+  console.log(day);
+  while (day > currentAnswers.length) {
+    day -= currentAnswers.length;
+  }
+
+  return currentAnswers[day];
 }

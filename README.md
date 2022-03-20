@@ -4,9 +4,16 @@
 
 A Vue implementation of the [Wordle game](https://www.powerlanguage.co.uk/wordle/). This is just for fun and doesn't aim to 100% replicate the original.
 
-You can make your own Wordle and send it to friends by base64-encoding a word and include it as the URL query, e.g. `vue-wordle.netlify.app/?YmxpbXA=` (this will also allow words that are not in the dictionary.)
+## Make Your Own Wordle
 
-This repository is open sourced for learning purposes only - the original creator(s) of Wordle own all applicable rights to the game itself.
+You can make your own Wordle and send it to friends by base64-encoding a word and include it as the URL query, e.g. `more-wordle.netlify.app/?YmxpbXA=`. This will also allow words that are not in the dictionary.
+
+Alternatively, you can add a custom word list to pick from to your loccal `.env` file and set a start date as well:
+
+```
+VITE_ANSWERS=first,scond,third
+VITE_STARTS_AT=2022-04-01
+```
 
 ## Recommended IDE Setup
 
