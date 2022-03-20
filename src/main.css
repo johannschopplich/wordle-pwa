@@ -1,0 +1,92 @@
+:root {
+  --h-screen: calc(100 * var(--vh, 1vh));
+}
+
+body {
+  @apply h-$h-screen bg-sky-800 text-gray-800 dark:bg-gray-900 dark:text-white sm:p-4;
+}
+
+#app {
+  @apply max-w-screen-sm h-full mx-auto bg-white p-4 font-sans dark:bg-gray-800 sm:rounded-md sm:shadow-sm;
+}
+
+.correct,
+.present,
+.absent {
+  @apply !text-white;
+}
+
+.correct {
+  @apply !bg-lime-600;
+}
+
+.present {
+  @apply !bg-yellow-600;
+}
+
+.absent {
+  @apply !bg-gray-500;
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(1px);
+  }
+  10% {
+    transform: translate(-2px);
+  }
+  20% {
+    transform: translate(2px);
+  }
+  30% {
+    transform: translate(-2px);
+  }
+  40% {
+    transform: translate(2px);
+  }
+  50% {
+    transform: translate(-2px);
+  }
+  60% {
+    transform: translate(2px);
+  }
+  70% {
+    transform: translate(-2px);
+  }
+  80% {
+    transform: translate(2px);
+  }
+  90% {
+    transform: translate(-2px);
+  }
+  100% {
+    transform: translate(1px);
+  }
+}
+
+@keyframes jump {
+  0% {
+    transform: translateY(0px);
+  }
+  20% {
+    transform: translateY(5px);
+  }
+  60% {
+    transform: translateY(-25px);
+  }
+  90% {
+    transform: translateY(3px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
