@@ -3,6 +3,17 @@ import { customAnswers } from "~/data/customAnswers";
 
 const defaultMessage = "Using word of the day instead.";
 
+function getWordFromList(answers: string[], start: Date): string {
+  const now = new Date();
+  const diff = Number(now) - Number(start);
+  let day = Math.floor(diff / (1000 * 60 * 60 * 24));
+  while (day > answers.length) {
+    day -= answers.length;
+  }
+
+  return answers[day];
+}
+
 export async function getAllWords() {
   const { allowedGuesses } = await import("~/data/allowedGuesses");
 
@@ -23,28 +34,14 @@ export function getWordOfTheDay() {
     }
   }
 
-  const now = new Date();
-  let start = new Date(2022, 0, 0);
-  let currentAnswers = answers;
-
-  const customStart = import.meta.env.VITE_STARTS_AT;
-  if (customStart) {
-    if (isNaN(new Date(customStart).getTime())) {
-      alert(`Malformed custom date in "VITE_STARTS_AT". ${defaultMessage}`);
+  if (import.meta.env.VITE_STARTS_AT && customAnswers.length) {
+    const start = new Date(import.meta.env.VITE_STARTS_AT);
+    if (isNaN(start.getTime())) {
+      alert(`Malformed date format in "VITE_STARTS_AT". ${defaultMessage}`);
     } else {
-      start = new Date(customStart);
+      return getWordFromList(customAnswers, start);
     }
   }
 
-  if (customAnswers.length) {
-    currentAnswers = customAnswers;
-  }
-
-  const diff = Number(now) - Number(start);
-  let day = Math.floor(diff / (1000 * 60 * 60 * 24));
-  while (day > currentAnswers.length) {
-    day -= currentAnswers.length;
-  }
-
-  return currentAnswers[day];
+  return getWordFromList(answers, new Date(2022, 0, 0));
 }

@@ -26,7 +26,7 @@ defineProps<{
 
   <div
     v-if="isOpen && size === 'large'"
-    class="absolute inset-0 bg-gray-800 bg-opacity-25"
+    class="absolute inset-0 bg-gray-800 bg-opacity-50"
   />
 </template>
 
