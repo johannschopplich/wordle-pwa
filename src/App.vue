@@ -87,7 +87,7 @@ async function completeRow() {
 
     const answerLetters: (string | null)[] = answer.split("");
 
-    // first pass: mark correct ones
+    // First pass: mark correct ones
     currentRow.forEach((tile, i) => {
       if (answerLetters[i] === tile.letter) {
         tile.state = letterStates[tile.letter] = LetterState.CORRECT;
@@ -95,7 +95,7 @@ async function completeRow() {
       }
     });
 
-    // second pass: mark the present
+    // Second pass: mark the present
     currentRow.forEach((tile) => {
       if (!tile.state && answerLetters.includes(tile.letter)) {
         tile.state = LetterState.PRESENT;
@@ -118,24 +118,24 @@ async function completeRow() {
 
     allowInput = false;
     if (currentRow.every((tile) => tile.state === LetterState.CORRECT)) {
-      // yay!
+      // Yay!
       setTimeout(() => {
         grid = genResultGrid();
         success = true;
-        // wait for jump animation to finish
+        // Wait for jump animation to finish
         setTimeout(
           () => showMessage(successMessages[currentRowIndex], -1),
           1000
         );
       }, 1600);
     } else if (currentRowIndex < board.length - 1) {
-      // go the next row
+      // Go the next row
       currentRowIndex++;
       setTimeout(() => {
         allowInput = true;
       }, 1600);
     } else {
-      // game over :(
+      // Game over :(
       setTimeout(() => {
         showMessage(answer.toUpperCase(), -1);
       }, 1600);
@@ -168,6 +168,11 @@ function genResultGrid() {
     .map((row) => row.map((tile) => icons[tile.state]).join(""))
     .join("\n");
 }
+
+(async () => {
+  // Lazily load all words
+  await getAllWords();
+})();
 </script>
 
 <template>
