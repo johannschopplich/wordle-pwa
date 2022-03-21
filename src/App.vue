@@ -249,7 +249,7 @@ function genResultGrid() {
   </div>
 
   <Message :is-open="!!message" :size="success ? 'large' : 'default'">
-    <p :class="['font-600 truncate', success && 'text-xl']">
+    <p :class="['font-600 truncate', success ? 'text-xl' : 'text-sm']">
       {{ message }}
     </p>
     <pre v-if="grid" class="text-2xl">{{ grid }}</pre>
