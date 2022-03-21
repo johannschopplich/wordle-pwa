@@ -1,12 +1,13 @@
-import { allowedGuesses } from "~/data/allowedGuesses";
 import { answers } from "~/data/answers";
 import { customAnswers } from "~/data/customAnswers";
 
 const defaultMessage = "Using word of the day instead.";
 
-export const allWords = [
-  ...new Set([...answers, ...customAnswers, ...allowedGuesses]),
-];
+export async function getAllWords() {
+  const { allowedGuesses } = await import("~/data/allowedGuesses");
+
+  return [...new Set([...answers, ...customAnswers, ...allowedGuesses])];
+}
 
 export function getWordOfTheDay() {
   if (location.search) {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onUnmounted } from "vue";
 import { useShare } from "@vueuse/core";
-import { getWordOfTheDay, allWords } from "~/logic/words";
+import { getWordOfTheDay, getAllWords } from "~/logic/words";
 import { icons } from "~/data/result";
 import { notEnoughLetters, notInWordList, successMessages } from "~/i18n";
 import { LetterState } from "~/types";
@@ -74,7 +74,9 @@ function clearTile() {
   }
 }
 
-function completeRow() {
+async function completeRow() {
+  const allWords = await getAllWords();
+
   if (currentRow.every((tile) => tile.letter)) {
     const guess = currentRow.map((tile) => tile.letter).join("");
     if (!allWords.includes(guess) && guess !== answer) {

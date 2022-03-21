@@ -1,1 +1,1 @@
-export const answers = ["julia"].map((i) => i.toLowerCase());
+export const answers = ["sonne", "osten", "leben"];
