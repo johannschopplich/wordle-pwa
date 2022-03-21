@@ -11,7 +11,7 @@ A forked, refactored and extended Vue app of [VVordle](https://github.com/yyx990
 
 ### Base64
 
-You can make your own Wordle and send it to friends by base64-encoding a word and include it as the URL query, e.g. [`ostern.netlify.app/?anVsaWE=`](`https://ostern.netlify.app/?anVsaWE=`). This will also allow words that are not in the dictionary.
+You can make your own Wordle and send it to friends by base64-encoding a word and include it as the URL query, e.g. [`ostern.netlify.app/?anVsaWE=`](https://ostern.netlify.app/?anVsaWE=). This will also allow words that are not in the dictionary.
 
 ### Custom Word List Via `.env`
 
