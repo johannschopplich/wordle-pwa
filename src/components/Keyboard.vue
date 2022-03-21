@@ -10,11 +10,11 @@ defineEmits<{
   (e: "key", key: string): void;
 }>();
 
-const rows = [
+const rows = $computed(() => [
   `qwertyuiop${props.umlauts ? "ü" : ""}`.split(""),
   `asdfghjkl${props.umlauts ? "öä" : ""}`.split(""),
   ["Enter", ..."zxcvbnm".split(""), "Backspace"],
-];
+]);
 </script>
 
 <template>
@@ -31,11 +31,12 @@ const rows = [
         :key="key"
         :class="[
           'button h-12 p-0 flex justify-center items-center bg-gray-200 text-gray-900 select-none uppercase hover:bg-gray-200 transition-color,background-color-200 transition-delay-1500',
-          key.length > 1
-            ? umlauts
-              ? 'flex-[2_1_0%] px-0.5'
-              : 'flex-[1.5_1_0%] px-0.5'
-            : 'flex-1',
+          key.length > 1 && 'px-0.5',
+          key.length === 1
+            ? 'flex-1'
+            : umlauts
+            ? 'flex-[2_1_0%]'
+            : 'flex-[1.5_1_0%]',
           letterStates[key],
         ]"
         @click="$emit('key', key)"
