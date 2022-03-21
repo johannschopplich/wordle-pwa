@@ -172,10 +172,17 @@ function genResultGrid() {
 
 <template>
   <div class="h-full grid grid-rows-[auto_1fr_auto] gap-4 children:min-w-0">
-    <header
-      class="flex justify-between bg-green-50 text-green-600 px-4 py-2 rounded-lg"
-    >
-      <h1 class="font-heading text-2xl tracking-wide">Osterwortsuche</h1>
+    <header class="flex justify-between bg-green-50 px-4 py-2 rounded-lg">
+      <div>
+        <h1
+          class="text-green-700 font-heading text-2xl leading-none tracking-wide"
+        >
+          Osterwortsuche
+        </h1>
+        <p class="text-gray-600 text-xs font-500 uppercase">
+          Jeden Tag ein Wort
+        </p>
+      </div>
       <div class="text-2xl">🐰</div>
     </header>
 
