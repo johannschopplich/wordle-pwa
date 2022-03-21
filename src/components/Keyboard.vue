@@ -20,15 +20,15 @@ const rows = $computed(() => [
 <template>
   <div class="space-y-2">
     <div
-      v-for="(row, i) in rows"
-      :key="i"
+      v-for="(row, rowIndex) in rows"
+      :key="rowIndex"
       class="w-full flex gap-1 mx-auto touch-manipulation"
     >
-      <div v-if="!umlauts && i === 1" style="flex-grow: 0.5" />
+      <div v-if="!umlauts && rowIndex === 1" style="flex-grow: 0.5" />
 
       <button
-        v-for="key in row"
-        :key="key"
+        v-for="(key, keyIndex) in row"
+        :key="keyIndex"
         :class="[
           'button h-12 p-0 bg-gray-200 text-gray-900 text-base font-semibold uppercase select-none transition-color,background-color-200 transition-delay-1500 hover:bg-gray-200',
           key.length > 1 && 'px-0.75',
@@ -49,7 +49,7 @@ const rows = $computed(() => [
         <span v-else>{{ key }}</span>
       </button>
 
-      <div v-if="!umlauts && i === 1" style="flex-grow: 0.5" />
+      <div v-if="!umlauts && rowIndex === 1" style="flex-grow: 0.5" />
     </div>
   </div>
 </template>
