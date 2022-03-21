@@ -16,7 +16,6 @@ function getWordFromList(answers: string[], start: Date) {
 
 export async function getAllWords() {
   const { allowedGuesses } = await import("~/data/allowedGuesses");
-
   return [...new Set([...answers, ...customAnswers, ...allowedGuesses])];
 }
 
@@ -43,5 +42,5 @@ export function getWordOfTheDay() {
     }
   }
 
-  return getWordFromList(answers, new Date(2022, 0, 0));
+  return getWordFromList(answers, new Date("2022-01-01"));
 }

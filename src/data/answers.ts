@@ -1,1 +1,10 @@
-export const answers = ["sonne", "osten", "leben"];
+export const answers = [
+  "könig",
+  "kleid",
+  "seele",
+  "augen",
+  "wonne",
+  "nacht",
+  "traum",
+  "sonne",
+];
