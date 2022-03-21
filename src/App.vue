@@ -190,11 +190,11 @@ function genResultGrid() {
         "
       >
         <div
-          v-for="(row, boardIndex) in board"
-          :key="boardIndex"
+          v-for="(row, rowIndex) in board"
+          :key="rowIndex"
           :class="[
             'grid grid-cols-5 gap-2',
-            shakeRowIndex === boardIndex &&
+            shakeRowIndex === rowIndex &&
               'animate-[shake] animate-duration-500ms',
           ]"
         >
@@ -225,7 +225,7 @@ function genResultGrid() {
                   'outline outline-2 outline-current -outline-offset-4',
                 tile.state,
                 success &&
-                  currentRowIndex === boardIndex &&
+                  currentRowIndex === rowIndex &&
                   'animate-[jump] animate-duration-500ms',
               ]"
               :style="{
