@@ -22,7 +22,7 @@ const rows = $computed(() => [
     <div
       v-for="(row, rowIndex) in rows"
       :key="rowIndex"
-      class="w-full flex gap-1 mx-auto touch-manipulation"
+      class="w-full flex gap-1 mx-auto touch-none"
     >
       <div v-if="!umlauts && rowIndex === 1" style="flex-grow: 0.5" />
 
