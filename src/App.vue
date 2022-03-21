@@ -6,8 +6,6 @@ import { icons } from "~/data/result";
 import { notEnoughLetters, notInWordList, successMessages } from "~/i18n";
 import { LetterState } from "~/types";
 
-const { share, isSupported } = useShare();
-
 // Get word of the day
 const answer = getWordOfTheDay();
 
@@ -44,6 +42,8 @@ window.addEventListener("keyup", onKeyup);
 onUnmounted(() => {
   window.removeEventListener("keyup", onKeyup);
 });
+
+const { share, isSupported } = useShare();
 
 function onKey(key: string) {
   if (!allowInput) return;
@@ -178,13 +178,13 @@ function genResultGrid() {
 <template>
   <div class="h-full grid grid-rows-[auto_1fr_auto] gap-4 children:min-w-0">
     <header class="bg-stone-100 px-4 py-2 rounded-lg">
-      <div class="flex justify-between">
-        <h1 class="text-amber-700 font-heading text-2xl tracking-wide">
+      <div class="text-2xl flex justify-between">
+        <h1 class="text-amber-700 font-heading tracking-wide">
           Osterwortsuche
         </h1>
-        <div class="text-2xl">🐰</div>
+        <span>🐰</span>
       </div>
-      <p class="-mt-1 text-stone-600 text-xs font-500 uppercase">
+      <p class="-mt-1 text-stone-400 text-xs font-500 uppercase">
         Jeden Tag ein Wort
       </p>
     </header>
