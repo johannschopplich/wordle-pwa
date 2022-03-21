@@ -14,7 +14,7 @@ body {
 }
 
 #app {
-  @apply max-w-screen-sm h-full mx-auto bg-white pt-4 px-4 pb-[max(env(safe-area-inset-bottom),1rem)] font-sans  dark:bg-gray-800 sm:rounded-md sm:shadow-sm;
+  @apply max-w-screen-sm h-full mx-auto bg-white pt-4 px-4 pb-[max(env(safe-area-inset-bottom),1rem)] font-sans dark:bg-gray-800 sm:rounded-md sm:shadow-sm;
 }
 
 .correct,
