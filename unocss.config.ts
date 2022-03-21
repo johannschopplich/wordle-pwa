@@ -18,4 +18,10 @@ export default defineConfig({
     "icon-inline":
       "w-[1em] h-[1em] relative bottom-[0.125em] inline-block fill-current text-current select-none",
   },
+  media: {
+    touch: "(hover: none) and (pointer: coarse)",
+    stylus: "(hover: none) and (pointer: fine)",
+    pointer: "(hover) and (pointer: coarse)",
+    mouse: "(hover) and (pointer: fine)",
+  },
 });

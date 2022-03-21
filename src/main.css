@@ -10,11 +10,11 @@
 }
 
 body {
-  @apply h-$h-screen pb-[env(safe-area-inset-bottom,0)] bg-amber-800 text-gray-800 dark:bg-gray-900 dark:text-white sm:p-4;
+  @apply h-$h-screen bg-amber-800 text-gray-800 dark:bg-gray-900 dark:text-white sm:p-4;
 }
 
 #app {
-  @apply max-w-screen-sm h-full mx-auto bg-white p-4 font-sans dark:bg-gray-800 sm:rounded-md sm:shadow-sm;
+  @apply max-w-screen-sm h-full mx-auto bg-white p-4 font-sans media-touch:pb-[env(safe-area-inset-bottom,1rem)]  dark:bg-gray-800 sm:rounded-md sm:shadow-sm;
 }
 
 .correct,
