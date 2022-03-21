@@ -33,6 +33,6 @@
     "unplugin-icons": "^0.14.0",
     "unplugin-vue-components": "^0.18.3",
     "vite": "^2.8.6",
-    "vue-tsc": "^0.33.2"
+    "vue-tsc": "^0.33.5"
   }
 }

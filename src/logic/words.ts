@@ -3,7 +3,7 @@ import { customAnswers } from "~/data/customAnswers";
 
 const defaultMessage = "Using word of the day instead.";
 
-function getWordFromList(answers: string[], start: Date): string {
+function getWordFromList(answers: string[], start: Date) {
   const now = new Date();
   const diff = Number(now) - Number(start);
   let day = Math.floor(diff / (1000 * 60 * 60 * 24));

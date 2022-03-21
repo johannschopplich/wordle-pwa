@@ -251,15 +251,13 @@ function genResultGrid() {
       {{ message }}
     </p>
     <pre v-if="grid" class="text-2xl">{{ grid }}</pre>
-    <template v-if="success">
-      <button
-        v-show="isSupported"
-        class="button"
-        @click="share({ text: grid })"
-      >
-        Ergebnis teilen
-      </button>
-    </template>
+    <button
+      v-show="success && isSupported"
+      class="button"
+      @click="share({ text: grid })"
+    >
+      Ergebnis teilen
+    </button>
   </Message>
 </template>
 
