@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineProps<{
-  open: boolean;
+  isOpen: boolean;
   size: "default" | "large";
 }>();
 </script>
@@ -8,7 +8,7 @@ defineProps<{
 <template>
   <Transition>
     <div
-      v-if="open"
+      v-if="isOpen"
       id="messageContainer"
       :class="[
         'message',
@@ -25,7 +25,7 @@ defineProps<{
   </Transition>
 
   <div
-    v-if="open && size === 'large'"
+    v-if="isOpen && size === 'large'"
     class="absolute inset-0 bg-gray-800 bg-opacity-25"
   />
 </template>

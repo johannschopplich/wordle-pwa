@@ -246,7 +246,7 @@ function genResultGrid() {
     />
   </div>
 
-  <Message :size="success ? 'large' : 'default'" :open="!!message">
+  <Message :is-open="!!message" :size="success ? 'large' : 'default'">
     <p :class="['font-600 truncate', success && 'text-xl']">
       {{ message }}
     </p>
