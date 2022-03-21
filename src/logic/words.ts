@@ -1,12 +1,11 @@
 import { allowedGuesses } from "~/data/allowedGuesses";
 import { answers } from "~/data/answers";
+import { customAnswers } from "~/data/customAnswers";
 
 const defaultMessage = "Using word of the day instead.";
 
 export const allWords = [
-  ...answers,
-  ...(import.meta.env.VITE_ANSWERS?.split(",") ?? []),
-  ...allowedGuesses,
+  ...new Set([...answers, ...customAnswers, ...allowedGuesses]),
 ];
 
 export function getWordOfTheDay() {
@@ -36,13 +35,8 @@ export function getWordOfTheDay() {
     }
   }
 
-  const customAnswers = import.meta.env.VITE_ANSWERS;
-  if (customAnswers) {
-    if (!customAnswers.includes(",")) {
-      alert(`Malformed custom answers in "VITE_ANSWERS". ${defaultMessage}`);
-    } else {
-      currentAnswers = customAnswers.split(",");
-    }
+  if (customAnswers.length) {
+    currentAnswers = customAnswers;
   }
 
   const diff = Number(now) - Number(start);
