@@ -18,6 +18,7 @@ export default defineConfig({
     "icon-inline":
       "w-[1em] h-[1em] relative bottom-[0.125em] inline-block fill-current text-current select-none",
   },
+  // @ts-expect-error: Supported by UnoCSS (copied from preset wind)
   media: {
     touch: "(hover: none) and (pointer: coarse)",
     stylus: "(hover: none) and (pointer: fine)",
