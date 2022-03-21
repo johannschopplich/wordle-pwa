@@ -33,14 +33,14 @@ export function getWordOfTheDay() {
     }
   }
 
-  if (import.meta.env.VITE_STARTS_AT && customAnswers.length) {
-    const start = new Date(import.meta.env.VITE_STARTS_AT);
-    if (isNaN(start.getTime())) {
-      alert(`Malformed date format in "VITE_STARTS_AT". ${defaultMessage}`);
-    } else {
-      return getWordFromList(customAnswers, start);
+  let start = new Date("2022-01-01");
+
+  if (import.meta.env.VITE_STARTS_AT) {
+    const date = new Date(import.meta.env.VITE_STARTS_AT);
+    if (date.toString() !== "Invalid Date") {
+      start = date;
     }
   }
 
-  return getWordFromList(answers, new Date("2022-01-01"));
+  return getWordFromList(customAnswers.length ? customAnswers : answers, start);
 }
