@@ -244,46 +244,24 @@ function genResultGrid() {
     />
   </div>
 
-  <Transition>
-    <div
-      v-if="message"
-      :class="[
-        'message',
-        'absolute left-1/2 bg-opacity-95 shadow-lg -translate-x-1/2 transition-opacity-250 z-10',
-        success
-          ? 'top-20 bg-white p-6 rounded-xl'
-          : 'top-10 bg-gray-800 text-white px-4 py-2 rounded-full',
-      ]"
-    >
-      <div class="space-y-2xl text-center">
-        <p :class="['font-600 truncate', success && 'text-xl']">
-          {{ message }}
-        </p>
-        <pre v-if="grid" class="text-2xl">{{ grid }}</pre>
-        <template v-if="success">
-          <button
-            v-show="isSupported"
-            class="button"
-            @click="share({ text: grid })"
-          >
-            Ergebnis teilen
-          </button>
-        </template>
-      </div>
-    </div>
-  </Transition>
-
-  <div
-    v-if="message && success"
-    class="absolute inset-0 bg-gray-800 bg-opacity-50"
-  />
+  <Message :size="success ? 'large' : 'default'" :open="!!message">
+    <p :class="['font-600 truncate', success && 'text-xl']">
+      {{ message }}
+    </p>
+    <pre v-if="grid" class="text-2xl">{{ grid }}</pre>
+    <template v-if="success">
+      <button
+        v-show="isSupported"
+        class="button"
+        @click="share({ text: grid })"
+      >
+        Ergebnis teilen
+      </button>
+    </template>
+  </Message>
 </template>
 
 <style scoped>
-.message.v-leave-to {
-  opacity: 0;
-}
-
 .tile-front,
 .tile-back {
   @apply absolute inset-0 inline-flex justify-center items-center transition-transform-600 backface-hidden;
