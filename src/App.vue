@@ -166,8 +166,11 @@ function genResultGrid() {
 
 <template>
   <div class="h-full grid grid-rows-[auto_1fr_auto] gap-4 children:min-w-0">
-    <header class="bg-sky-50 text-sky-600 px-4 py-2 rounded-lg">
-      <h1 class="text-2xl font-600">🐰 Osterwortsuche</h1>
+    <header
+      class="flex justify-between bg-green-600 text-white px-4 py-2 rounded-lg sm:bg-green-50 sm:text-green-600"
+    >
+      <h1 class="text-2xl font-600">Osterwortsuche</h1>
+      <div class="text-2xl">🐰</div>
     </header>
 
     <div class="flex justify-center items-center">
@@ -268,7 +271,7 @@ function genResultGrid() {
 
   <div
     v-if="message && success"
-    class="absolute inset-0 bg-gray-800 bg-opacity-50 transition-opacity-250"
+    class="absolute inset-0 bg-gray-800 bg-opacity-50"
   />
 </template>
 
