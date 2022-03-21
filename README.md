@@ -1,24 +1,49 @@
-# Vue Wordle
+# More Wordle
 
-> Forked from [VVordle](https://github.com/yyx990803/vue-wordle)
+A forked, refactored and extended Vue app of [VVordle](https://github.com/yyx990803/vue-wordle) by Evan You, which itself is a implementation of the original [Wordle game](https://www.nytimes.com/games/wordle/index.html).
 
-A Vue implementation of the [Wordle game](https://www.powerlanguage.co.uk/wordle/). This is just for fun and doesn't aim to 100% replicate the original.
+This wordle project can be easily customized.
 
 ## Make Your Own Wordle
 
-You can make your own Wordle and send it to friends by base64-encoding a word and include it as the URL query, e.g. `more-wordle.netlify.app/?YmxpbXA=`. This will also allow words that are not in the dictionary.
+### Base64
+
+You can make your own Wordle and send it to friends by base64-encoding a word and include it as the URL query, e.g. [`ostern.netlify.app/?anVsaWE=`](`https://ostern.netlify.app/?anVsaWE=`). This will also allow words that are not in the dictionary.
+
+### Custom Word List Via `.env`
 
 Alternatively, you can add a custom word list to pick from to your loccal `.env` file and set a start date as well:
 
-```
+```dotenv
 VITE_ANSWERS=first,scond,third
 VITE_STARTS_AT=2022-04-01
 ```
 
-## Recommended IDE Setup
+More Wordle will calculate the difference between the current date and the start date and pick the answer at the array index based from the date difference.
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+## Prerequisites
 
-## Type Support For `.vue` Imports in TS
+Before getting started, please make sure you have installed the recommended setup.
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.
+- **Node.js**<sup>\*</sup> (v16, the latest LTS version) 👉 [[Download](https://nodejs.org/en/download/)]
+- **pnpm**<sup>\*</sup> (the fast and disk space efficient package manager) 👉 [[Download](https://pnpm.io/installation#nodejs-is-preinstalled)]
+- **Visual Studio Code** 👉 [[Download](https://code.visualstudio.com/)]
+- **Volar Extension** 👉 [[Download](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)]
+  - Either enable [**Take Over Mode**](https://github.com/johnsoncodehk/volar/discussions/471) (recommended)
+  - ... or add **TypeScript Vue Plugin (Volar)** 👉 [[Download](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.vscode-typescript-vue-plugin)]
+
+## Installation
+
+Install the necessary Node.js dependencies with:
+
+```bash
+pnpm install
+```
+
+## License
+
+[MIT](./LICENSE) License © 2022 [Johann Schopplich](https://github.com/johannschopplich)
+
+[MIT](./LICENSE) License © 2022 [Evan You](https://github.com/yyx990803)
+
+The original creator(s) of Wordle own all applicable rights to the game itself.
