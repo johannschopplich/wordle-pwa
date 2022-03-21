@@ -2,7 +2,10 @@
 
 A forked, refactored and extended Vue app of [VVordle](https://github.com/yyx990803/vue-wordle) by Evan You, which itself is a implementation of the original [Wordle game](https://www.nytimes.com/games/wordle/index.html).
 
-This wordle project can be easily customized.
+## Key Features
+
+- 💆‍♀️ Easy customization
+- ⌨️ Optional umlauts keyboard layout
 
 ## Make Your Own Wordle
 
