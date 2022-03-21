@@ -119,8 +119,12 @@ function completeRow() {
       // yay!
       setTimeout(() => {
         grid = genResultGrid();
-        showMessage(successMessages[currentRowIndex], -1);
         success = true;
+        // wait for jump animation to finish
+        setTimeout(
+          () => showMessage(successMessages[currentRowIndex], -1),
+          1000
+        );
       }, 1600);
     } else if (currentRowIndex < board.length - 1) {
       // go the next row
@@ -167,9 +171,9 @@ function genResultGrid() {
 <template>
   <div class="h-full grid grid-rows-[auto_1fr_auto] gap-4 children:min-w-0">
     <header
-      class="flex justify-between bg-green-600 text-white px-4 py-2 rounded-lg sm:bg-green-50 sm:text-green-600"
+      class="flex justify-between bg-green-50 text-green-600 px-4 py-2 rounded-lg"
     >
-      <h1 class="text-2xl font-600">Osterwortsuche</h1>
+      <h1 class="font-heading text-2xl tracking-wide">Osterwortsuche</h1>
       <div class="text-2xl">🐰</div>
     </header>
 
@@ -177,8 +181,8 @@ function genResultGrid() {
       <div
         class="w-$width h-$height grid grid-rows-6 gap-2 mx-auto"
         style="
-          --height: min(420px, calc(var(--h-screen) - 310px));
-          --width: min(350px, calc(var(--height) / 6 * 5));
+          --height: min(26rem, calc(var(--h-screen) - 20rem));
+          --width: calc(var(--height) / 6 * 5);
         "
       >
         <div

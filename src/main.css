@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Henrietta";
+  font-weight: 400;
+  font-style: normal;
+  src: local("Open Sans"), local("OpenSans"),
+    url("/fonts/VCHenrietta7-Medium.woff2") format("woff2");
+}
+
 :root {
   --h-screen: calc(100 * var(--vh, 1vh));
 }

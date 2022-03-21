@@ -5,7 +5,11 @@ const control =
   "appearance-none text-base py-2 px-4 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600";
 
 export default defineConfig({
-  safelist: ["prose"],
+  theme: {
+    fontFamily: {
+      heading: "Henrietta, sans-serif",
+    },
+  },
   presets: [presetUno(), presetTypography()],
   shortcuts: {
     box: "bg-white rounded-md shadow-sm p-4 dark:bg-gray-800",

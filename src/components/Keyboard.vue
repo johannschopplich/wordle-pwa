@@ -30,7 +30,7 @@ const rows = [
         v-for="key in row"
         :key="key"
         :class="[
-          'button h-12 p-0 flex justify-center items-center bg-gray-300 text-gray-900 select-none uppercase hover:bg-gray-300 transition-color,background-color-200 transition-delay-1500',
+          'button h-12 p-0 flex justify-center items-center bg-gray-200 text-gray-900 select-none uppercase hover:bg-gray-200 transition-color,background-color-200 transition-delay-1500',
           key.length > 1
             ? umlauts
               ? 'flex-[2_1_0%] px-0.5'

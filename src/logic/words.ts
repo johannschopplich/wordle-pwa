@@ -47,7 +47,6 @@ export function getWordOfTheDay() {
 
   const diff = Number(now) - Number(start);
   let day = Math.floor(diff / (1000 * 60 * 60 * 24));
-  console.log(day);
   while (day > currentAnswers.length) {
     day -= currentAnswers.length;
   }
