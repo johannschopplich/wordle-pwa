@@ -10,7 +10,7 @@
 }
 
 body {
-  @apply h-$h-screen bg-green-800 text-gray-800 dark:bg-gray-900 dark:text-white sm:p-4;
+  @apply h-$h-screen bg-amber-800 text-gray-800 dark:bg-gray-900 dark:text-white sm:p-4;
 }
 
 #app {

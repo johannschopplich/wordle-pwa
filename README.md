@@ -1,3 +1,16 @@
+<p align="center">
+  <img src="./public/images/pwa-512x512.png" alt="Logo of More Wordle" width="114" height="114">
+</p>
+
+<h3 align="center">More Wordle</h3>
+
+<p align="center">
+  Customizable Wordle app for my friends and family<br>
+  <a href="https://ostern.netlify.app"><strong>Explore the demo »</strong></a>
+</p>
+
+<br>
+
 # More Wordle
 
 A forked, refactored and extended Vue app of [VVordle](https://github.com/yyx990803/vue-wordle) by Evan You, which itself is a implementation of the original [Wordle game](https://www.nytimes.com/games/wordle/index.html).
