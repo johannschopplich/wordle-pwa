@@ -14,7 +14,7 @@ defineProps<{
         'message',
         'absolute left-1/2 shadow-lg -translate-x-1/2 transition-opacity-250 z-10',
         size === 'default' &&
-          'top-10 bg-gray-800 text-white px-4 py-2 rounded-full',
+          'top-12 bg-gray-800 text-white px-4 py-2 rounded-full',
         size === 'large' && 'top-20 bg-white p-6 rounded-xl',
       ]"
     >

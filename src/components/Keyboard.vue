@@ -40,8 +40,12 @@ const rows = [
         ]"
         @click="$emit('key', key)"
       >
-        <span v-if="key !== 'Backspace'">{{ key }}</span>
-        <TeenyiconsBackspaceOutline v-else class="text-3xl" />
+        <TeenyiconsTickCircleOutline v-if="key === 'Enter'" class="text-3xl" />
+        <TeenyiconsBackspaceOutline
+          v-else-if="key === 'Backspace'"
+          class="text-3xl"
+        />
+        <span v-else>{{ key }}</span>
       </button>
 
       <div v-if="!umlauts && i === 1" style="flex-grow: 0.5" />
