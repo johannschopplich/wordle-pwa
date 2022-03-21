@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./public/images/pwa-512x512.png" alt="Logo of More Wordle" width="114" height="114">
+  <img src="./public/images/header.png" alt="Logo of More Wordle" width="114" height="114">
 </p>
 
 <h3 align="center">More Wordle</h3>
