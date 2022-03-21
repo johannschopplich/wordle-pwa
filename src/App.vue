@@ -9,6 +9,10 @@ import { LetterState } from "~/types";
 // Get word of the day
 const answer = getWordOfTheDay();
 
+// Lazily load all words
+let allWords: string[] = [];
+(async () => (allWords = await getAllWords()))();
+
 // Board state. Each tile is represented as { letter, state }
 const board = $ref(
   Array.from({ length: 6 }, () =>
@@ -75,8 +79,6 @@ function clearTile() {
 }
 
 async function completeRow() {
-  const allWords = await getAllWords();
-
   if (currentRow.every((tile) => tile.letter)) {
     const guess = currentRow.map((tile) => tile.letter).join("");
     if (!allWords.includes(guess) && guess !== answer) {
@@ -168,11 +170,6 @@ function genResultGrid() {
     .map((row) => row.map((tile) => icons[tile.state]).join(""))
     .join("\n");
 }
-
-(async () => {
-  // Lazily load all words
-  await getAllWords();
-})();
 </script>
 
 <template>
