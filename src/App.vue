@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onUnmounted } from "vue";
-import { useShare } from "@vueuse/core";
+import { promiseTimeout, useShare } from "@vueuse/core";
 import { getWordOfTheDay, getAllWords } from "~/logic/words";
 import { icons } from "~/data/result";
 import { notEnoughLetters, notInWordList, successMessages } from "~/i18n";
@@ -79,72 +79,68 @@ function clearTile() {
 }
 
 async function completeRow() {
-  if (currentRow.every((tile) => tile.letter)) {
-    const guess = currentRow.map((tile) => tile.letter).join("");
-    if (!allWords.includes(guess) && guess !== answer) {
-      shake();
-      showMessage(notInWordList);
-      return;
-    }
-
-    const answerLetters: (string | null)[] = answer.split("");
-
-    // First pass: mark correct ones
-    currentRow.forEach((tile, i) => {
-      if (answerLetters[i] === tile.letter) {
-        tile.state = letterStates[tile.letter] = LetterState.CORRECT;
-        answerLetters[i] = null;
-      }
-    });
-
-    // Second pass: mark the present
-    currentRow.forEach((tile) => {
-      if (!tile.state && answerLetters.includes(tile.letter)) {
-        tile.state = LetterState.PRESENT;
-        answerLetters[answerLetters.indexOf(tile.letter)] = null;
-        if (!letterStates[tile.letter]) {
-          letterStates[tile.letter] = LetterState.PRESENT;
-        }
-      }
-    });
-
-    // 3rd pass: mark absent
-    currentRow.forEach((tile) => {
-      if (!tile.state) {
-        tile.state = LetterState.ABSENT;
-        if (!letterStates[tile.letter]) {
-          letterStates[tile.letter] = LetterState.ABSENT;
-        }
-      }
-    });
-
-    allowInput = false;
-    if (currentRow.every((tile) => tile.state === LetterState.CORRECT)) {
-      // Yay!
-      setTimeout(() => {
-        grid = genResultGrid();
-        success = true;
-        // Wait for jump animation to finish
-        setTimeout(
-          () => showMessage(successMessages[currentRowIndex], -1),
-          1000
-        );
-      }, 1600);
-    } else if (currentRowIndex < board.length - 1) {
-      // Go the next row
-      currentRowIndex++;
-      setTimeout(() => {
-        allowInput = true;
-      }, 1600);
-    } else {
-      // Game over :(
-      setTimeout(() => {
-        showMessage(answer.toUpperCase(), -1);
-      }, 1600);
-    }
-  } else {
+  if (!currentRow.every((tile) => tile.letter)) {
     shake();
     showMessage(notEnoughLetters);
+    return;
+  }
+
+  const guess = currentRow.map((tile) => tile.letter).join("");
+  if (!allWords.includes(guess) && guess !== answer) {
+    shake();
+    showMessage(notInWordList);
+    return;
+  }
+
+  const answerLetters: (string | null)[] = answer.split("");
+
+  // First pass: mark correct ones
+  currentRow.forEach((tile, i) => {
+    if (answerLetters[i] === tile.letter) {
+      tile.state = letterStates[tile.letter] = LetterState.CORRECT;
+      answerLetters[i] = null;
+    }
+  });
+
+  // Second pass: mark the present
+  currentRow.forEach((tile) => {
+    if (!tile.state && answerLetters.includes(tile.letter)) {
+      tile.state = LetterState.PRESENT;
+      answerLetters[answerLetters.indexOf(tile.letter)] = null;
+      if (!letterStates[tile.letter]) {
+        letterStates[tile.letter] = LetterState.PRESENT;
+      }
+    }
+  });
+
+  // 3rd pass: mark absent
+  currentRow.forEach((tile) => {
+    if (!tile.state) {
+      tile.state = LetterState.ABSENT;
+      if (!letterStates[tile.letter]) {
+        letterStates[tile.letter] = LetterState.ABSENT;
+      }
+    }
+  });
+
+  allowInput = false;
+  if (currentRow.every((tile) => tile.state === LetterState.CORRECT)) {
+    // Yay!
+    await promiseTimeout(1600);
+    grid = genResultGrid();
+    success = true;
+    // Wait for jump animation to finish
+    await promiseTimeout(1000);
+    showMessage(successMessages[currentRowIndex], -1);
+  } else if (currentRowIndex < board.length - 1) {
+    // Go the next row
+    currentRowIndex++;
+    await promiseTimeout(1600);
+    allowInput = true;
+  } else {
+    // Game over :(
+    await promiseTimeout(1600);
+    showMessage(answer.toUpperCase(), -1);
   }
 }
 
@@ -157,11 +153,10 @@ function showMessage(msg: string, time = 1250) {
   }
 }
 
-function shake() {
+async function shake() {
   shakeRowIndex = currentRowIndex;
-  setTimeout(() => {
-    shakeRowIndex = -1;
-  }, 1000);
+  await promiseTimeout(1000);
+  shakeRowIndex = -1;
 }
 
 function genResultGrid() {
