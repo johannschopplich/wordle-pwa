@@ -23,7 +23,7 @@ defineProps<{
         size === 'large' && 'top-20 bg-white p-6 rounded-xl',
       ]"
     >
-      <div class="space-y-2xl text-center">
+      <div class="space-y-6 text-center">
         <slot />
       </div>
     </div>
