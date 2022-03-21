@@ -270,6 +270,6 @@ function genResultGrid() {
   background-image: url("/images/header.png");
   background-position: calc(100% - 0.5rem) bottom;
   background-repeat: no-repeat;
-  background-size: 3rem auto;
+  background-size: 3.5rem auto;
 }
 </style>
