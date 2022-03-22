@@ -175,7 +175,7 @@ function genResultGrid() {
     <div
       class="w-$width h-$height grid grid-rows-6 gap-2 mx-auto"
       style="
-        --height: min(26rem, calc(var(--h-screen) - 20rem));
+        --height: clamp(10rem, calc(var(--h-screen) - 20rem), 26rem);
         --width: calc(var(--height) / 6 * 5);
       "
     >
