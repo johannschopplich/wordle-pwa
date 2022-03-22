@@ -2,18 +2,21 @@
 import { until, useNow, useStorage } from "@vueuse/core";
 
 const now = useNow();
-const tomorrow = useStorage<Date>(
-  "app.lastMatchDay",
-  getTomorrow(),
-  undefined,
-  {
-    serializer: {
-      read: (v: any) => new Date(v),
-      write: (v: any) => v.toISOString(),
-    },
-  }
-);
+const getTomorrow = () =>
+  new Date(
+    now.value.getFullYear(),
+    now.value.getMonth(),
+    now.value.getDate() + 1
+  );
 
+const tomorrow = useStorage<Date>("app.nextDay", getTomorrow(), undefined, {
+  serializer: {
+    read: (v: any) => new Date(v),
+    write: (v: any) => v.toISOString(),
+  },
+});
+
+// Reset the app when tomorrow is already reached
 if (tomorrow.value.getTime() < now.value.getTime()) {
   reset();
 }
@@ -23,21 +26,10 @@ until(now)
   .toMatch((v) => v.getTime() > tomorrow.value.getTime())
   .then(reset);
 
-let boardKey = $ref(0);
-
-function getTomorrow() {
-  return new Date(
-    now.value.getFullYear(),
-    now.value.getMonth(),
-    now.value.getDate() + 1
-  );
-}
-
+// Reset board state
 function reset() {
+  localStorage.removeItem("app.state");
   tomorrow.value = getTomorrow();
-  // Reset board state
-  localStorage.removeItem("app.board");
-  boardKey++;
 }
 </script>
 
@@ -45,6 +37,6 @@ function reset() {
   <div class="h-full grid grid-rows-[auto_1fr_auto] gap-4 children:min-w-0">
     <Header />
 
-    <Board :key="boardKey" />
+    <Board :key="tomorrow.getTime()" />
   </div>
 </template>

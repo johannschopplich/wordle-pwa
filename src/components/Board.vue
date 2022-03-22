@@ -22,7 +22,7 @@ let allWords: string[] = [];
 (async () => (allWords = await getAllWords()))();
 
 // Set up persistent data
-const store = useStorage<AppStorage>("app.board", {
+const state = useStorage<AppStorage>("app.state", {
   // Board state. Each tile is represented as { letter, state }
   board: Array.from({ length: 6 }, () =>
     Array.from({ length: 5 }, () => ({
@@ -40,7 +40,7 @@ const store = useStorage<AppStorage>("app.board", {
 
 // Current active row
 const currentRow = $computed(
-  () => store.value.board[store.value.currentRowIndex]
+  () => state.value.board[state.value.currentRowIndex]
 );
 
 // Feedback state: message and shake
@@ -106,7 +106,7 @@ async function completeRow() {
   // First pass: mark correct ones
   currentRow.forEach((tile, i) => {
     if (answerLetters[i] === tile.letter) {
-      tile.state = store.value.letterStates[tile.letter] = LetterState.CORRECT;
+      tile.state = state.value.letterStates[tile.letter] = LetterState.CORRECT;
       answerLetters[i] = null;
     }
   });
@@ -116,8 +116,8 @@ async function completeRow() {
     if (!tile.state && answerLetters.includes(tile.letter)) {
       tile.state = LetterState.PRESENT;
       answerLetters[answerLetters.indexOf(tile.letter)] = null;
-      if (!store.value.letterStates[tile.letter]) {
-        store.value.letterStates[tile.letter] = LetterState.PRESENT;
+      if (!state.value.letterStates[tile.letter]) {
+        state.value.letterStates[tile.letter] = LetterState.PRESENT;
       }
     }
   });
@@ -126,8 +126,8 @@ async function completeRow() {
   currentRow.forEach((tile) => {
     if (!tile.state) {
       tile.state = LetterState.ABSENT;
-      if (!store.value.letterStates[tile.letter]) {
-        store.value.letterStates[tile.letter] = LetterState.ABSENT;
+      if (!state.value.letterStates[tile.letter]) {
+        state.value.letterStates[tile.letter] = LetterState.ABSENT;
       }
     }
   });
@@ -140,10 +140,10 @@ async function completeRow() {
     success = true;
     // Wait for jump animation to finish (1000ms) nearly
     await promiseTimeout(900);
-    showMessage(t(`successMessages.${store.value.currentRowIndex}`), -1);
-  } else if (store.value.currentRowIndex < store.value.board.length - 1) {
+    showMessage(t(`successMessages.${state.value.currentRowIndex}`), -1);
+  } else if (state.value.currentRowIndex < state.value.board.length - 1) {
     // Go the next row
-    store.value.currentRowIndex++;
+    state.value.currentRowIndex++;
     await promiseTimeout(1600);
     allowInput = true;
   } else {
@@ -163,14 +163,14 @@ function showMessage(msg: string, time = 1250) {
 }
 
 async function shake() {
-  shakeRowIndex = store.value.currentRowIndex;
+  shakeRowIndex = state.value.currentRowIndex;
   await promiseTimeout(1000);
   shakeRowIndex = -1;
 }
 
 function genResultGrid() {
-  return store.value.board
-    .slice(0, store.value.currentRowIndex + 1)
+  return state.value.board
+    .slice(0, state.value.currentRowIndex + 1)
     .map((row) => row.map((tile) => icons[tile.state]).join(""))
     .join("\n");
 }
@@ -186,7 +186,7 @@ function genResultGrid() {
       "
     >
       <div
-        v-for="(row, rowIndex) in store.board"
+        v-for="(row, rowIndex) in state.board"
         :key="rowIndex"
         :class="[
           'grid grid-cols-5 gap-2',
@@ -221,7 +221,7 @@ function genResultGrid() {
                 'outline outline-2 outline-current -outline-offset-4',
               tile.state,
               success &&
-                store.currentRowIndex === rowIndex &&
+                state.currentRowIndex === rowIndex &&
                 'animate-[jump] animate-duration-500ms',
             ]"
             :style="{
@@ -238,7 +238,7 @@ function genResultGrid() {
 
   <Keyboard
     class="-mx-3 sm:mx-0"
-    :letter-states="store.letterStates"
+    :letter-states="state.letterStates"
     :umlauts="true"
     @key="onKey"
   />
