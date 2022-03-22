@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import { useNow, until } from "@vueuse/core";
+import { until, useNow } from "@vueuse/core";
 
 const now = useNow();
-const tomorrow = new Date(
-  now.value.getFullYear(),
-  now.value.getMonth(),
-  now.value.getDate() + 1
-);
+let tomorrow = new Date();
+tomorrow.setDate(now.value.getDate() + 1);
 
 // Reset the app when the next day has dawned
 (async () => {
   await until(now).toMatch((v) => v.getTime() > tomorrow.getTime());
+  localStorage.clear();
   location.reload();
 })();
 </script>

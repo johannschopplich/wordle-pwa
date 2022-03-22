@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import { onUnmounted } from "vue";
-import { promiseTimeout, useShare } from "@vueuse/core";
+import {
+  promiseTimeout,
+  useEventListener,
+  useShare,
+  useStorage,
+} from "@vueuse/core";
 import { getWordOfTheDay, getAllWords } from "~/logic/words";
 import { icons } from "~/data/result";
 import { useI18n } from "~/logic/i18n";
 import { LetterState } from "~/types";
+import type { AppStorage } from "~/types";
 
-// Get translation helper
+// Destructure the translation helper
 const { t } = useI18n();
 
 // Get word of the day
@@ -16,19 +21,27 @@ const answer = getWordOfTheDay();
 let allWords: string[] = [];
 (async () => (allWords = await getAllWords()))();
 
-// Board state. Each tile is represented as { letter, state }
-const board = $ref(
-  Array.from({ length: 6 }, () =>
+// Set up persistent data
+const store = useStorage<AppStorage>("app.board", {
+  // Board state. Each tile is represented as { letter, state }
+  board: Array.from({ length: 6 }, () =>
     Array.from({ length: 5 }, () => ({
       letter: "",
       state: LetterState.INITIAL,
     }))
-  )
-);
+  ),
+
+  // Current active row index
+  currentRowIndex: 0,
+
+  // Keep track of revealed letters for the virtual keyboard
+  letterStates: {},
+});
 
 // Current active row
-let currentRowIndex = $ref(0);
-const currentRow = $computed(() => board[currentRowIndex]);
+const currentRow = $computed(
+  () => store.value.board[store.value.currentRowIndex]
+);
 
 // Feedback state: message and shake
 let message = $ref("");
@@ -36,19 +49,12 @@ let grid = $ref("");
 let shakeRowIndex = $ref(-1);
 let success = $ref(false);
 
-// Keep track of revealed letters for the virtual keyboard
-const letterStates: Record<string, LetterState> = $ref({});
-
 // Handle keyboard input
 let allowInput = true;
 
 const onKeyup = (e: KeyboardEvent) => onKey(e.key);
 
-window.addEventListener("keyup", onKeyup);
-
-onUnmounted(() => {
-  window.removeEventListener("keyup", onKeyup);
-});
+useEventListener(window, "keyup", onKeyup);
 
 const { share, isSupported } = useShare();
 
@@ -100,7 +106,7 @@ async function completeRow() {
   // First pass: mark correct ones
   currentRow.forEach((tile, i) => {
     if (answerLetters[i] === tile.letter) {
-      tile.state = letterStates[tile.letter] = LetterState.CORRECT;
+      tile.state = store.value.letterStates[tile.letter] = LetterState.CORRECT;
       answerLetters[i] = null;
     }
   });
@@ -110,8 +116,8 @@ async function completeRow() {
     if (!tile.state && answerLetters.includes(tile.letter)) {
       tile.state = LetterState.PRESENT;
       answerLetters[answerLetters.indexOf(tile.letter)] = null;
-      if (!letterStates[tile.letter]) {
-        letterStates[tile.letter] = LetterState.PRESENT;
+      if (!store.value.letterStates[tile.letter]) {
+        store.value.letterStates[tile.letter] = LetterState.PRESENT;
       }
     }
   });
@@ -120,8 +126,8 @@ async function completeRow() {
   currentRow.forEach((tile) => {
     if (!tile.state) {
       tile.state = LetterState.ABSENT;
-      if (!letterStates[tile.letter]) {
-        letterStates[tile.letter] = LetterState.ABSENT;
+      if (!store.value.letterStates[tile.letter]) {
+        store.value.letterStates[tile.letter] = LetterState.ABSENT;
       }
     }
   });
@@ -134,10 +140,10 @@ async function completeRow() {
     success = true;
     // Wait for jump animation to finish (1000ms) nearly
     await promiseTimeout(900);
-    showMessage(t(`successMessages.${currentRowIndex}`), -1);
-  } else if (currentRowIndex < board.length - 1) {
+    showMessage(t(`successMessages.${store.value.currentRowIndex}`), -1);
+  } else if (store.value.currentRowIndex < store.value.board.length - 1) {
     // Go the next row
-    currentRowIndex++;
+    store.value.currentRowIndex++;
     await promiseTimeout(1600);
     allowInput = true;
   } else {
@@ -157,14 +163,14 @@ function showMessage(msg: string, time = 1250) {
 }
 
 async function shake() {
-  shakeRowIndex = currentRowIndex;
+  shakeRowIndex = store.value.currentRowIndex;
   await promiseTimeout(1000);
   shakeRowIndex = -1;
 }
 
 function genResultGrid() {
-  return board
-    .slice(0, currentRowIndex + 1)
+  return store.value.board
+    .slice(0, store.value.currentRowIndex + 1)
     .map((row) => row.map((tile) => icons[tile.state]).join(""))
     .join("\n");
 }
@@ -180,7 +186,7 @@ function genResultGrid() {
       "
     >
       <div
-        v-for="(row, rowIndex) in board"
+        v-for="(row, rowIndex) in store.board"
         :key="rowIndex"
         :class="[
           'grid grid-cols-5 gap-2',
@@ -215,7 +221,7 @@ function genResultGrid() {
                 'outline outline-2 outline-current -outline-offset-4',
               tile.state,
               success &&
-                currentRowIndex === rowIndex &&
+                store.currentRowIndex === rowIndex &&
                 'animate-[jump] animate-duration-500ms',
             ]"
             :style="{
@@ -232,7 +238,7 @@ function genResultGrid() {
 
   <Keyboard
     class="-mx-3 sm:mx-0"
-    :letter-states="letterStates"
+    :letter-states="store.letterStates"
     :umlauts="true"
     @key="onKey"
   />
