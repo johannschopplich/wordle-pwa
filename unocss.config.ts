@@ -2,7 +2,7 @@ import { defineConfig, presetUno } from "unocss";
 import { presetTypography } from "@unocss/preset-typography";
 
 const control =
-  "appearance-none text-sm leading-4 px-3 py-2 border rounded-md shadow-sm focus:outline-none";
+  "appearance-none text-base leading-4 px-3 py-2 border rounded-md shadow-sm focus:outline-none sm:text-sm";
 
 export default defineConfig({
   theme: {
