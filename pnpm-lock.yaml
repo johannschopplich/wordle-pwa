@@ -57,12 +57,6 @@ packages:
       find-up: 5.0.0
     dev: true
 
-  /@antfu/utils/0.3.0:
-    resolution: {integrity: sha512-UU8TLr/EoXdg7OjMp0h9oDoIAVr+Z/oW9cpOxQQyrsz6Qzd2ms/1CdWx8fl2OQdFpxGmq5Vc4TwfLHId6nAZjA==}
-    dependencies:
-      '@types/throttle-debounce': 2.1.0
-    dev: true
-
   /@antfu/utils/0.5.0:
     resolution: {integrity: sha512-MrAQ/MrPSxbh1bBrmwJjORfJymw4IqSHFBXqvxaga3ZdDM+/zokYF8DjyJpSjY2QmpmgQrajDUBJOWrYeARfzA==}
     dev: true
@@ -127,11 +121,11 @@ packages:
     resolution: {integrity: sha512-Jh0llaK2LRXQoYsorIH8maClebsnzTcve+7U3rQUSnC11X4jtPnFuyatqFLvMxZ8MLG8dB4zfHsbPfuvxluONw==}
     dev: true
 
-  /@iconify/utils/1.0.28:
-    resolution: {integrity: sha512-hmSS50Q6qoOcq/TKhSV0VaI5+NFwQicJLk1MBLGDUQsGtOWdIagiYBz9ricpsw6dSu0cLW2a4ZAFg9V556yH8Q==}
+  /@iconify/utils/1.0.29:
+    resolution: {integrity: sha512-ReARQUYRAzuj0fvzUhHZlw38bMYq8u+oKsecMalk2Lp98b54uHtOcpEKTAdXwTwYV7MMxEGCa4pRmYofZtXdOw==}
     dependencies:
       '@antfu/install-pkg': 0.1.0
-      '@antfu/utils': 0.3.0
+      '@antfu/utils': 0.5.0
       '@iconify/types': 1.1.0
       debug: 4.3.4
       kolorist: 1.5.1
@@ -179,10 +173,6 @@ packages:
 
   /@types/node/17.0.22:
     resolution: {integrity: sha512-8FwbVoG4fy+ykY86XCAclKZDORttqE5/s7dyWZKLXTdv3vRy5HozBEinG5IqhvPXXzIZEcTVbuHlQEI6iuwcmw==}
-    dev: true
-
-  /@types/throttle-debounce/2.1.0:
-    resolution: {integrity: sha512-5eQEtSCoESnh2FsiLTxE121IiE60hnMqcb435fShf4bpLRjEu1Eoekht23y6zXS9Ts3l+Szu3TARnTsA0GkOkQ==}
     dev: true
 
   /@typescript-eslint/eslint-plugin/5.16.0_3fed250b11519414a4c7d52468dd6bf5:
@@ -355,7 +345,7 @@ packages:
   /@unocss/preset-icons/0.29.5:
     resolution: {integrity: sha512-ukaTuvY0CkwpsY/DOj1MBZcjNb/Rv55OuRoxwR4nKLEc0NAWB6uHogomoCYZIkKsPx+xeLSxOtrivBFjxuy1XQ==}
     dependencies:
-      '@iconify/utils': 1.0.28
+      '@iconify/utils': 1.0.29
       '@unocss/core': 0.29.5
       local-pkg: 0.4.1
     transitivePeerDependencies:
@@ -1981,7 +1971,7 @@ packages:
     dependencies:
       '@antfu/install-pkg': 0.1.0
       '@antfu/utils': 0.5.0
-      '@iconify/utils': 1.0.28
+      '@iconify/utils': 1.0.29
       debug: 4.3.4
       kolorist: 1.5.1
       local-pkg: 0.4.1

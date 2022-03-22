@@ -6,9 +6,9 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "lint": "eslint \"src/**/*.{ts,vue}\"",
+    "lint": "eslint \"src/**/*.{ts,vue}\" --ignore-path .gitignore",
     "lint:fix": "npm run lint -- --fix",
-    "format": "prettier --write \"src/**/*.{css,html,json,md,ts,vue,yml}\""
+    "format": "prettier --write \"src/**/*.{css,html,json,md,ts,vue,yml}\" --ignore-path .gitignore"
   },
   "dependencies": {
     "@unocss/reset": "^0.29.5",
