@@ -13,7 +13,10 @@ export const install: UserModule = () => {
 
   // Set the vh on orientation changes
   const mql = window.matchMedia("(orientation: portrait)");
-  mql.addEventListener("change", onResize);
+  mql.addEventListener("change", (e) => {
+    if (!e.matches) return;
+    onResize();
+  });
 
   // Set size on startup
   onResize();
