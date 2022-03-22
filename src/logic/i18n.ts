@@ -20,7 +20,7 @@ function parseAndReplaceString(str: string, params: any): string {
     if (Object.prototype.hasOwnProperty.call(params, arr[1])) {
       _str = _str.replace(arr[0], params[arr[1]]);
     } else {
-      throw new Error(`[i18n] Param "${arr[1]}" not found`);
+      throw new Error(`Param "${arr[1]}" not found`);
     }
   }
 
