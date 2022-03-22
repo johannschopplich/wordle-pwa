@@ -175,7 +175,7 @@ function genResultGrid() {
     <div
       class="w-$width h-$height grid grid-rows-6 gap-2 mx-auto"
       style="
-        --height: clamp(10rem, calc(var(--h-screen) - 20rem), 26rem);
+        --height: clamp(12rem, calc(var(--h-screen) - 20rem), 26rem);
         --width: calc(var(--height) / 6 * 5);
       "
     >
@@ -192,7 +192,7 @@ function genResultGrid() {
           v-for="(tile, index) in row"
           :key="index"
           :class="[
-            'w-full relative text-4xl align-middle font-700 uppercase select-none',
+            'w-full relative text-size-[5vh] align-middle font-700 uppercase select-none sm:text-size-4xl',
             tile.letter && 'animate-[zoom] animate-duration-200ms',
           ]"
         >
