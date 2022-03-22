@@ -3,8 +3,11 @@ import { onUnmounted } from "vue";
 import { promiseTimeout, useShare } from "@vueuse/core";
 import { getWordOfTheDay, getAllWords } from "~/logic/words";
 import { icons } from "~/data/result";
-import { notEnoughLetters, notInWordList, successMessages } from "~/i18n";
+import { useI18n } from "~/modules/i18n";
 import { LetterState } from "~/types";
+
+// Get translation helper
+const { t } = useI18n();
 
 // Get word of the day
 const answer = getWordOfTheDay();
@@ -81,14 +84,14 @@ function clearTile() {
 async function completeRow() {
   if (!currentRow.every((tile) => tile.letter)) {
     shake();
-    showMessage(notEnoughLetters);
+    showMessage(t("alerts.notEnoughLetters"));
     return;
   }
 
   const guess = currentRow.map((tile) => tile.letter).join("");
   if (!allWords.includes(guess) && guess !== answer) {
     shake();
-    showMessage(notInWordList);
+    showMessage(t("alerts.notInWordList"));
     return;
   }
 
@@ -131,7 +134,7 @@ async function completeRow() {
     success = true;
     // Wait for jump animation to finish
     await promiseTimeout(1000);
-    showMessage(successMessages[currentRowIndex], -1);
+    showMessage(t(`successMessages.${currentRowIndex}`), -1);
   } else if (currentRowIndex < board.length - 1) {
     // Go the next row
     currentRowIndex++;
