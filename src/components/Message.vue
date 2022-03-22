@@ -9,7 +9,8 @@ defineProps<{
   <Teleport to="body">
     <div
       v-if="isOpen && size === 'large'"
-      class="absolute inset-0 bg-gray-800 bg-opacity-50 translate-z-10" />
+      class="absolute inset-0 bg-gray-800 bg-opacity-50 translate-z-10"
+    />
 
     <Transition>
       <div
@@ -25,8 +26,9 @@ defineProps<{
         <div class="space-y-6 text-center">
           <slot />
         </div>
-      </div> </Transition
-  ></Teleport>
+      </div>
+    </Transition>
+  </Teleport>
 </template>
 
 <style scoped>
