@@ -5126,7 +5126,6 @@ export const allowedGuesses = [
   "necke",
   "neckt",
   "neffe",
-  "neger",
   "negus",
   "nehme",
   "nehmt",
