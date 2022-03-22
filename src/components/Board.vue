@@ -192,7 +192,7 @@ function genResultGrid() {
           v-for="(tile, index) in row"
           :key="index"
           :class="[
-            'w-full relative text-size-[calc(var(--height)*0.1)] align-middle font-700 uppercase select-none',
+            'w-full relative text-size-[calc(var(--height)*0.1)] font-700 uppercase select-none',
             tile.letter && 'animate-[zoom] animate-duration-200ms',
           ]"
         >

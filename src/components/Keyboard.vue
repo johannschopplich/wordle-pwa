@@ -30,7 +30,7 @@ const rows = $computed(() => [
         v-for="(key, keyIndex) in row"
         :key="keyIndex"
         :class="[
-          'button h-12 p-0 bg-gray-200 text-gray-900 text-base font-semibold uppercase select-none transition-color,background-color-200 transition-delay-1500 hover:bg-gray-200',
+          'button h-12 p-0 bg-gray-200 text-gray-900 text-base font-600 uppercase select-none transition-color,background-color-200 transition-delay-1500 hover:bg-gray-200',
           key.length > 1 && 'px-0.75',
           key.length === 1
             ? 'flex-1'
