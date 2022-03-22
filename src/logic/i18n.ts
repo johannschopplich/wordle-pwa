@@ -93,11 +93,26 @@ export const createI18n = (config: I18nConfig): I18nInstance => {
     }
   };
 
+  const setLocale = (loc: string) => {
+    if (!messages[loc]) {
+      console.warn(
+        "[i18n]",
+        `Messages for "${loc}" not found, falling back to "${fallbackLocale}"`
+      );
+    }
+
+    locale.value = loc;
+  };
+
+  const getLocale = () => locale.value;
+
   return {
     locales,
     locale,
     messages,
     t,
+    setLocale,
+    getLocale,
     install(app: App) {
       app.provide(injectionKey, this);
       app.config.globalProperties.$t = this.t;

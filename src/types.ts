@@ -16,6 +16,8 @@ export interface I18nInstance {
   locales?: string[];
   locale?: Ref<string>;
   t: (key: string, params?: any) => string;
+  setLocale: (locale: string) => void;
+  getLocale: () => string;
   install(app: App): void;
 }
 
