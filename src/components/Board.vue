@@ -3,7 +3,7 @@ import { onUnmounted } from "vue";
 import { promiseTimeout, useShare } from "@vueuse/core";
 import { getWordOfTheDay, getAllWords } from "~/logic/words";
 import { icons } from "~/data/result";
-import { useI18n } from "~/modules/i18n";
+import { useI18n } from "~/logic/i18n";
 import { LetterState } from "~/types";
 
 // Get translation helper
