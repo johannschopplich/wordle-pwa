@@ -247,7 +247,7 @@ function genResultGrid() {
       class="button"
       @click="share({ text: grid })"
     >
-      <TeenyiconsMessageTextAltSolid class="mr-2 relative top-1px" />
+      <TeenyiconsMessageTextAltSolid class="mr-2" />
       Ergebnis teilen
     </button>
   </Message>
