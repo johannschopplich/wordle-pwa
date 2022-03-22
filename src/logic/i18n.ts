@@ -1,7 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ref, inject } from "vue";
-import type { App, InjectionKey } from "vue";
-import type { Messages, I18nInstance, I18nConfig } from "~/types";
+import type { App, InjectionKey, Ref } from "vue";
+
+export type Messages = Record<string, any>;
+
+export interface I18nConfig {
+  defaultLocale?: string;
+  locales?: string[];
+  messages: Messages;
+}
+
+export interface I18nInstance {
+  messages: Messages;
+  locales?: string[];
+  locale?: Ref<string>;
+  t: (key: string, params?: any) => string;
+  setLocale: (locale: string) => void;
+  getLocale: () => string;
+  install(app: App): void;
+}
 
 declare module "vue" {
   interface ComponentCustomProperties {

@@ -132,8 +132,8 @@ async function completeRow() {
     await promiseTimeout(1600);
     grid = genResultGrid();
     success = true;
-    // Wait for jump animation to finish
-    await promiseTimeout(1000);
+    // Wait for jump animation to finish (1000ms) nearly
+    await promiseTimeout(900);
     showMessage(t(`successMessages.${currentRowIndex}`), -1);
   } else if (currentRowIndex < board.length - 1) {
     // Go the next row
