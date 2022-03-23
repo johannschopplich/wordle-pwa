@@ -6,7 +6,8 @@ export const answers = [
   "könig",
   "nacht",
   "traum",
-  "sonne",
+  "schaf",
   "alles",
   "dauer",
+  "abend",
 ];

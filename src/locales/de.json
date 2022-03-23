@@ -4,11 +4,11 @@
     "notEnoughLetters": "Nicht genug Buchstaben"
   },
   "successMessages": {
-    "0": "Einfach wow!",
-    "1": "Beeindruckend! ",
-    "2": "Prächtig gelöst!",
-    "3": "Famose Arbeit!",
-    "4": "Gerade so gelöst!",
-    "5": "Knapp, doch gerade so!"
+    "0": "Zu einfach für dich?",
+    "1": "Sehr beeindruckend!",
+    "2": "Das ging schnell!",
+    "3": "Ziemlich gut!",
+    "4": "Mit Puffer gelöst!",
+    "5": "Hast dich durchgebissen!"
   }
 }
