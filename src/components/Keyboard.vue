@@ -41,10 +41,10 @@ const rows = $computed(() => [
         ]"
         @click="$emit('key', key)"
       >
-        <TeenyiconsTickCircleOutline v-if="key === 'Enter'" class="text-3xl" />
+        <TeenyiconsTickCircleOutline v-if="key === 'Enter'" class="text-2xl" />
         <TeenyiconsBackspaceOutline
           v-else-if="key === 'Backspace'"
-          class="text-3xl"
+          class="text-2xl"
         />
         <span v-else>{{ key }}</span>
       </button>
