@@ -3,7 +3,7 @@ import { until, useNow, useStorage } from "@vueuse/core";
 
 const now = useNow();
 const tomorrow = useStorage<Date>(
-  "app.nextDay",
+  "app.next",
   getTomorrow(now.value),
   undefined,
   {
