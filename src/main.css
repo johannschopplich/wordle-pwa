@@ -25,3 +25,78 @@ body {
 #app {
   @apply max-w-screen-sm h-full mx-auto bg-white pt-4 px-4 pb-[max(env(safe-area-inset-bottom),1rem)] sm:rounded-md sm:shadow-sm dark:bg-zinc-900 dark:sm:border-2 dark:sm:border-zinc-800;
 }
+
+.correct {
+  @apply !bg-lime-600 !text-white;
+}
+
+.present {
+  @apply !bg-yellow-500 !text-gray-900;
+}
+
+.absent {
+  @apply !bg-gray-500 !text-white !dark:bg-zinc-400 !dark:text-zinc-900;
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(1px);
+  }
+  10% {
+    transform: translate(-2px);
+  }
+  20% {
+    transform: translate(2px);
+  }
+  30% {
+    transform: translate(-2px);
+  }
+  40% {
+    transform: translate(2px);
+  }
+  50% {
+    transform: translate(-2px);
+  }
+  60% {
+    transform: translate(2px);
+  }
+  70% {
+    transform: translate(-2px);
+  }
+  80% {
+    transform: translate(2px);
+  }
+  90% {
+    transform: translate(-2px);
+  }
+  100% {
+    transform: translate(1px);
+  }
+}
+
+@keyframes jump {
+  0% {
+    transform: translateY(0px);
+  }
+  20% {
+    transform: translateY(5px);
+  }
+  60% {
+    transform: translateY(-22px);
+  }
+  90% {
+    transform: translateY(3px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}

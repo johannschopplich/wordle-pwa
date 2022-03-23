@@ -7,8 +7,8 @@ import {
   useStorage,
 } from "@vueuse/core";
 import { getWordOfTheDay, getAllWords } from "~/logic/words";
-import { icons } from "~/data/result";
 import { useI18n } from "~/logic/i18n";
+import { icons } from "~/data/result";
 import { LetterState } from "~/types";
 
 // Destructure the translation helper
@@ -22,29 +22,29 @@ let allWords: string[] = $ref([]);
 (async () => (allWords = await getAllWords()))();
 
 // Set up persistent data
-const state = useStorage("app.state", {
-  // Board state. Each tile is represented as { letter, state }
-  board: Array.from({ length: 6 }, () =>
-    Array.from({ length: 5 }, () => ({
-      letter: "",
-      state: LetterState.INITIAL,
-    }))
-  ),
+let state = $(
+  useStorage("app.state", {
+    // Board state. Each tile is represented as { letter, state }
+    board: Array.from({ length: 6 }, () =>
+      Array.from({ length: 5 }, () => ({
+        letter: "",
+        state: LetterState.INITIAL,
+      }))
+    ),
 
-  // Current active row index
-  currentRowIndex: 0,
+    // Current active row index
+    currentRowIndex: 0,
 
-  // Keep track of revealed letters for the virtual keyboard
-  letterStates: {} as Record<string, LetterState>,
+    // Keep track of revealed letters for the virtual keyboard
+    letterStates: {} as Record<string, LetterState>,
 
-  // Indicates if the game is over
-  gameOver: false,
-});
+    // Indicates if the game is over
+    gameOver: false,
+  })
+);
 
 // Current active row
-const currentRow = $computed(
-  () => state.value.board[state.value.currentRowIndex]
-);
+const currentRow = $computed(() => state.board[state.currentRowIndex]);
 
 // Feedback state: message and shake
 let message = $ref("");
@@ -60,7 +60,7 @@ const { share, isSupported } = useShare();
 
 useEventListener(window, "keyup", (e: KeyboardEvent) => onKey(e.key));
 
-if (state.value.gameOver) {
+if (state.gameOver) {
   allowInput = false;
   until($$(allWords))
     .toMatch((v) => v.length > 0)
@@ -115,7 +115,7 @@ async function completeRow() {
   // First pass: mark correct ones
   currentRow.forEach((tile, i) => {
     if (answerLetters[i] === tile.letter) {
-      tile.state = state.value.letterStates[tile.letter] = LetterState.CORRECT;
+      tile.state = state.letterStates[tile.letter] = LetterState.CORRECT;
       answerLetters[i] = null;
     }
   });
@@ -125,8 +125,8 @@ async function completeRow() {
     if (!tile.state && answerLetters.includes(tile.letter)) {
       tile.state = LetterState.PRESENT;
       answerLetters[answerLetters.indexOf(tile.letter)] = null;
-      if (!state.value.letterStates[tile.letter]) {
-        state.value.letterStates[tile.letter] = LetterState.PRESENT;
+      if (!state.letterStates[tile.letter]) {
+        state.letterStates[tile.letter] = LetterState.PRESENT;
       }
     }
   });
@@ -135,8 +135,8 @@ async function completeRow() {
   currentRow.forEach((tile) => {
     if (!tile.state) {
       tile.state = LetterState.ABSENT;
-      if (!state.value.letterStates[tile.letter]) {
-        state.value.letterStates[tile.letter] = LetterState.ABSENT;
+      if (!state.letterStates[tile.letter]) {
+        state.letterStates[tile.letter] = LetterState.ABSENT;
       }
     }
   });
@@ -144,21 +144,21 @@ async function completeRow() {
   allowInput = false;
   if (currentRow.every((tile) => tile.state === LetterState.CORRECT)) {
     // Yay!
-    await promiseTimeout(state.value.gameOver ? 0 : 1600);
+    await promiseTimeout(state.gameOver ? 0 : 1600);
     grid = genResultGrid();
-    success = state.value.gameOver = true;
+    success = state.gameOver = true;
     // Wait for jump animation to almost finish (1000ms)
     await promiseTimeout(900);
-    showMessage(t(`successMessages.${state.value.currentRowIndex}`), -1);
-  } else if (state.value.currentRowIndex < state.value.board.length - 1) {
+    showMessage(t(`successMessages.${state.currentRowIndex}`), -1);
+  } else if (state.currentRowIndex < state.board.length - 1) {
     // Go the next row
-    state.value.currentRowIndex++;
+    state.currentRowIndex++;
     await promiseTimeout(1600);
     allowInput = true;
   } else {
     // Game over :(
-    await promiseTimeout(state.value.gameOver ? 0 : 1600);
-    state.value.gameOver = true;
+    await promiseTimeout(state.gameOver ? 0 : 1600);
+    state.gameOver = true;
     showMessage(answer.toUpperCase(), -1);
   }
 }
@@ -173,14 +173,14 @@ function showMessage(msg: string, time = 1250) {
 }
 
 async function shake() {
-  shakeRowIndex = state.value.currentRowIndex;
+  shakeRowIndex = state.currentRowIndex;
   await promiseTimeout(1000);
   shakeRowIndex = -1;
 }
 
 function genResultGrid() {
-  return state.value.board
-    .slice(0, state.value.currentRowIndex + 1)
+  return state.board
+    .slice(0, state.currentRowIndex + 1)
     .map((row) => row.map((tile) => icons[tile.state]).join(""))
     .join("\n");
 }
@@ -271,84 +271,9 @@ function genResultGrid() {
   </Message>
 </template>
 
-<style>
-.correct {
-  @apply !bg-lime-600 !text-white;
-}
-
-.present {
-  @apply !bg-yellow-500 !text-gray-900;
-}
-
-.absent {
-  @apply !bg-gray-500 !text-white !dark:bg-zinc-400 !dark:text-zinc-900;
-}
-
+<style scoped>
 .tile-front,
 .tile-back {
   @apply absolute inset-0 inline-flex justify-center items-center transition-transform-600 backface-hidden;
-}
-
-@keyframes zoom {
-  0% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes shake {
-  0% {
-    transform: translate(1px);
-  }
-  10% {
-    transform: translate(-2px);
-  }
-  20% {
-    transform: translate(2px);
-  }
-  30% {
-    transform: translate(-2px);
-  }
-  40% {
-    transform: translate(2px);
-  }
-  50% {
-    transform: translate(-2px);
-  }
-  60% {
-    transform: translate(2px);
-  }
-  70% {
-    transform: translate(-2px);
-  }
-  80% {
-    transform: translate(2px);
-  }
-  90% {
-    transform: translate(-2px);
-  }
-  100% {
-    transform: translate(1px);
-  }
-}
-
-@keyframes jump {
-  0% {
-    transform: translateY(0px);
-  }
-  20% {
-    transform: translateY(5px);
-  }
-  60% {
-    transform: translateY(-25px);
-  }
-  90% {
-    transform: translateY(3px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
 }
 </style>
