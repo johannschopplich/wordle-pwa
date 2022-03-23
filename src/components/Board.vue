@@ -278,7 +278,7 @@ function genResultGrid() {
 }
 
 .absent {
-  @apply !bg-gray-500 !text-white !dark:bg-zinc-500;
+  @apply !bg-gray-500 !text-white !dark:bg-zinc-400 !dark:text-zinc-900;
 }
 
 .tile-front,
