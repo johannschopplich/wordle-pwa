@@ -35,6 +35,9 @@ const state = useStorage("app.state", {
 
   // Keep track of revealed letters for the virtual keyboard
   letterStates: {} as Record<string, LetterState>,
+
+  // Indicates if the game is over
+  gameOver: false,
 });
 
 // Current active row
@@ -49,11 +52,9 @@ let shakeRowIndex = $ref(-1);
 let success = $ref(false);
 
 // Handle keyboard input
-let allowInput = true;
+let allowInput = !state.value.gameOver;
 
-const onKeyup = (e: KeyboardEvent) => onKey(e.key);
-
-useEventListener(window, "keyup", onKeyup);
+useEventListener(window, "keyup", (e: KeyboardEvent) => onKey(e.key));
 
 const { share, isSupported } = useShare();
 
@@ -136,8 +137,8 @@ async function completeRow() {
     // Yay!
     await promiseTimeout(1600);
     grid = genResultGrid();
-    success = true;
-    // Wait for jump animation to finish (1000ms) nearly
+    success = state.value.gameOver = true;
+    // Wait for jump animation to almost finish (1000ms)
     await promiseTimeout(900);
     showMessage(t(`successMessages.${state.value.currentRowIndex}`), -1);
   } else if (state.value.currentRowIndex < state.value.board.length - 1) {
@@ -148,6 +149,7 @@ async function completeRow() {
   } else {
     // Game over :(
     await promiseTimeout(1600);
+    state.value.gameOver = true;
     showMessage(answer.toUpperCase(), -1);
   }
 }
