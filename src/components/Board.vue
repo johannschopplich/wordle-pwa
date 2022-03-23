@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {
+  until,
   promiseTimeout,
   useEventListener,
   useShare,
@@ -17,7 +18,7 @@ const { t } = useI18n();
 const answer = getWordOfTheDay();
 
 // Lazily load all words
-let allWords: string[] = [];
+let allWords: string[] = $ref([]);
 (async () => (allWords = await getAllWords()))();
 
 // Set up persistent data
@@ -54,18 +55,20 @@ let success = $ref(false);
 // Handle keyboard input
 let allowInput = true;
 
-useEventListener(window, "keyup", (e: KeyboardEvent) => onKey(e.key));
-
+// Share board grid as text
 const { share, isSupported } = useShare();
 
+useEventListener(window, "keyup", (e: KeyboardEvent) => onKey(e.key));
+
+if (state.value.gameOver) {
+  allowInput = false;
+  until($$(allWords))
+    .toMatch((v) => v.length > 0)
+    .then(completeRow);
+}
+
 function onKey(key: string) {
-  if (state.value.gameOver) {
-    completeRow();
-    return;
-  }
-
   if (!allowInput) return;
-
   if (/^[\p{Letter}\p{Mark}]$/u.test(key)) {
     fillTile(key.toLowerCase());
   } else if (key === "Backspace") {
