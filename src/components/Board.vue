@@ -205,8 +205,10 @@ function genResultGrid() {
           <div
             :class="[
               'tile-front',
-              'border-2 border-gray-300',
-              tile.letter && 'border-gray-400',
+              'border-2',
+              tile.letter
+                ? 'border-gray-400 dark:border-zinc-500'
+                : 'border-gray-300 dark:border-zinc-600',
               tile.state && 'rotate-x-180',
             ]"
             :style="{ transitionDelay: `${index * 300}ms` }"

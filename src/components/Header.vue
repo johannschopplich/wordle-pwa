@@ -1,9 +1,13 @@
 <template>
-  <header class="header sticky top-4 bg-stone-100 px-4 py-2 rounded-lg z-10">
+  <header
+    class="header sticky top-4 bg-stone-100 px-4 py-2 rounded-lg z-10 dark:bg-zinc-800"
+  >
     <h1 class="text-2xl text-amber-700 font-heading tracking-wide">
       Osterwortsuche
     </h1>
-    <p class="-mt-1 text-stone-400 text-xs font-500 uppercase">
+    <p
+      class="-mt-1 text-stone-400 text-xs font-500 uppercase dark:text-zinc-500"
+    >
       Jeden Tag ein Wort
     </p>
   </header>
