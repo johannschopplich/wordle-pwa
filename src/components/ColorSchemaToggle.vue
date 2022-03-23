@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { computed } from "vue";
 import { useStorage, useToggle } from "@vueuse/core";
 
 const mode = useStorage<"light" | "dark">("app.color-scheme", "light");
 
-const isDark = computed<boolean>({
+const isDark = $computed<boolean>({
   get() {
     return mode.value === "dark";
   },
@@ -14,7 +13,7 @@ const isDark = computed<boolean>({
   },
 });
 
-const toggleDark = useToggle(isDark);
+const toggleDark = useToggle($$(isDark));
 </script>
 
 <template>
