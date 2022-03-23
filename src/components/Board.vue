@@ -9,7 +9,6 @@ import { getWordOfTheDay, getAllWords } from "~/logic/words";
 import { icons } from "~/data/result";
 import { useI18n } from "~/logic/i18n";
 import { LetterState } from "~/types";
-import type { BoardState } from "~/types";
 
 // Destructure the translation helper
 const { t } = useI18n();
@@ -22,7 +21,7 @@ let allWords: string[] = [];
 (async () => (allWords = await getAllWords()))();
 
 // Set up persistent data
-const state = useStorage<BoardState>("app.state", {
+const state = useStorage("app.state", {
   // Board state. Each tile is represented as { letter, state }
   board: Array.from({ length: 6 }, () =>
     Array.from({ length: 5 }, () => ({
@@ -35,7 +34,7 @@ const state = useStorage<BoardState>("app.state", {
   currentRowIndex: 0,
 
   // Keep track of revealed letters for the virtual keyboard
-  letterStates: {},
+  letterStates: {} as Record<string, LetterState>,
 });
 
 // Current active row

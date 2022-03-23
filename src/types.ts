@@ -8,12 +8,3 @@ export const enum LetterState {
   PRESENT = "present",
   ABSENT = "absent",
 }
-
-export interface BoardState {
-  board: {
-    letter: string;
-    state: LetterState;
-  }[][];
-  currentRowIndex: number;
-  letterStates: Record<string, LetterState>;
-}
