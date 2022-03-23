@@ -25,7 +25,7 @@ until($$(now))
 const countdown = $computed(() => {
   const diff = tomorrow.getTime() - now.getTime();
   const hours = Math.floor(diff / (1000 * 60 * 60));
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
   return `${pad(hours)}:${pad(minutes)}`;
 });
 
