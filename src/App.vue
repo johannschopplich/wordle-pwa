@@ -28,9 +28,10 @@ function getTomorrow(date: Date) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
 }
 
-// Reset board state
 function reset() {
+  // Reset board state to initialize a new game
   localStorage.removeItem("app.state");
+  // Re-render the board component
   tomorrow.value = getTomorrow(now.value);
 }
 </script>
