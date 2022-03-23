@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { useStorage, useToggle } from "@vueuse/core";
 
-const mode = useStorage<"light" | "dark">("app.color-scheme", "light");
+let mode = $(useStorage<"light" | "dark">("app.color-scheme", "light"));
 
 const isDark = $computed<boolean>({
   get() {
-    return mode.value === "dark";
+    return mode === "dark";
   },
   set(v) {
-    mode.value = v ? "dark" : "light";
+    mode = v ? "dark" : "light";
     document.documentElement.classList.toggle("dark");
   },
 });
