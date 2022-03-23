@@ -274,11 +274,11 @@ function genResultGrid() {
 }
 
 .present {
-  @apply !bg-yellow-500;
+  @apply !bg-yellow-500 !text-gray-900;
 }
 
 .absent {
-  @apply !bg-gray-500 !text-white;
+  @apply !bg-gray-500 !text-white !dark:bg-zinc-600;
 }
 
 .tile-front,
