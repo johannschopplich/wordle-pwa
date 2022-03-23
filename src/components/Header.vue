@@ -11,12 +11,13 @@ defineProps<{
     <h1
       class="text-2xl text-amber-700 font-heading tracking-wide dark:text-amber-600"
     >
-      Osterwortsuche
+      {{ $t("title") }}
     </h1>
-    <p
-      class="-mt-1 text-stone-400 text-xs font-500 uppercase dark:text-zinc-500"
-    >
-      Täglich ein Wort — nächstes in
+    <p class="-mt-1 text-xs font-500 uppercase">
+      <span class="text-stone-400 dark:text-zinc-500">
+        {{ $t("header.newWordOfTheDay") }}
+      </span>
+      {{ " " }}
       <span class="text-stone-500 dark:text-zinc-400">{{ countdown }}</span>
     </p>
   </header>

@@ -20,7 +20,7 @@ defineProps<{
           'absolute left-1/2 shadow-lg transition-opacity-250 -translate-x-1/2 translate-z-1 z-20 dark:text-gray-800',
           size === 'default' &&
             'top-12 bg-gray-800 text-white px-4 py-2 rounded-full dark:bg-white',
-          size === 'large' && 'top-20 bg-white p-6 rounded-xl',
+          size === 'large' && 'top-24 bg-white p-6 rounded-xl',
         ]"
       >
         <div class="space-y-6 text-center">

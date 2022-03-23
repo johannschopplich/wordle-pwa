@@ -1,4 +1,8 @@
 {
+  "title": "Osterwortsuche",
+  "header": {
+    "newWordOfTheDay": "Neues Wort des Tages in"
+  },
   "alerts": {
     "notInWordList": "Nicht in der Wortliste",
     "notEnoughLetters": "Nicht genug Buchstaben"
