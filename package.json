@@ -31,8 +31,8 @@
     "typescript": "^4.6.2",
     "unocss": "^0.29.5",
     "unplugin-icons": "^0.14.0",
-    "unplugin-vue-components": "^0.18.3",
+    "unplugin-vue-components": "^0.18.4",
     "vite": "^2.8.6",
-    "vue-tsc": "^0.33.6"
+    "vue-tsc": "^0.33.7"
   }
 }
