@@ -52,14 +52,20 @@ let shakeRowIndex = $ref(-1);
 let success = $ref(false);
 
 // Handle keyboard input
-let allowInput = !state.value.gameOver;
+let allowInput = true;
 
 useEventListener(window, "keyup", (e: KeyboardEvent) => onKey(e.key));
 
 const { share, isSupported } = useShare();
 
 function onKey(key: string) {
+  if (state.value.gameOver) {
+    completeRow();
+    return;
+  }
+
   if (!allowInput) return;
+
   if (/^[\p{Letter}\p{Mark}]$/u.test(key)) {
     fillTile(key.toLowerCase());
   } else if (key === "Backspace") {
@@ -135,7 +141,7 @@ async function completeRow() {
   allowInput = false;
   if (currentRow.every((tile) => tile.state === LetterState.CORRECT)) {
     // Yay!
-    await promiseTimeout(1600);
+    await promiseTimeout(state.value.gameOver ? 0 : 1600);
     grid = genResultGrid();
     success = state.value.gameOver = true;
     // Wait for jump animation to almost finish (1000ms)
@@ -148,7 +154,7 @@ async function completeRow() {
     allowInput = true;
   } else {
     // Game over :(
-    await promiseTimeout(1600);
+    await promiseTimeout(state.value.gameOver ? 0 : 1600);
     state.value.gameOver = true;
     showMessage(answer.toUpperCase(), -1);
   }
