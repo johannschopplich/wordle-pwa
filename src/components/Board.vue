@@ -142,9 +142,10 @@ async function completeRow() {
   });
 
   allowInput = false;
+  await promiseTimeout(state.gameOver ? 0 : 1600);
+
   if (currentRow.every((tile) => tile.state === LetterState.CORRECT)) {
     // Yay!
-    await promiseTimeout(state.gameOver ? 0 : 1600);
     grid = genResultGrid();
     success = state.gameOver = true;
     // Wait for jump animation to almost finish (1000ms)
@@ -153,11 +154,9 @@ async function completeRow() {
   } else if (state.currentRowIndex < state.board.length - 1) {
     // Go the next row
     state.currentRowIndex++;
-    await promiseTimeout(1600);
     allowInput = true;
   } else {
     // Game over :(
-    await promiseTimeout(state.gameOver ? 0 : 1600);
     state.gameOver = true;
     showMessage(answer.toUpperCase(), -1);
   }
