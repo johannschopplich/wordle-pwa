@@ -43,4 +43,8 @@ function reset() {
     <!-- Board will contains two fragments -->
     <Board :key="tomorrow.getTime()" />
   </div>
+
+  <div class="absolute top-3 right-3 text-white hidden md:block">
+    <ColorSchemaToggle />
+  </div>
 </template>

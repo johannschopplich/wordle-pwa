@@ -2,7 +2,9 @@
   <header
     class="header sticky top-4 bg-stone-100 px-4 py-2 rounded-lg z-10 dark:bg-zinc-800"
   >
-    <h1 class="text-2xl text-amber-700 font-heading tracking-wide">
+    <h1
+      class="text-2xl text-amber-700 font-heading tracking-wide dark:text-amber-600"
+    >
       Osterwortsuche
     </h1>
     <p
