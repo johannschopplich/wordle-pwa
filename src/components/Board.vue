@@ -254,17 +254,17 @@ function genResultGrid() {
     </p>
     <template v-if="success">
       <pre class="text-2xl leading-none">{{ grid }}</pre>
-      <button
-        v-show="isSupported"
-        class="button"
-        @click="share({ text: grid })"
-      >
+      <p class="whitespace-nowrap">
+        <span class="text-gray-500">Nächste Runde in</span>
+        {{ " " }}
+        <span class="font-semibold">
+          {{ countdown.hours }} h {{ countdown.minutes }} min
+        </span>
+      </p>
+      <button class="button w-full py-3" @click="share({ text: grid })">
         <TeenyiconsMessageTextAltSolid class="mr-2" />
         Ergebnis teilen
       </button>
-      <p class="whitespace-nowrap">
-        Nächste Runde in <span class="font-semibold">{{ countdown }}</span>
-      </p>
     </template>
   </Message>
 </template>

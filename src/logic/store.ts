@@ -41,7 +41,10 @@ export const countdown = $computed(() => {
   const diff = tomorrow.value.getTime() - now.value.getTime();
   const hours = Math.floor(diff / (1000 * 60 * 60));
   const minutes = Math.floor((diff / (1000 * 60)) % 60);
-  return `${pad(hours)}:${pad(minutes)}`;
+  return {
+    hours,
+    minutes,
+  };
 });
 
 // Reset the app when tomorrow is already reached
@@ -53,10 +56,6 @@ export function tryReset() {
     // Rest tomorrow date, which also re-renders the board component
     tomorrow.value = getTomorrow(now.value);
   }
-}
-
-function pad(n: number) {
-  return n < 10 ? "0" + n : n;
 }
 
 function getTomorrow(date: Date) {

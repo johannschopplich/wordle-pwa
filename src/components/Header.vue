@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { countdown } from "~/logic/store";
+
+function pad(n: number) {
+  return n < 10 ? "0" + n : n;
+}
 </script>
 
 <template>
@@ -16,7 +20,9 @@ import { countdown } from "~/logic/store";
         {{ $t("header.newWordOfTheDay") }}
       </span>
       {{ " " }}
-      <span class="text-stone-500 dark:text-zinc-400">{{ countdown }}</span>
+      <span class="text-stone-500 dark:text-zinc-400">
+        {{ pad(countdown.hours) }}:{{ pad(countdown.minutes) }}
+      </span>
     </p>
   </header>
 </template>
