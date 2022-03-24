@@ -9,7 +9,7 @@ defineProps<{
   <Teleport to="body">
     <div
       v-if="isOpen && size === 'large'"
-      class="absolute inset-0 bg-neutral-800 bg-opacity-50 translate-z-1 z-20"
+      class="fixed inset-0 bg-neutral-800 bg-opacity-50 translate-z-1 z-20"
     />
 
     <Transition>
@@ -17,7 +17,7 @@ defineProps<{
         v-if="isOpen"
         :class="[
           'message',
-          'absolute top-23 left-1/2 shadow-sm transition-opacity-250 -translate-x-1/2 translate-z-1 z-20',
+          'fixed top-23 left-1/2 shadow-sm transition-opacity-250 -translate-x-1/2 translate-z-1 z-20',
           size === 'default' &&
             'bg-gray-800 text-white px-4 py-2 rounded-full dark:bg-white dark:text-gray-800',
           size === 'large' &&
