@@ -261,7 +261,11 @@ function genResultGrid() {
           {{ countdown.hours }} h {{ countdown.minutes }} min
         </span>
       </p>
-      <button class="button w-full py-3" @click="share({ text: grid })">
+      <button
+        v-show="isSupported"
+        class="button w-full py-3"
+        @click="share({ text: grid })"
+      >
         <TeenyiconsMessageTextAltSolid class="mr-2" />
         Ergebnis teilen
       </button>
