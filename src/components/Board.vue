@@ -258,7 +258,7 @@ function genResultGrid() {
         <span class="text-gray-500">Nächste Runde in</span>
         {{ " " }}
         <span class="font-semibold">
-          {{ countdown.hours }} h {{ countdown.minutes }} min
+          {{ countdown.hours }}&thinsp;h {{ countdown.minutes }}&thinsp;min
         </span>
       </p>
       <button
