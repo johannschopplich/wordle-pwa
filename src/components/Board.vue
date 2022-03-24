@@ -8,7 +8,6 @@ import {
 import { getWordOfTheDay, getAllWords } from "~/logic/words";
 import { useI18n } from "~/logic/i18n";
 import { state as _state, countdown } from "~/logic/store";
-import { icons } from "~/data/result";
 import { LetterState } from "~/types";
 
 // Destructure the translation helper
@@ -158,6 +157,13 @@ async function shake() {
   await promiseTimeout(1000);
   shakeRowIndex = -1;
 }
+
+const icons = {
+  [LetterState.CORRECT]: "🟩",
+  [LetterState.PRESENT]: "🟨",
+  [LetterState.ABSENT]: "⬛️",
+  [LetterState.INITIAL]: null,
+};
 
 function genResultGrid() {
   return state.board

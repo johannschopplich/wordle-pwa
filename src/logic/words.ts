@@ -3,17 +3,6 @@ import { customAnswers } from "~/data/customAnswers";
 
 const defaultMessage = "Using word of the day instead.";
 
-function getWordFromList(answers: string[], start: Date) {
-  const now = new Date();
-  const diff = Number(now) - Number(start);
-  let day = Math.floor(diff / (1000 * 60 * 60 * 24));
-  while (day > answers.length) {
-    day -= answers.length;
-  }
-
-  return answers[day];
-}
-
 export async function getAllWords() {
   const { allowedGuesses } = await import("~/data/allowedGuesses");
   return [...new Set([...answers, ...customAnswers, ...allowedGuesses])];
@@ -37,10 +26,27 @@ export function getWordOfTheDay() {
 
   if (import.meta.env.VITE_STARTS_AT) {
     const date = new Date(import.meta.env.VITE_STARTS_AT);
-    if (date.toString() !== "Invalid Date") {
+    if (date.toString() === "Invalid Date") {
+      console.error('Invalid start date in "VITE_STARTS_AT" env variable.');
+    } else {
       start = date;
     }
   }
 
-  return getWordFromList(customAnswers.length ? customAnswers : answers, start);
+  return getWordFromList(
+    customAnswers.length ? customAnswers : answers,
+    start,
+    "final"
+  );
+}
+
+function getWordFromList(answers: string[], start: Date, fallback: string) {
+  const now = new Date();
+  const diff = Number(now) - Number(start);
+  let day = Math.floor(diff / (1000 * 60 * 60 * 24));
+  while (day > answers.length) {
+    day -= answers.length;
+  }
+
+  return answers[day] ?? fallback;
 }
