@@ -237,11 +237,17 @@ function genResultGrid() {
   />
 
   <Message :is-open="!!message" :size="success ? 'large' : 'default'">
-    <p :class="['font-600 truncate', success ? 'text-xl' : 'text-sm']">
+    <p
+      :class="[
+        success
+          ? 'text-xl text-amber-700 font-heading tracking-wide'
+          : 'text-sm font-600 truncate',
+      ]"
+    >
       {{ message }}
     </p>
-    <pre v-if="grid" class="text-2xl">{{ grid }}</pre>
     <template v-if="success">
+      <pre class="text-2xl">{{ grid }}</pre>
       <button
         v-show="isSupported"
         class="button"
