@@ -26,6 +26,21 @@ body {
   @apply max-w-screen-sm h-full mx-auto bg-white pt-4 px-4 pb-[max(env(safe-area-inset-bottom),1rem)] sm:rounded-md sm:shadow-sm dark:bg-zinc-900 dark:sm:border-2 dark:sm:border-zinc-800;
 }
 
+.hyphenate {
+  -webkit-hyphens: auto;
+  -webkit-hyphenate-limit-before: 3;
+  -webkit-hyphenate-limit-after: 3;
+  -webkit-hyphenate-limit-chars: 6 3 3;
+  -webkit-hyphenate-limit-lines: 2;
+  -webkit-hyphenate-limit-last: always;
+  -webkit-hyphenate-limit-zone: 8%;
+  hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;
+  hyphenate-limit-lines: 2;
+  hyphenate-limit-last: always;
+  hyphenate-limit-zone: 8%;
+}
+
 .correct {
   @apply !bg-lime-600 !text-white;
 }

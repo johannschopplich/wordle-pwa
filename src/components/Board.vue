@@ -240,7 +240,7 @@ function genResultGrid() {
     <p
       :class="[
         success
-          ? 'text-xl text-amber-700 font-heading tracking-wide'
+          ? 'hyphenate text-2xl leading-tight text-amber-700 font-heading tracking-wide'
           : 'text-sm font-600 truncate',
       ]"
     >
@@ -256,7 +256,7 @@ function genResultGrid() {
         <TeenyiconsMessageTextAltSolid class="mr-2" />
         Ergebnis teilen
       </button>
-      <p>
+      <p class="whitespace-nowrap">
         Nächste Runde in <span class="font-semibold">{{ countdown }}</span>
       </p>
     </template>
