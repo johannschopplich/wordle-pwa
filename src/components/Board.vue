@@ -253,7 +253,7 @@ function genResultGrid() {
       {{ message }}
     </p>
     <template v-if="success">
-      <pre class="text-2xl">{{ grid }}</pre>
+      <pre class="text-2xl leading-none">{{ grid }}</pre>
       <button
         v-show="isSupported"
         class="button"
