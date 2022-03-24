@@ -1,7 +1,5 @@
 <script setup lang="ts">
-defineProps<{
-  countdown: string;
-}>();
+import { countdown } from "~/logic/store";
 </script>
 
 <template>

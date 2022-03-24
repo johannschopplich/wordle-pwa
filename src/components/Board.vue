@@ -4,10 +4,10 @@ import {
   promiseTimeout,
   useEventListener,
   useShare,
-  useStorage,
 } from "@vueuse/core";
 import { getWordOfTheDay, getAllWords } from "~/logic/words";
 import { useI18n } from "~/logic/i18n";
+import { state as _state, countdown } from "~/logic/store";
 import { icons } from "~/data/result";
 import { LetterState } from "~/types";
 
@@ -22,26 +22,7 @@ let allWords: string[] = $ref([]);
 (async () => (allWords = await getAllWords()))();
 
 // Set up persistent data
-let state = $(
-  useStorage("app.state", {
-    // Board state. Each tile is represented as { letter, state }
-    board: Array.from({ length: 6 }, () =>
-      Array.from({ length: 5 }, () => ({
-        letter: "",
-        state: LetterState.INITIAL,
-      }))
-    ),
-
-    // Current active row index
-    currentRowIndex: 0,
-
-    // Keep track of revealed letters for the virtual keyboard
-    letterStates: {} as Record<string, LetterState>,
-
-    // Indicates if the game is over
-    gameOver: false,
-  })
-);
+let state = $(_state);
 
 // Current active row
 const currentRow = $computed(() => state.board[state.currentRowIndex]);
@@ -60,6 +41,7 @@ const { share, isSupported } = useShare();
 
 useEventListener(window, "keyup", (e: KeyboardEvent) => onKey(e.key));
 
+// Handle already guessed word of the day
 if (state.gameOver) {
   allowInput = false;
   until($$(allWords))
@@ -259,14 +241,19 @@ function genResultGrid() {
       {{ message }}
     </p>
     <pre v-if="grid" class="text-2xl">{{ grid }}</pre>
-    <button
-      v-show="success && isSupported"
-      class="button"
-      @click="share({ text: grid })"
-    >
-      <TeenyiconsMessageTextAltSolid class="mr-2" />
-      Ergebnis teilen
-    </button>
+    <template v-if="success">
+      <button
+        v-show="isSupported"
+        class="button"
+        @click="share({ text: grid })"
+      >
+        <TeenyiconsMessageTextAltSolid class="mr-2" />
+        Ergebnis teilen
+      </button>
+      <p>
+        Nächste Runde in <span class="font-semibold">{{ countdown }}</span>
+      </p>
+    </template>
   </Message>
 </template>
 
