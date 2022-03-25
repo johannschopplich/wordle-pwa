@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { countdown } from "~/logic/store";
+import { state, countdown } from "~/logic/store";
 
 function pad(n: number) {
   return n < 10 ? "0" + n : n;
@@ -17,10 +17,10 @@ function pad(n: number) {
     </h1>
     <p class="-mt-1 text-xs font-500 uppercase">
       <span class="text-stone-400 dark:text-zinc-500">
-        {{ $t("header.newWordOfTheDay") }}
+        {{ $t(state.gameOver ? "header.nextRound" : "header.currentRound") }}
       </span>
-      {{ " " }}
-      <span class="text-stone-500 dark:text-zinc-400">
+      <span v-show="state.gameOver" class="text-stone-500 dark:text-zinc-400">
+        {{ " " }}
         {{ pad(countdown.hours) }}:{{ pad(countdown.minutes) }}
       </span>
     </p>

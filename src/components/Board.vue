@@ -16,9 +16,8 @@ const { t } = useI18n();
 // Get word of the day
 const answer = getWordOfTheDay();
 
-// Lazily load all words
+// Bucket with all possible words
 let allWords: string[] = $ref([]);
-(async () => (allWords = await getAllWords()))();
 
 // Set up persistent data
 let state = $(_state);
@@ -40,13 +39,16 @@ const { share, isSupported } = useShare();
 
 useEventListener(window, "keyup", (e: KeyboardEvent) => onKey(e.key));
 
-// Handle already guessed word of the day
-if (state.gameOver) {
-  allowInput = false;
-  until($$(allWords))
-    .toMatch((v) => v.length > 0)
-    .then(completeRow);
-}
+(async () => {
+  // Lazily load all words
+  allWords = await getAllWords();
+
+  // Handle already guessed word of the day
+  if (state.gameOver) {
+    allowInput = false;
+    completeRow();
+  }
+})();
 
 function onKey(key: string) {
   if (!allowInput) return;
@@ -143,12 +145,11 @@ async function completeRow() {
   }
 }
 
-function showMessage(msg: string, time = 1250) {
+async function showMessage(msg: string, time = 1250) {
   message = msg;
   if (time > 0) {
-    setTimeout(() => {
-      message = "";
-    }, time);
+    await promiseTimeout(time);
+    message = "";
   }
 }
 
@@ -257,16 +258,17 @@ function genResultGrid() {
       <p class="whitespace-nowrap">
         <span class="text-gray-500">Nächste Runde in</span>
         {{ " " }}
-        <span class="font-semibold">
-          {{ countdown.hours }}&thinsp;h {{ countdown.minutes }}&thinsp;min
+        <span v-show="countdown.hours > 0" class="font-semibold">
+          {{ countdown.hours }}&thinsp;h
         </span>
+        <span class="font-semibold">{{ countdown.minutes }}&thinsp;min</span>
       </p>
       <button
         v-show="isSupported"
         class="button w-full py-3"
         @click="share({ text: grid })"
       >
-        <TeenyiconsMessageTextAltSolid class="mr-2" />
+        <TeenyiconsShareSolid class="mr-2" />
         Ergebnis teilen
       </button>
     </template>
