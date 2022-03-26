@@ -3,8 +3,7 @@ import { watchThrottled } from "@vueuse/core";
 import { now, tomorrow, tryReset } from "~/logic/store";
 
 // Reset the app when tomorrow is already reached
-tryReset();
-watchThrottled(now, tryReset, { throttle: 1000 });
+watchThrottled(now, tryReset, { immediate: true, throttle: 1000 });
 </script>
 
 <template>
