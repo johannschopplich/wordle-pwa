@@ -9,12 +9,12 @@
     "notEnoughLetters": "Nicht genug Buchstaben",
     "notFound": "Fast! Gesucht war {label}."
   },
-  "successMessages": {
-    "0": "Zu einfach für dich?",
-    "1": "Sehr beeindruckend!",
-    "2": "Das ging schnell!",
-    "3": "Ziemlich gut!",
-    "4": "Mit Puffer gemeistert!",
-    "5": "Hast dich durchgebissen!"
-  }
+  "successMessages": [
+    "Das war wohl zu einfach?",
+    "Sehr beeindruckend!",
+    "Das ging schnell!",
+    "Ziemlich gut!",
+    "Mit Puffer gemeistert!",
+    "Hast dich durchgebissen!"
+  ]
 }

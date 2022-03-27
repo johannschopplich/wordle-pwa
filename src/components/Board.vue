@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import {
-  until,
-  promiseTimeout,
-  useEventListener,
-  useShare,
-} from "@vueuse/core";
+import { promiseTimeout, useEventListener, useShare } from "@vueuse/core";
 import { getWordOfTheDay, getAllWords } from "~/logic/words";
 import { useI18n } from "~/logic/i18n";
 import { state as _state, countdown } from "~/logic/store";
@@ -35,7 +30,7 @@ let success = $ref(false);
 let allowInput = true;
 
 // Share board grid as text
-const { share, isSupported } = useShare();
+const { share, isSupported: isShareSupported } = useShare();
 
 useEventListener(window, "keyup", (e: KeyboardEvent) => onKey(e.key));
 
@@ -133,7 +128,7 @@ async function completeRow() {
     success = state.gameOver = true;
     // Wait for jump animation to almost finish (1000ms)
     await promiseTimeout(900);
-    showMessage(t(`successMessages.${state.currentRowIndex}`), -1);
+    showMessage(t(`successMessages[${state.currentRowIndex}]`), -1);
   } else if (state.currentRowIndex < state.board.length - 1) {
     // Go the next row
     state.currentRowIndex++;
@@ -270,7 +265,7 @@ function genResultGrid() {
       </p>
 
       <button
-        v-show="success && isSupported"
+        v-show="success && isShareSupported"
         class="button w-full py-3"
         @click="share({ text: grid })"
       >
