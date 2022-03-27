@@ -82,14 +82,14 @@ function clearTile() {
 async function completeRow() {
   if (!currentRow.every((tile) => tile.letter)) {
     shake();
-    showMessage(t("alerts.notEnoughLetters"));
+    showMessage(t("errorMessages.notEnoughLetters"));
     return;
   }
 
   const guess = currentRow.map((tile) => tile.letter).join("");
   if (!allWords.includes(guess) && guess !== answer) {
     shake();
-    showMessage(t("alerts.notInWordList"));
+    showMessage(t("errorMessages.notInWordList"));
     return;
   }
 
@@ -141,7 +141,10 @@ async function completeRow() {
   } else {
     // Game over :(
     state.gameOver = true;
-    showMessage(answer.toUpperCase(), -1);
+    showMessage(
+      t("errorMessages.notFound", { label: answer.toUpperCase() }),
+      -1
+    );
   }
 }
 
@@ -243,18 +246,20 @@ function genResultGrid() {
     @key="onKey"
   />
 
-  <Message :is-open="!!message" :size="success ? 'large' : 'default'">
-    <p
+  <Message :is-open="!!message" :size="state.gameOver ? 'large' : 'default'">
+    <h2
       :class="[
-        success
+        state.gameOver
           ? 'hyphenate text-2xl leading-tight text-amber-700 font-heading tracking-wide'
           : 'text-sm font-600 truncate',
       ]"
     >
       {{ message }}
-    </p>
-    <template v-if="success">
-      <pre class="text-2xl leading-none">{{ grid }}</pre>
+    </h2>
+
+    <template v-if="state.gameOver">
+      <pre v-show="success" class="text-2xl leading-none">{{ grid }}</pre>
+
       <p class="whitespace-nowrap">
         <span class="text-gray-500">Nächste Runde in</span>
         {{ " " }}
@@ -263,8 +268,9 @@ function genResultGrid() {
         </span>
         <span class="font-semibold">{{ countdown.minutes }}&thinsp;min</span>
       </p>
+
       <button
-        v-show="isSupported"
+        v-show="success && isSupported"
         class="button w-full py-3"
         @click="share({ text: grid })"
       >

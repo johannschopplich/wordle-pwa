@@ -1,11 +1,3 @@
-<script setup lang="ts">
-import { state, countdown } from "~/logic/store";
-
-function pad(n: number) {
-  return n < 10 ? "0" + n : n;
-}
-</script>
-
 <template>
   <header
     class="header sticky top-4 bg-stone-100 px-4 py-2 rounded-lg z-10 dark:bg-zinc-800"
@@ -17,11 +9,7 @@ function pad(n: number) {
     </h1>
     <p class="-mt-1 text-xs font-500 uppercase">
       <span class="text-stone-400 dark:text-zinc-500">
-        {{ $t(state.gameOver ? "header.nextRound" : "header.currentRound") }}
-      </span>
-      <span v-show="state.gameOver" class="text-stone-500 dark:text-zinc-400">
-        {{ " " }}
-        {{ pad(countdown.hours) }}:{{ pad(countdown.minutes) }}
+        {{ $t("header.currentRound") }}
       </span>
     </p>
   </header>

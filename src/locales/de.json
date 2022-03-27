@@ -4,9 +4,10 @@
     "currentRound": "Finde das Wort des Tages",
     "nextRound": "Neues Wort des Tages in"
   },
-  "alerts": {
+  "errorMessages": {
     "notInWordList": "Nicht in der Wortliste",
-    "notEnoughLetters": "Nicht genug Buchstaben"
+    "notEnoughLetters": "Nicht genug Buchstaben",
+    "notFound": "Fast! Gesucht war {label}."
   },
   "successMessages": {
     "0": "Zu einfach für dich?",
