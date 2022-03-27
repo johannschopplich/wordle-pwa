@@ -1,12 +1,10 @@
 export const answers = [
-  "kleid",
-  "seele",
-  "abend",
+  "zweig",
+  "küken",
+  "farbe",
   "wonne",
   "könig",
-  "pause",
-  "traum",
+  "leben",
+  "abend",
   "schaf",
-  "alles",
-  "dauer",
 ];
