@@ -10,7 +10,7 @@ watchThrottled(now, tryReset, { immediate: true, throttle: 1000 });
   <div class="h-full grid grid-rows-[auto_1fr_auto] gap-4 children:min-w-0">
     <Header />
 
-    <!-- Board will contains two fragments -->
+    <!-- Board will render two fragments -->
     <Board :key="tomorrow.getTime()" />
   </div>
 
