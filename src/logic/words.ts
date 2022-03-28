@@ -1,14 +1,14 @@
-import { answers } from "~/data/answers";
 import { customAnswers } from "~/data/customAnswers";
 
 const defaultMessage = "Using word of the day instead.";
 
 export async function getAllWords() {
+  const { answers } = await import("~/data/answers");
   const { allowedGuesses } = await import("~/data/allowedGuesses");
   return [...new Set([...answers, ...customAnswers, ...allowedGuesses])];
 }
 
-export function getWordOfTheDay() {
+export async function getWordOfTheDay() {
   if (location.search) {
     try {
       const query = atob(location.search.slice(1));
@@ -40,6 +40,7 @@ export function getWordOfTheDay() {
   }
 
   if (!word) {
+    const { answers } = await import("~/data/answers");
     word = getWordFromList(answers, start);
   }
 

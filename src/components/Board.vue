@@ -5,14 +5,14 @@ import { useI18n } from "~/logic/i18n";
 import { state as _state, countdown } from "~/logic/store";
 import { LetterState } from "~/types";
 
-// Destructure the translation helper
+// Get the translation helper
 const { t } = useI18n();
 
-// Get word of the day
-const answer = getWordOfTheDay();
+// Word of the day
+let answer: string;
 
-// Bucket with all possible words
-let allWords: string[] = $ref([]);
+// All possible words
+let allWords: string[] = [];
 
 // Set up persistent data
 let state = $(_state);
@@ -34,8 +34,12 @@ const { share, isSupported: isShareSupported } = useShare();
 
 useEventListener(window, "keyup", (e: KeyboardEvent) => onKey(e.key));
 
+// Lazily retrieve word/answers and initialize game state
 (async () => {
-  // Lazily load all words
+  // Get word of the day
+  answer = await getWordOfTheDay();
+
+  // Get all words
   allWords = await getAllWords();
 
   // Handle already guessed word of the day
