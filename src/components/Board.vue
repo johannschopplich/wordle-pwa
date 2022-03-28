@@ -131,7 +131,7 @@ async function completeRow() {
   });
 
   allowInput = false;
-  await promiseTimeout(state.gameOver ? 0 : 1600);
+  if (!state.gameOver) await promiseTimeout(1600);
 
   if (currentRow.every((tile) => tile.state === LetterState.CORRECT)) {
     // Yay!
