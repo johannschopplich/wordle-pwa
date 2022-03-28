@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import { promiseTimeout, useEventListener, useShare } from "@vueuse/core";
+import {
+  promiseTimeout,
+  useEventListener,
+  useClipboard,
+  useShare,
+} from "@vueuse/core";
 import { getWordOfTheDay, getAllWords } from "~/logic/words";
 import { useI18n } from "~/logic/i18n";
-import { state as _state, countdown } from "~/logic/store";
+import { state as _state, now, countdown } from "~/logic/store";
 import { LetterState } from "~/types";
 
 // Get the translation helper
@@ -30,7 +35,9 @@ let success = $ref(false);
 let allowInput = true;
 
 // Share board grid as text
+let shareText = $ref("");
 const { share, isSupported: isShareSupported } = useShare();
+const { copy, copied, isSupported: isClipboardSupported } = useClipboard();
 
 useEventListener(window, "keyup", (e: KeyboardEvent) => onKey(e.key));
 
@@ -129,6 +136,8 @@ async function completeRow() {
   if (currentRow.every((tile) => tile.state === LetterState.CORRECT)) {
     // Yay!
     grid = genResultGrid();
+    const day = now.value.toLocaleDateString("de-DE");
+    shareText = `${day}\n${grid}`;
     success = state.gameOver = true;
     // Wait for jump animation to almost finish (1000ms)
     await promiseTimeout(900);
@@ -269,12 +278,18 @@ function genResultGrid() {
       </p>
 
       <button
-        v-show="success && isShareSupported"
+        v-show="success && (isShareSupported || isClipboardSupported)"
         class="button w-full py-3"
-        @click="share({ text: grid })"
+        @click="isShareSupported ? share({ text: shareText }) : copy(shareText)"
       >
-        <TeenyiconsShareSolid class="mr-2" />
-        Ergebnis teilen
+        <template v-if="isShareSupported">
+          <TeenyiconsShareSolid class="mr-2" />
+          {{ t("actions.share") }}
+        </template>
+        <template v-else>
+          <TeenyiconsDocumentsSolid class="mr-2" />
+          {{ !copied ? t("actions.copy") : t("actions.copied") }}
+        </template>
       </button>
     </template>
   </Message>

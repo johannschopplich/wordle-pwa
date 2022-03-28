@@ -16,5 +16,10 @@
     "Ziemlich gut!",
     "Mit Puffer gemeistert!",
     "Hast dich durchgebissen!"
-  ]
+  ],
+  "actions": {
+    "share": "Ergebnis teilen",
+    "copy": "Ergebnis kopieren",
+    "copied": "Kopiert!"
+  }
 }
