@@ -288,7 +288,7 @@ function genResultGrid() {
         </template>
         <template v-else>
           <TeenyiconsDocumentsSolid class="mr-2" />
-          {{ !copied ? t("actions.copy") : t("actions.copied") }}
+          {{ t(`actions.${!copied ? "copy" : "copied"}`) }}
         </template>
       </button>
     </template>
