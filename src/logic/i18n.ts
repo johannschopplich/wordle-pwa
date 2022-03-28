@@ -28,7 +28,10 @@ declare module "vue" {
 
 const injectionKey = Symbol("i18n") as InjectionKey<I18nInstance>;
 
-function parseAndReplaceString(str: string, params: any): string {
+function parseAndReplaceString(
+  str: string,
+  params: Record<string, any>
+): string {
   const RE = /{(\w*)}/g;
   let arr;
   let _str: string = str;
@@ -47,45 +50,54 @@ function parseAndReplaceString(str: string, params: any): string {
 function recursiveRetrieve(
   chain: string[],
   messages: Messages,
-  params?: any
+  params?: Record<string, any>
 ): string {
   const key = chain[0];
-  if (~key.indexOf("[")) {
-    // Get array item
-    const [objKey, str] = key.split("[");
-    const num = parseInt(str.replace("]", ""));
 
-    if (num > -1) {
-      if (
-        !messages[objKey] &&
-        messages[objKey].length > 0 &&
-        messages[objKey][num] &&
-        messages[objKey][num] !== ""
-      ) {
-        throw new Error("Key not found");
-      } else if (chain.length === 1) {
-        return typeof messages[objKey][num] === "string"
-          ? messages[objKey][num]
-          : "";
-      } else {
-        return recursiveRetrieve(chain.slice(1), messages[objKey][num], params);
-      }
-    } else {
-      throw new Error(`Key "${key}" not found`);
+  if (key.includes("[")) {
+    // Get array item
+    const [objKey, rest] = key.split("[");
+    const num = parseInt(rest.replace("]", ""));
+
+    if (num < 0) {
+      throw new Error(
+        `Invalid array index "${num}" for message "${chain.join(".")}"`
+      );
     }
+
+    if (
+      !messages[objKey] &&
+      messages[objKey].length > 0 &&
+      messages[objKey][num] &&
+      messages[objKey][num] !== ""
+    ) {
+      throw new Error(`Message "${chain.join(".")}" not found`);
+    }
+
+    if (chain.length === 1) {
+      return typeof messages[objKey][num] === "string"
+        ? messages[objKey][num]
+        : "";
+    } else {
+      return recursiveRetrieve(chain.slice(1), messages[objKey][num], params);
+    }
+  }
+
+  if (!messages[chain[0]] && messages[chain[0]] !== "") {
+    throw new Error(`Message "${chain.join(".")}" not found`);
+  }
+
+  if (chain.length === 1) {
+    let string: string =
+      typeof messages[chain[0]] === "string" ? messages[chain[0]] : "";
+
+    if (params) {
+      string = parseAndReplaceString(string, params);
+    }
+
+    return string;
   } else {
-    if (!messages[chain[0]] && messages[chain[0]] !== "") {
-      throw new Error("Message not found");
-    } else if (chain.length === 1) {
-      let string: string =
-        typeof messages[chain[0]] === "string" ? messages[chain[0]] : "";
-      if (params) {
-        string = parseAndReplaceString(string, params);
-      }
-      return string;
-    } else {
-      return recursiveRetrieve(chain.slice(1), messages[chain[0]], params);
-    }
+    return recursiveRetrieve(chain.slice(1), messages[chain[0]], params);
   }
 }
 
@@ -94,7 +106,7 @@ export const createI18n = (config: I18nConfig): I18nInstance => {
   const fallbackLocale = "en";
   const locale = ref(defaultLocale || fallbackLocale);
 
-  const t = (key: string, params?: any): string => {
+  const t = (key: string, params?: Record<string, any>) => {
     const pack = messages[locale.value] || messages[fallbackLocale];
 
     if (typeof key !== "string") {
@@ -105,7 +117,7 @@ export const createI18n = (config: I18nConfig): I18nInstance => {
     try {
       return recursiveRetrieve(key.split("."), pack, params);
     } catch (error) {
-      console.warn("[i18n]", `Key path "${key}" not found`);
+      console.warn("[i18n]", error);
       return "";
     }
   };

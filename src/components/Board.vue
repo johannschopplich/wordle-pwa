@@ -136,8 +136,7 @@ async function completeRow() {
   if (currentRow.every((tile) => tile.state === LetterState.CORRECT)) {
     // Yay!
     grid = genResultGrid();
-    const day = now.value.toLocaleDateString("de-DE");
-    shareText = `${day}\n${grid}`;
+    shareText = `${now.value.toLocaleDateString("de-DE")}\n${grid}`;
     success = state.gameOver = true;
     // Wait for jump animation to almost finish (1000ms)
     await promiseTimeout(900);
