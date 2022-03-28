@@ -33,14 +33,20 @@ export function getWordOfTheDay() {
     }
   }
 
-  return getWordFromList(
-    customAnswers.length ? customAnswers : answers,
-    start,
-    "final"
-  );
+  let word;
+
+  if (customAnswers.length) {
+    word = getWordFromList(customAnswers, start);
+  }
+
+  if (!word) {
+    word = getWordFromList(answers, start);
+  }
+
+  return word;
 }
 
-function getWordFromList(answers: string[], start: Date, fallback: string) {
+function getWordFromList(answers: string[], start: Date) {
   const now = new Date();
   const diff = Number(now) - Number(start);
   let day = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -48,5 +54,5 @@ function getWordFromList(answers: string[], start: Date, fallback: string) {
     day -= answers.length;
   }
 
-  return answers[day] ?? fallback;
+  return answers[day];
 }
