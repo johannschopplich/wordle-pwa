@@ -278,16 +278,16 @@ function genResultGrid() {
 
       <button
         v-show="success && (isShareSupported || isClipboardSupported)"
-        class="button w-full py-3"
+        class="button w-full py-3 space-x-2"
         @click="isShareSupported ? share({ text: shareText }) : copy(shareText)"
       >
         <template v-if="isShareSupported">
-          <TeenyiconsShareSolid class="mr-2" />
-          {{ t("actions.share") }}
+          <TeenyiconsShareSolid />
+          <span>{{ t("actions.share") }}</span>
         </template>
         <template v-else>
-          <TeenyiconsDocumentsSolid class="mr-2" />
-          {{ t(`actions.${!copied ? "copy" : "copied"}`) }}
+          <TeenyiconsDocumentsSolid v-show="!copied" />
+          <span>{{ t(`actions.${!copied ? "copy" : "copied"}`) }}</span>
         </template>
       </button>
     </template>
