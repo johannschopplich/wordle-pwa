@@ -33,7 +33,7 @@ export async function getWordOfTheDay() {
     }
   }
 
-  let word;
+  let word: string | undefined;
 
   if (customAnswers.length) {
     word = getWordFromList(customAnswers, start);
