@@ -65,40 +65,41 @@ function recursiveRetrieve(
       );
     }
 
+    const message = messages[objKey][num];
+
     if (
       !messages[objKey] &&
       messages[objKey].length > 0 &&
-      messages[objKey][num] &&
-      messages[objKey][num] !== ""
+      message &&
+      message !== ""
     ) {
       throw new Error(`Message "${chain.join(".")}" not found`);
     }
 
     if (chain.length === 1) {
-      return typeof messages[objKey][num] === "string"
-        ? messages[objKey][num]
-        : "";
-    } else {
-      return recursiveRetrieve(chain.slice(1), messages[objKey][num], params);
+      return typeof message === "string" ? message : "";
     }
+
+    return recursiveRetrieve(chain.slice(1), message, params);
   }
 
-  if (!messages[chain[0]] && messages[chain[0]] !== "") {
+  const message = messages[key];
+
+  if (!message && message !== "") {
     throw new Error(`Message "${chain.join(".")}" not found`);
   }
 
   if (chain.length === 1) {
-    let string: string =
-      typeof messages[chain[0]] === "string" ? messages[chain[0]] : "";
+    let str: string = typeof message === "string" ? message : "";
 
     if (params) {
-      string = parseAndReplaceString(string, params);
+      str = parseAndReplaceString(str, params);
     }
 
-    return string;
-  } else {
-    return recursiveRetrieve(chain.slice(1), messages[chain[0]], params);
+    return str;
   }
+
+  return recursiveRetrieve(chain.slice(1), message, params);
 }
 
 export const createI18n = (config: I18nConfig): I18nInstance => {
