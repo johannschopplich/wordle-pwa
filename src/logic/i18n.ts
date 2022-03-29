@@ -33,15 +33,15 @@ function parseAndReplaceString(
   params: Record<string, any>
 ): string {
   const RE = /{(\w*)}/g;
-  let arr;
+  let arr: RegExpExecArray | null;
   let _str: string = str;
 
   while ((arr = RE.exec(str)) !== null) {
-    if (Object.prototype.hasOwnProperty.call(params, arr[1])) {
-      _str = _str.replace(arr[0], params[arr[1]]);
-    } else {
+    if (!Object.prototype.hasOwnProperty.call(params, arr[1])) {
       throw new Error(`Param "${arr[1]}" not found`);
     }
+
+    _str = _str.replace(arr[0], params[arr[1]]);
   }
 
   return _str;
