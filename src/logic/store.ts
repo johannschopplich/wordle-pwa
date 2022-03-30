@@ -53,7 +53,7 @@ export function tryReset() {
     // Reset board state to initialize a new game
     Object.assign(state.value, DEFAULT_BOARD_STATE);
 
-    // Rest tomorrow date, which also re-renders the board component
+    // Reset tomorrow date, which also re-renders the board component
     tomorrow.value = getTomorrow(now.value);
   }
 }
