@@ -49,7 +49,13 @@ export const countdown = $computed(() => {
 
 // Reset the app when tomorrow is already reached
 export function tryReset() {
+  console.log("tryReset");
+  console.log("Now", now.value);
+  console.log("Tomorrow", tomorrow.value);
+
   if (now.value.getTime() > tomorrow.value.getTime()) {
+    console.log("Reset");
+
     // Reset board state to initialize a new game
     Object.assign(state.value, DEFAULT_BOARD_STATE);
 
