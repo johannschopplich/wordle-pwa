@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
 import { watchThrottled } from "@vueuse/core";
 import { now, tomorrow, tryReset } from "~/logic/store";
 
-// Reset the app when tomorrow is already reached
-watchThrottled(now, tryReset, { immediate: true, throttle: 1000 });
+onMounted(() => {
+  // Reset the app when tomorrow is already reached
+  watchThrottled(now, tryReset, { immediate: true, throttle: 1000 });
+});
 </script>
 
 <template>
