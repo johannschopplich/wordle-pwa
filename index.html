@@ -14,7 +14,7 @@
     <link rel="apple-touch-icon" href="/images/pwa-192x192.png" />
     <link
       rel="preload"
-      href="/fonts/VCHenrietta7-Medium.woff2"
+      href="/fonts/VCHenrietta-Medium.woff2"
       as="font"
       type="font/woff2"
       crossorigin
@@ -23,9 +23,10 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <title>Osterliches Wortspiel</title>
     <script>
-      (() =>
-        localStorage.getItem("app.color-scheme") === "dark" &&
-        document.documentElement.classList.add("dark"))();
+      (() => {
+        if (localStorage.getItem("app.color-scheme") === "dark")
+          document.documentElement.classList.add("dark");
+      })();
     </script>
   </head>
   <body>
