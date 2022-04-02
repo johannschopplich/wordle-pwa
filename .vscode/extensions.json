@@ -1,8 +1,9 @@
 {
   "recommendations": [
+    "antfu.unocss",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "johnsoncodehk.volar",
-    "antfu.unocss"
+    "lokalise.i18n-ally"
   ]
 }
