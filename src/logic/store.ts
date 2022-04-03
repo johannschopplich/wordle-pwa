@@ -21,7 +21,10 @@ const DEFAULT_BOARD_STATE = {
 };
 
 // Set up persistent data
-export const state = useStorage("app.state", { ...DEFAULT_BOARD_STATE });
+export const state = useStorage<typeof DEFAULT_BOARD_STATE>(
+  "app.state",
+  JSON.parse(JSON.stringify(DEFAULT_BOARD_STATE))
+);
 
 export const now = useNow();
 export const tomorrow = useStorage<Date>(
@@ -48,10 +51,10 @@ export const countdown = $computed(() => {
 });
 
 // Reset the app when tomorrow is already reached
-export function tryReset() {
+export async function tryReset() {
   if (now.value.getTime() > tomorrow.value.getTime()) {
     // Reset board state to initialize a new game
-    Object.assign(state.value, DEFAULT_BOARD_STATE);
+    state.value = JSON.parse(JSON.stringify(DEFAULT_BOARD_STATE));
 
     // Reset tomorrow date, which also re-renders the board component
     tomorrow.value = getTomorrow(now.value);
