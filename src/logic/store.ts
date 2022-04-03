@@ -21,12 +21,10 @@ const DEFAULT_BOARD_STATE = {
 };
 
 // Set up persistent data
-export const state = useStorage<typeof DEFAULT_BOARD_STATE>(
-  "app.state",
-  JSON.parse(JSON.stringify(DEFAULT_BOARD_STATE))
-);
+export const state = useStorage("app.state", deepCopy(DEFAULT_BOARD_STATE));
 
 export const now = useNow();
+
 export const tomorrow = useStorage<Date>(
   "app.next",
   getTomorrow(now.value),
@@ -54,11 +52,31 @@ export const countdown = $computed(() => {
 export async function tryReset() {
   if (now.value.getTime() > tomorrow.value.getTime()) {
     // Reset board state to initialize a new game
-    state.value = JSON.parse(JSON.stringify(DEFAULT_BOARD_STATE));
+    state.value = deepCopy(DEFAULT_BOARD_STATE);
 
     // Reset tomorrow date, which also re-renders the board component
     tomorrow.value = getTomorrow(now.value);
   }
+}
+
+function deepCopy<T>(source: T): T {
+  return Array.isArray(source)
+    ? source.map((item) => deepCopy(item))
+    : source instanceof Date
+    ? new Date(source.getTime())
+    : source && typeof source === "object"
+    ? Object.getOwnPropertyNames(source).reduce((o, prop) => {
+        Object.defineProperty(
+          o,
+          prop,
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          Object.getOwnPropertyDescriptor(source, prop)!
+        );
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        o[prop] = deepCopy((source as Record<string, any>)[prop]);
+        return o;
+      }, Object.create(Object.getPrototypeOf(source)))
+    : (source as T);
 }
 
 function getTomorrow(date: Date) {
