@@ -28,6 +28,59 @@ declare module "vue" {
 
 const injectionKey = Symbol("i18n") as InjectionKey<I18nInstance>;
 
+export function createI18n(config: I18nConfig): I18nInstance {
+  const { defaultLocale, locales, messages } = config;
+  const fallbackLocale = "en";
+  const locale = ref(defaultLocale || fallbackLocale);
+
+  const t = (key: string, params?: Record<string, any>) => {
+    const pack = messages[locale.value] || messages[fallbackLocale];
+
+    if (typeof key !== "string") {
+      console.warn("[i18n]", `Message "${key}" must be a string`);
+      return "";
+    }
+
+    try {
+      return recursiveRetrieve(key.split("."), pack, params);
+    } catch (error) {
+      console.warn("[i18n]", error);
+      return "";
+    }
+  };
+
+  const setLocale = (loc: string) => {
+    if (!messages[loc]) {
+      console.warn(
+        "[i18n]",
+        `Messages for "${loc}" not found, falling back to "${fallbackLocale}"`
+      );
+    }
+
+    locale.value = loc;
+  };
+
+  const getLocale = () => locale.value;
+
+  return {
+    locales,
+    locale,
+    messages,
+    t,
+    setLocale,
+    getLocale,
+    install(app: App) {
+      app.provide(injectionKey, this);
+      app.config.globalProperties.$t = this.t;
+      app.config.globalProperties.$i18n = this;
+    },
+  };
+}
+
+export function useI18n() {
+  return inject(injectionKey) as Omit<I18nInstance, "install">;
+}
+
 function parseAndReplaceString(
   str: string,
   params: Record<string, any>
@@ -100,57 +153,4 @@ function recursiveRetrieve(
   }
 
   return recursiveRetrieve(chain.slice(1), message, params);
-}
-
-export const createI18n = (config: I18nConfig): I18nInstance => {
-  const { defaultLocale, locales, messages } = config;
-  const fallbackLocale = "en";
-  const locale = ref(defaultLocale || fallbackLocale);
-
-  const t = (key: string, params?: Record<string, any>) => {
-    const pack = messages[locale.value] || messages[fallbackLocale];
-
-    if (typeof key !== "string") {
-      console.warn("[i18n]", "Key must be a string");
-      return "";
-    }
-
-    try {
-      return recursiveRetrieve(key.split("."), pack, params);
-    } catch (error) {
-      console.warn("[i18n]", error);
-      return "";
-    }
-  };
-
-  const setLocale = (loc: string) => {
-    if (!messages[loc]) {
-      console.warn(
-        "[i18n]",
-        `Messages for "${loc}" not found, falling back to "${fallbackLocale}"`
-      );
-    }
-
-    locale.value = loc;
-  };
-
-  const getLocale = () => locale.value;
-
-  return {
-    locales,
-    locale,
-    messages,
-    t,
-    setLocale,
-    getLocale,
-    install(app: App) {
-      app.provide(injectionKey, this);
-      app.config.globalProperties.$t = this.t;
-      app.config.globalProperties.$i18n = this;
-    },
-  };
-};
-
-export function useI18n() {
-  return inject(injectionKey) as Omit<I18nInstance, "install">;
 }
