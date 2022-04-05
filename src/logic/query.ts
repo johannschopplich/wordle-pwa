@@ -106,7 +106,7 @@ export function useQuery<T = any>(
     options?.turbo?.abort ?? contextOptions?.turbo?.abort ?? abort;
   const immediate = options?.immediate ?? contextOptions?.immediate ?? true;
 
-  const computedKey = computed(function () {
+  const computedKey = computed(() => {
     try {
       return key();
     } catch {
@@ -155,50 +155,34 @@ export function useQuery<T = any>(
 
   const unsubscribe = watch(
     computedKey,
-    async function (key, _old, onCleanup) {
+    async (key, _old, onCleanup) => {
       isRefetching.value = false;
       if (!key) return;
 
-      const unsubscribeMutate = turboSubscribe<T>(
-        key,
-        "mutated",
-        function (item) {
-          resource.value = item;
-        }
-      );
+      const unsubscribeMutate = turboSubscribe<T>(key, "mutated", (item) => {
+        resource.value = item;
+      });
 
-      const unsubscribeRefetching = turboSubscribe<T>(
-        key,
-        "refetching",
-        function () {
-          isRefetching.value = true;
-        }
-      );
+      const unsubscribeRefetching = turboSubscribe<T>(key, "refetching", () => {
+        isRefetching.value = true;
+      });
 
-      const unsubscribeResolved = turboSubscribe<T>(
-        key,
-        "resolved",
-        function (item) {
-          isRefetching.value = false;
-          resource.value = item;
-        }
-      );
+      const unsubscribeResolved = turboSubscribe<T>(key, "resolved", (item) => {
+        isRefetching.value = false;
+        resource.value = item;
+      });
 
-      const unsubscribeErrors = turboSubscribe<unknown>(
-        key,
-        "error",
-        function (e) {
-          isRefetching.value = false;
-          error.value = e;
-        }
-      );
+      const unsubscribeErrors = turboSubscribe<unknown>(key, "error", (e) => {
+        isRefetching.value = false;
+        error.value = e;
+      });
 
       resource.value = await turboQuery<T>(key, {
         stale: true,
         ...options,
       });
 
-      onCleanup(function () {
+      onCleanup(() => {
         unsubscribeMutate();
         unsubscribeRefetching();
         unsubscribeResolved();
