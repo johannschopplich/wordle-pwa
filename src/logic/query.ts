@@ -16,7 +16,7 @@ import type {
 } from "turbo-query";
 import type { Ref, InjectionKey } from "vue";
 
-const injectionKey = Symbol(
+export const injectionKey = Symbol(
   "turbo-vue-context"
 ) as InjectionKey<TurboVueOptions>;
 
