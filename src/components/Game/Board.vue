@@ -246,14 +246,14 @@ function genResultGrid() {
     </div>
   </div>
 
-  <Keyboard
+  <GameKeyboard
     class="-mx-3 sm:mx-0"
     :letter-states="state.letterStates"
     :umlauts="true"
     @key="onKey"
   />
 
-  <Message :is-open="!!message" :size="state.gameOver ? 'large' : 'default'">
+  <AppMessage :is-open="!!message" :size="state.gameOver ? 'large' : 'default'">
     <h2
       :class="[
         state.gameOver
@@ -291,7 +291,7 @@ function genResultGrid() {
         </template>
       </button>
     </template>
-  </Message>
+  </AppMessage>
 </template>
 
 <style scoped>

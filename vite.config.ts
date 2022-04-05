@@ -21,6 +21,7 @@ export default defineConfig({
 
     // https://github.com/antfu/unplugin-vue-components
     Components({
+      directoryAsNamespace: true,
       dts: "src/components.d.ts",
       resolvers: [
         // https://github.com/antfu/unplugin-icons
