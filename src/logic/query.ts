@@ -64,6 +64,11 @@ export interface TurboVueResourceActions<T> {
   abort(reason?: any): void;
 
   /**
+   * Determines if an error occured.
+   */
+  error: Readonly<Ref<unknown>>;
+
+  /**
    * Determines if it's refetching in the background.
    */
   isRefetching: Readonly<Ref<boolean>>;
@@ -203,6 +208,7 @@ export function useQuery<T = any>(
       forget: localForget,
       abort: localAbort,
       unsubscribe,
+      error: readonly(error),
       isRefetching: readonly(isRefetching),
     },
   ];
