@@ -36,6 +36,7 @@ let allowInput = true;
 
 // Share board grid as text
 let shareText = $ref("");
+const isMobile = matchMedia("(hover: none)").matches;
 const { share, isSupported: isShareSupported } = useShare();
 const { copy, copied, isSupported: isClipboardSupported } = useClipboard();
 
@@ -279,9 +280,13 @@ function genResultGrid() {
       <button
         v-show="success && (isShareSupported || isClipboardSupported)"
         class="button w-full py-3 space-x-2"
-        @click="isShareSupported ? share({ text: shareText }) : copy(shareText)"
+        @click="
+          isShareSupported && isMobile
+            ? share({ text: shareText })
+            : copy(shareText)
+        "
       >
-        <template v-if="isShareSupported">
+        <template v-if="isShareSupported && isMobile">
           <TeenyiconsShareSolid />
           <span>{{ t("actions.share") }}</span>
         </template>
