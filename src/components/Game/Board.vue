@@ -303,5 +303,6 @@ function genResultGrid() {
 .tile-front,
 .tile-back {
   @apply absolute inset-0 inline-flex justify-center items-center transition-transform-600 backface-hidden;
+  -webkit-backface-visibility: hidden;
 }
 </style>
