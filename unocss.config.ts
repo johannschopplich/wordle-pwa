@@ -1,6 +1,6 @@
 import { defineConfig } from "unocss";
 import { presetTypography } from "@unocss/preset-typography";
-import presetWind from "@unocss/preset-wind";
+import { presetWind, theme } from "@unocss/preset-wind";
 
 const control =
   "appearance-none text-base leading-4 px-3 py-2 border rounded-md shadow-sm focus:outline-none sm:text-sm";
@@ -8,7 +8,7 @@ const control =
 export default defineConfig({
   theme: {
     fontFamily: {
-      heading: "Henrietta, sans-serif",
+      heading: `Henrietta,${theme.fontFamily.sans}`,
     },
   },
   presets: [presetWind(), presetTypography()],

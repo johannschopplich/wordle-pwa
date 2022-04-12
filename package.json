@@ -19,7 +19,7 @@
     "@unocss/reset": "^0.31.0",
     "@vueuse/core": "^8.2.5",
     "turbo-query": "^1.6.1",
-    "vue": "^3.2.31"
+    "vue": "^3.2.32"
   },
   "devDependencies": {
     "@babel/types": "^7.17.0",
@@ -40,6 +40,6 @@
     "unplugin-icons": "^0.14.1",
     "unplugin-vue-components": "^0.19.2",
     "vite": "^2.9.1",
-    "vue-tsc": "^0.34.5"
+    "vue-tsc": "^0.34.6"
   }
 }
