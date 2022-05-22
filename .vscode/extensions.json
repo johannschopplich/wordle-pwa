@@ -3,7 +3,7 @@
     "antfu.unocss",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "johnsoncodehk.volar",
-    "lokalise.i18n-ally"
+    "lokalise.i18n-ally",
+    "Vue.volar"
   ]
 }
