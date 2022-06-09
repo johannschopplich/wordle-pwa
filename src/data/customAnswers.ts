@@ -1,1 +1,2 @@
-export const customAnswers = import.meta.env.VITE_ANSWERS?.split(",") ?? [];
+export const customAnswers: string[] =
+  import.meta.env.VITE_ANSWERS?.split(",") ?? [];
