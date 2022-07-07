@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import {
   promiseTimeout,
-  useEventListener,
   useClipboard,
+  useEventListener,
   useShare,
 } from "@vueuse/core";
-import { getWordOfTheDay, getAllWords } from "~/logic/words";
+import { getAllWords, getWordOfTheDay } from "~/logic/words";
 import { useI18n } from "~/logic/i18n";
-import { state as _state, now, countdown } from "~/logic/store";
+import { state as _state, countdown, now } from "~/logic/store";
 import { LetterState } from "~/types";
 
 // Get the translation helper

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ref, inject } from "vue";
+import { inject, ref } from "vue";
 import type { App, InjectionKey, Ref } from "vue";
 
 export type Messages = Record<string, any>;
