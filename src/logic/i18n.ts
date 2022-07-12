@@ -85,11 +85,11 @@ function parseAndReplaceString(
   str: string,
   params: Record<string, any>
 ): string {
-  const RE = /{(\w*)}/g;
+  const TEMPLATE_RE = /{(\w*)}/g;
   let arr: RegExpExecArray | null;
-  let _str: string = str;
+  let _str = str;
 
-  while ((arr = RE.exec(str)) !== null) {
+  while ((arr = TEMPLATE_RE.exec(str)) !== null) {
     if (!Object.prototype.hasOwnProperty.call(params, arr[1])) {
       throw new Error(`Param "${arr[1]}" not found`);
     }
