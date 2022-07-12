@@ -1,5 +1,5 @@
+import { resolve } from "node:path";
 import { defineConfig } from "vite";
-import { resolve } from "path";
 import Vue from "@vitejs/plugin-vue";
 import Icons from "unplugin-icons/vite";
 import IconsResolver from "unplugin-icons/resolver";
