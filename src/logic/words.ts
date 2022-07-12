@@ -15,14 +15,14 @@ export async function getWordOfTheDay() {
       if (query.length !== 5) {
         alert(`Incorrect word length from encoded query. ${defaultMessage}`);
       } else {
-        return query;
+        return query.toLowerCase();
       }
     } catch (e) {
       alert(`Malformed encoded word query. ${defaultMessage}`);
     }
   }
 
-  let start = new Date("2022-01-01");
+  let start = new Date(new Date().getFullYear(), 0, 1);
 
   if (import.meta.env.VITE_STARTS_AT) {
     const date = new Date(import.meta.env.VITE_STARTS_AT);
