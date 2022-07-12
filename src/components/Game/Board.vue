@@ -258,7 +258,7 @@ function genResultGrid() {
     <h2
       :class="[
         state.gameOver
-          ? 'hyphenate text-2xl leading-tight text-amber-700 font-heading tracking-wide'
+          ? 'text-2xl leading-tight text-amber-700 font-heading tracking-wide'
           : 'text-sm font-600 truncate',
       ]"
     >
@@ -302,7 +302,7 @@ function genResultGrid() {
 <style scoped>
 .tile-front,
 .tile-back {
-  @apply absolute inset-0 inline-flex justify-center items-center transition-transform-600 backface-hidden;
+  --at-apply: "absolute inset-0 inline-flex justify-center items-center transition-transform-600 backface-hidden";
   -webkit-backface-visibility: hidden;
 }
 </style>
