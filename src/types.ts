@@ -1,6 +1,10 @@
 import type { App } from "vue";
 
-export type UserModule = (ctx: { app: App<Element> }) => void | Promise<void>;
+export interface UserModuleContext {
+  app: App<Element>;
+}
+
+export type UserModule = (ctx: UserModuleContext) => void | Promise<void>;
 
 export interface UserModuleImport {
   install?: UserModule;
