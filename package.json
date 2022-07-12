@@ -18,28 +18,28 @@
     "pre-commit": "pnpm run typecheck"
   },
   "dependencies": {
-    "@unocss/reset": "^0.43.2",
-    "@vueuse/core": "^8.9.1",
+    "@unocss/reset": "^0.44.1",
+    "@vueuse/core": "^8.9.2",
     "vue": "^3.2.37"
   },
   "devDependencies": {
     "@iconify-json/teenyicons": "^1.1.3",
     "@types/node": "^18.0.3",
-    "@typescript-eslint/eslint-plugin": "^5.30.5",
-    "@typescript-eslint/parser": "^5.30.5",
-    "@unocss/preset-typography": "^0.43.2",
-    "@unocss/preset-wind": "^0.43.2",
-    "@unocss/transformer-directives": "^0.43.2",
+    "@typescript-eslint/eslint-plugin": "^5.30.6",
+    "@typescript-eslint/parser": "^5.30.6",
+    "@unocss/preset-typography": "^0.44.1",
+    "@unocss/preset-wind": "^0.44.1",
+    "@unocss/transformer-directives": "^0.44.1",
     "@vitejs/plugin-vue": "^3.0.0-beta.1",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-vue": "^9.2.0",
     "simple-git-hooks": "^2.8.0",
     "typescript": "^4.7.4",
-    "unocss": "^0.43.2",
+    "unocss": "^0.44.1",
     "unplugin-icons": "^0.14.7",
     "unplugin-vue-components": "^0.21.1",
-    "vite": "^3.0.0-beta.9",
-    "vue-tsc": "^0.38.3"
+    "vite": "^3.0.0-beta.10",
+    "vue-tsc": "^0.38.5"
   }
 }
