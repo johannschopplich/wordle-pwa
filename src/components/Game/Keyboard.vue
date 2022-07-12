@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { LetterState } from "~/types";
 
-const props = defineProps<{
+const { umlauts } = defineProps<{
   letterStates: Record<string, LetterState>;
   umlauts: boolean;
 }>();
@@ -11,8 +11,8 @@ defineEmits<{
 }>();
 
 const rows = $computed(() => [
-  `qwertyuiop${props.umlauts ? "ü" : ""}`.split(""),
-  `asdfghjkl${props.umlauts ? "öä" : ""}`.split(""),
+  `qwertyuiop${umlauts ? "ü" : ""}`.split(""),
+  `asdfghjkl${umlauts ? "öä" : ""}`.split(""),
   ["Enter", ..."zxcvbnm".split(""), "Backspace"],
 ]);
 </script>

@@ -5,6 +5,13 @@
   src: url("/fonts/VCHenrietta-Medium.woff2") format("woff2");
 }
 
+@font-face {
+  font-family: "Henrietta Condensed";
+  font-weight: 400;
+  font-style: normal;
+  src: url("/fonts/VCHenriettaCondensed-Medium.woff2") format("woff2");
+}
+
 :root {
   min-width: 320px;
   --h-screen: calc(100 * var(--vh, 1vh));

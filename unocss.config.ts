@@ -9,6 +9,7 @@ export default defineConfig({
   theme: {
     fontFamily: {
       heading: `Henrietta,${theme.fontFamily.sans}`,
+      "heading-condensed": `Henrietta Condensed,${theme.fontFamily.sans}`,
     },
   },
   shortcuts: {
