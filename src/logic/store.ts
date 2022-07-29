@@ -76,7 +76,7 @@ function deepCopy<T>(source: T): T {
         o[prop] = deepCopy((source as Record<string, any>)[prop]);
         return o;
       }, Object.create(Object.getPrototypeOf(source)))
-    : (source as T);
+    : source;
 }
 
 function getTomorrow(date: Date) {

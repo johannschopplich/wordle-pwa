@@ -6,10 +6,6 @@ export interface UserModuleContext {
 
 export type UserModule = (ctx: UserModuleContext) => void | Promise<void>;
 
-export interface UserModuleImport {
-  install?: UserModule;
-}
-
 export const enum LetterState {
   INITIAL = 0,
   CORRECT = "correct",
