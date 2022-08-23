@@ -4,8 +4,8 @@ import Vue from "@vitejs/plugin-vue";
 import Icons from "unplugin-icons/vite";
 import IconsResolver from "unplugin-icons/resolver";
 import Components from "unplugin-vue-components/vite";
+import { transformerDirectives } from "unocss";
 import UnoCSS from "unocss/vite";
-import transformerDirective from "@unocss/transformer-directives";
 
 export default defineConfig({
   resolve: {
@@ -34,7 +34,7 @@ export default defineConfig({
 
     // https://github.com/unocss/unocss
     UnoCSS({
-      transformers: [transformerDirective()],
+      transformers: [transformerDirectives()],
     }),
   ],
 });
