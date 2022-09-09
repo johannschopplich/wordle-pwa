@@ -22,7 +22,7 @@ const rows = $computed(() => [
     <div
       v-for="(row, rowIndex) in rows"
       :key="rowIndex"
-      class="w-full flex gap-1 mx-auto touch-none"
+      class="mx-auto flex w-full touch-none gap-1"
     >
       <div v-if="!umlauts && rowIndex === 1" style="flex-grow: 0.5" />
 
@@ -41,10 +41,10 @@ const rows = $computed(() => [
         ]"
         @click="$emit('key', key)"
       >
-        <TeenyiconsTickCircleOutline v-if="key === 'Enter'" class="w-7 h-7" />
+        <TeenyiconsTickCircleOutline v-if="key === 'Enter'" class="h-7 w-7" />
         <TeenyiconsBackspaceOutline
           v-else-if="key === 'Backspace'"
-          class="w-7 h-7"
+          class="h-7 w-7"
         />
         <span v-else>{{ key }}</span>
       </button>

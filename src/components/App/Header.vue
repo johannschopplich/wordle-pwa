@@ -1,13 +1,13 @@
 <template>
   <header
-    class="header sticky top-4 bg-stone-100 px-4 py-2 rounded-lg z-10 dark:bg-zinc-800"
+    class="header sticky top-4 z-10 rounded-lg bg-stone-100 px-4 py-2 dark:bg-zinc-800"
   >
     <h1
-      class="text-2xl text-amber-700 font-heading tracking-wide dark:text-amber-600"
+      class="font-heading text-2xl tracking-wide text-amber-700 dark:text-amber-600"
     >
       {{ $t("title") }}
     </h1>
-    <p class="-mt-1 text-xs font-500 uppercase">
+    <p class="font-500 -mt-1 text-xs uppercase">
       <span class="text-stone-400 dark:text-zinc-500">
         {{ $t("header.currentRound") }}
       </span>

@@ -9,7 +9,7 @@ defineProps<{
   <Teleport to="body">
     <div
       v-if="isOpen && size === 'large'"
-      class="fixed inset-0 bg-neutral-800 bg-opacity-50 translate-z-1 z-20"
+      class="translate-z-1 fixed inset-0 z-20 bg-neutral-800 bg-opacity-50"
     />
 
     <Transition>

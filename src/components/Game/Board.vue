@@ -186,9 +186,9 @@ function genResultGrid() {
 </script>
 
 <template>
-  <div class="flex justify-center items-center">
+  <div class="flex items-center justify-center">
     <div
-      class="w-$width h-$height grid grid-rows-6 gap-2 mx-auto"
+      class="w-$width h-$height mx-auto grid grid-rows-6 gap-2"
       style="
         --height: clamp(12rem, calc(var(--h-screen) * 0.5), 26rem);
         --width: calc(var(--height) / 6 * 5);
@@ -279,7 +279,7 @@ function genResultGrid() {
 
       <button
         v-show="success && (isShareSupported || isClipboardSupported)"
-        class="button w-full py-3 space-x-2"
+        class="button w-full space-x-2 py-3"
         @click="
           isShareSupported && isMobile
             ? share({ text: shareText })
