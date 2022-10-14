@@ -1,4 +1,4 @@
-import { createI18n } from "~/logic/i18n";
+import { createI18n } from "@leanera/vue-i18n";
 import de from "~/locales/de.json";
 import type { UserModule } from "~/types";
 
