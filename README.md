@@ -6,7 +6,7 @@
 
 <p align="center">
   Customizable Wordle app for your friends and family<br>
-  <a href="https://ostern.netlify.app"><strong>Explore the demo »</strong></a>
+  <a href="https://adventskerze.netlify.app"><strong>Explore the demo »</strong></a>
 </p>
 
 <br>
@@ -43,7 +43,7 @@ VITE_STARTS_AT=2022-12-01
 
 ### Base64
 
-You can make your own one-time Wordle and send it to friends by base64-encoding a word and include it as the URL query, e.g. [`ostern.netlify.app/?anVsaWE=`](https://ostern.netlify.app/?anVsaWE=). This will also allow words that are not in the dictionary.
+You can make your own one-time Wordle and send it to friends by base64-encoding a word and include it as the URL query, e.g. [`adventskerze.netlify.app/?anVsaWE=`](https://adventskerze.netlify.app/?anVsaWE=). This will also allow words that are not in the dictionary.
 
 ### Custom Word List
 
