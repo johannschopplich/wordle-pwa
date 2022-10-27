@@ -4,7 +4,8 @@ export let answersFromEnv: string[] | undefined;
 export let answersFromSpreadsheet: string[] | undefined;
 
 export function getAnswersFromEnv() {
-  answersFromEnv ??= import.meta.env.VITE_ANSWERS?.split(",") ?? [];
+  answersFromEnv ??=
+    import.meta.env.VITE_ANSWERS?.split(",").map((i) => i.toLowerCase()) ?? [];
   return answersFromEnv;
 }
 
@@ -23,7 +24,7 @@ export async function getAnswersFromSpreadsheet() {
     import.meta.env.VITE_SPREADSHEET_SHEET
   );
 
-  const result = values.map((i) => Object.values(i)[0]);
+  const result = values.map((i) => Object.values(i)[0].toLowerCase());
   answersFromSpreadsheet = result;
   return result;
 }
