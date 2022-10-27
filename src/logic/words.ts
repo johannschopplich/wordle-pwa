@@ -3,7 +3,7 @@ import {
   getAnswersFromSpreadsheet,
 } from "~/data/customAnswers";
 
-const defaultMessage = "Using word of the day instead.";
+const DEFAULT_MESSAGE = "Using word of the day instead.";
 
 export async function getAllWords() {
   const { answers } = await import("~/data/answers");
@@ -25,12 +25,12 @@ export async function getWordOfTheDay() {
     try {
       const query = atob(location.search.slice(1));
       if (query.length !== 5) {
-        alert(`Incorrect word length from encoded query. ${defaultMessage}`);
+        alert(`Incorrect word length from encoded query. ${DEFAULT_MESSAGE}`);
       } else {
         return query.toLowerCase();
       }
     } catch (e) {
-      alert(`Malformed encoded word query. ${defaultMessage}`);
+      alert(`Malformed encoded word query. ${DEFAULT_MESSAGE}`);
     }
   }
 

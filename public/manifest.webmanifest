@@ -4,8 +4,8 @@
   "short_name": "Wortspiel",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#92400E",
-  "theme_color": "#92400E",
+  "background_color": "#146c3a",
+  "theme_color": "#146c3a",
   "icons": [
     {
       "src": "/images/pwa-192x192.png",

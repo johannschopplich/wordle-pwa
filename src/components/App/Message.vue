@@ -21,7 +21,7 @@ defineProps<{
           size === 'default' &&
             'bg-gray-800 text-white px-4 py-2 rounded-full dark:bg-white dark:text-gray-800',
           size === 'large' &&
-            'bg-white text-gray-800 p-6 rounded-xl border-2 border-amber-800',
+            'bg-white text-gray-800 p-6 rounded-xl border-2 border-primary-800',
         ]"
       >
         <div class="space-y-6 text-center">
