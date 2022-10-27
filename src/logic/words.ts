@@ -1,11 +1,23 @@
-import { customAnswers } from "~/data/customAnswers";
+import {
+  getAnswersFromEnv,
+  getAnswersFromSpreadsheet,
+} from "~/data/customAnswers";
 
 const defaultMessage = "Using word of the day instead.";
 
 export async function getAllWords() {
   const { answers } = await import("~/data/answers");
   const { allowedGuesses } = await import("~/data/allowedGuesses");
-  return [...new Set([...answers, ...customAnswers, ...allowedGuesses])];
+  const answersFromEnv = getAnswersFromEnv();
+  const answersFromSpreadsheet = await getAnswersFromSpreadsheet();
+  return [
+    ...new Set([
+      ...answers,
+      ...answersFromEnv,
+      ...answersFromSpreadsheet,
+      ...allowedGuesses,
+    ]),
+  ];
 }
 
 export async function getWordOfTheDay() {
@@ -35,8 +47,14 @@ export async function getWordOfTheDay() {
 
   let word: string | undefined;
 
-  if (customAnswers.length) {
-    word = getWordFromList(customAnswers, start);
+  const answersFromEnv = getAnswersFromEnv();
+  if (answersFromEnv.length) {
+    word = getWordFromList(answersFromEnv, start);
+  }
+
+  const answersFromSpreadsheet = await getAnswersFromSpreadsheet();
+  if (answersFromSpreadsheet.length) {
+    word = getWordFromList(answersFromSpreadsheet, start);
   }
 
   if (!word) {

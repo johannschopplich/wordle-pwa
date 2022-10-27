@@ -1,58 +1,70 @@
 <p align="center">
-  <img src="./public/images/header.png" alt="Logo of More Wordle" width="114" height="114">
+  <img src="./public/images/header.png" alt="Logo of Wordle PWA" width="128" height="128">
 </p>
 
-<h3 align="center">More Wordle</h3>
+<h3 align="center">Wordle PWA</h3>
 
 <p align="center">
-  Customizable Wordle app for my friends and family<br>
+  Customizable Wordle app for your friends and family<br>
   <a href="https://ostern.netlify.app"><strong>Explore the demo »</strong></a>
 </p>
 
 <br>
 
-# More Wordle
+# Wordle PWA
 
-A forked, refactored and extended Vue app of [VVordle](https://github.com/yyx990803/vue-wordle) by Evan You, which itself is a implementation of the original [Wordle game](https://www.nytimes.com/games/wordle/index.html).
+A refactored and extended Vue app of [VVordle](https://github.com/yyx990803/vue-wordle) by Evan You, which itself is a implementation of the original [Wordle game](https://www.nytimes.com/games/wordle/index.html).
 
 ## Key Features
 
-- 💆‍♀️ Easy customization
-- ⌨️ Optional umlauts keyboard layout
+- 🐤 Beautiful interface
+- 🎞 Custom answer sources (environment variables or Google Spreadsheet)
+- ⌨️ Optional `umlauts` keyboard layout
+- 💆‍♀️ Styled with [UnoCSS](https://github.com/unocss/unocss)
 
-## Make Your Own Wordle
+## Setup
+
+1. Enable [Corepack](https://github.com/nodejs/corepack) using `corepack enable` (use `npm i -g corepack` for Node.js < 16.10)
+2. Install dependencies using `pnpm install`
+3. Start the development server using `pnpm run dev`
+4. Visit [127.0.0.1:5173](http://127.0.0.1:5173/)
+
+> ℹ️ Enable [Take Over Mode](https://vuejs.org/guide/typescript/overview.html#takeover-mode) in Visual Studio Code.
+
+## Usage
+
+### Start Date
+
+Especially for a custom word list you probably prefer to start the list by a date of your choice. Wordle PWA will calculate the difference between the current date and the start date and pick the answer at the array index based from the date difference.
+
+```
+VITE_STARTS_AT=2022-12-01
+```
 
 ### Base64
 
-You can make your own Wordle and send it to friends by base64-encoding a word and include it as the URL query, e.g. [`ostern.netlify.app/?anVsaWE=`](https://ostern.netlify.app/?anVsaWE=). This will also allow words that are not in the dictionary.
+You can make your own one-time Wordle and send it to friends by base64-encoding a word and include it as the URL query, e.g. [`ostern.netlify.app/?anVsaWE=`](https://ostern.netlify.app/?anVsaWE=). This will also allow words that are not in the dictionary.
 
-### Custom Word List Via `.env`
+### Custom Word List
 
-Alternatively, you can add a custom word list to pick from to your loccal `.env` file and set a start date as well:
+#### Within `.env` File
 
-```dotenv
-VITE_ANSWERS=first,scond,third
-VITE_STARTS_AT=2022-04-01
+A custom word list may be set in the app's `.env` file:
+
+```
+VITE_ANSWERS=first,other,third
 ```
 
-More Wordle will calculate the difference between the current date and the start date and pick the answer at the array index based from the date difference.
+> ℹ️ Remember to set a start date as well.
 
-## Prerequisites
+#### Words From Google Spreadsheet
 
-Before getting started, please make sure you have installed the recommended setup.
+Alternatively, the app will fetch words from any public Google spread sheet if the following entries exist in the app's `.env` file:
 
-- **Node.js**<sup>\*</sup> (v16, the latest LTS version) 👉 [[Download](https://nodejs.org/en/download/)]
-- **pnpm**<sup>\*</sup> (the fast and disk space efficient package manager) 👉 [[Download](https://pnpm.io/installation#nodejs-is-preinstalled)]
-- **Visual Studio Code** 👉 [[Download](https://code.visualstudio.com/)]
-- **Volar Extension** 👉 [[Download](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)]
-  - Enable [**Take Over Mode**](https://vuejs.org/guide/typescript/overview.html#takeover-mode)
-
-## Installation
-
-Install the necessary Node.js dependencies with:
-
-```bash
-pnpm install
+```
+VITE_GOOGLE_API_KEY=...
+VITE_SPREADSHEET_ID=1nO4y9FBuOr4_lA50rIldeWUAvqKYpcJYf5h1tpBybZU
+VITE_SPREADSHEET_SHEET=Advent 2022
 ```
 
 ## License

@@ -30,7 +30,7 @@ export default defineConfig({
     }),
 
     // https://github.com/antfu/unplugin-icons
-    Icons(),
+    Icons({}),
 
     // https://github.com/unocss/unocss
     UnoCSS({
