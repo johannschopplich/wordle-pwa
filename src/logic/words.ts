@@ -74,8 +74,7 @@ export async function getWordOfTheDay() {
 }
 
 function getWordFromList(answers: string[], start: Date) {
-  const now = new Date();
-  const diff = Number(now) - Number(start);
+  const diff = Date.now() - start.getTime();
   let day = Math.floor(diff / (1000 * 60 * 60 * 24));
   while (day > answers.length) {
     day -= answers.length;
