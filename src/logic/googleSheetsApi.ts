@@ -8,7 +8,7 @@ export async function getSpreadsheetValues(
   id: string,
   sheet: string
 ): Promise<Record<string, string>[]> {
-  let data: SpreadsheetValues;
+  let data: SpreadsheetValues | undefined;
 
   try {
     const response = await fetch(
@@ -19,11 +19,10 @@ export async function getSpreadsheetValues(
     data = await response.json();
   } catch (e) {
     console.error("Error fetching spreadsheet data:", e);
-    return [];
   }
 
   const rows: Record<string, string>[] = [];
-  const rawRows: string[][] = data.values || [[]];
+  const rawRows: string[][] = data?.values || [[]];
   const headers: string[] = rawRows.shift() || [];
 
   for (const row of rawRows) {

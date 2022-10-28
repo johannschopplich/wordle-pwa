@@ -19,16 +19,12 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <title>Wortspiel</title>
     <script>
-      (() => {
+      ((root) => {
         if (localStorage.getItem("app.color-scheme") === "dark")
-          document.documentElement.classList.add("dark");
-        if (matchMedia("(hover: none)").matches) {
-          document.documentElement.style.setProperty(
-            "--vh",
-            `${window.innerHeight * 0.01}px`
-          );
-        }
-      })();
+          root.classList.add("dark");
+        if (matchMedia("(hover: none)").matches)
+          root.style.setProperty("--vh", `${window.innerHeight * 0.01}px`);
+      })(document.documentElement);
     </script>
   </head>
   <body>

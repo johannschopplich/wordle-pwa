@@ -1,4 +1,4 @@
-import { getSpreadsheetValues } from "~/logic/spreadsheet";
+import { getSpreadsheetValues } from "~/logic/googleSheetsApi";
 
 export let answersFromEnv: string[] | undefined;
 export let answersFromSpreadsheet: string[] | undefined;
