@@ -1,18 +1,26 @@
-import {
-  getAnswersFromEnv,
-  getAnswersFromSpreadsheet,
-} from "~/data/customAnswers";
+import { getSpreadsheetValues } from "~/logic/googleSheetsApi";
 
 const DEFAULT_MESSAGE = "Using word of the day instead.";
 
+export let answersFromEnv: string[] | undefined;
+export let answersFromSpreadsheet: string[] | undefined;
+export let defaultAnswers: string[] = [];
+
 export async function getAllWords() {
-  const { answers } = await import("~/data/answers");
-  const { allowedGuesses } = await import("~/data/allowedGuesses");
+  const { default: allowedGuesses } = await import(
+    "~/data/allowedGuesses.json"
+  );
   const answersFromEnv = getAnswersFromEnv();
   const answersFromSpreadsheet = await getAnswersFromSpreadsheet();
+
+  if (!answersFromEnv.length && !answersFromSpreadsheet.length) {
+    const { default: answers } = await import("~/data/answers.json");
+    defaultAnswers = answers;
+  }
+
   return [
     ...new Set([
-      ...answers,
+      ...defaultAnswers,
       ...answersFromEnv,
       ...answersFromSpreadsheet,
       ...allowedGuesses,
@@ -58,7 +66,7 @@ export async function getWordOfTheDay() {
   }
 
   if (!word) {
-    const { answers } = await import("~/data/answers");
+    const { default: answers } = await import("~/data/answers.json");
     word = getWordFromList(answers, start);
   }
 
@@ -74,4 +82,30 @@ function getWordFromList(answers: string[], start: Date) {
   }
 
   return answers[day];
+}
+
+function getAnswersFromEnv() {
+  answersFromEnv ??=
+    import.meta.env.VITE_ANSWERS?.split(",").map((i) => i.toLowerCase()) ?? [];
+  return answersFromEnv;
+}
+
+async function getAnswersFromSpreadsheet() {
+  if (answersFromSpreadsheet) return answersFromSpreadsheet;
+
+  if (
+    !import.meta.env.VITE_GOOGLE_API_KEY ||
+    !import.meta.env.VITE_SPREADSHEET_ID ||
+    !import.meta.env.VITE_SPREADSHEET_SHEET
+  )
+    return [];
+
+  const values = await getSpreadsheetValues(
+    import.meta.env.VITE_SPREADSHEET_ID,
+    import.meta.env.VITE_SPREADSHEET_SHEET
+  );
+
+  const result = values.map((i) => Object.values(i)[0].toLowerCase());
+  answersFromSpreadsheet = result;
+  return result;
 }

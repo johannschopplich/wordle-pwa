@@ -1,4 +1,4 @@
-export const answers = [
+[
   "bogen",
   "sechs",
   "altar",
@@ -1817,5 +1817,5 @@ export const answers = [
   "richt",
   "astro",
   "ulkig",
-  "wasch",
-];
+  "wasch"
+]

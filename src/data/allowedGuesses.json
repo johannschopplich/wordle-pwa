@@ -1,4 +1,4 @@
-export const allowedGuesses = [
+[
   "aalen",
   "aales",
   "aalet",
@@ -8508,5 +8508,5 @@ export const allowedGuesses = [
   "zwölf",
   "zyane",
   "zyans",
-  "zyste",
-];
+  "zyste"
+]
