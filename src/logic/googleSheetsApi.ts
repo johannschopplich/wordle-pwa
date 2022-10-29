@@ -4,10 +4,9 @@ export interface SpreadsheetValues {
   values: string[][];
 }
 
-export async function getSpreadsheetValues(
-  id: string,
-  sheet: string
-): Promise<Record<string, string>[]> {
+export async function getSpreadsheetValues<
+  ColumnHeaders extends string = string
+>(id: string, sheet: string): Promise<Record<ColumnHeaders, string>[]> {
   let data: SpreadsheetValues | undefined;
 
   try {
@@ -21,7 +20,7 @@ export async function getSpreadsheetValues(
     console.error("Error fetching spreadsheet data:", e);
   }
 
-  const rows: Record<string, string>[] = [];
+  const rows: Record<ColumnHeaders, string>[] = [];
   const rawRows: string[][] = data?.values || [[]];
   const headers: string[] = rawRows.shift() || [];
 

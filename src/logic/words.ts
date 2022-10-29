@@ -8,7 +8,7 @@ export let defaultAnswers: string[] = [];
 
 export async function getAllWords() {
   const { default: allowedGuesses } = await import(
-    "~/data/allowedGuesses.json"
+    "~/data/allowedGuesses-de.json"
   );
   const answersFromEnv = getAnswersFromEnv();
   const answersFromSpreadsheet = await getAnswersFromSpreadsheet();
@@ -47,7 +47,7 @@ export async function getWordOfTheDay() {
   if (import.meta.env.VITE_STARTS_AT) {
     const date = new Date(import.meta.env.VITE_STARTS_AT);
     if (date.toString() === "Invalid Date") {
-      console.error('Invalid start date in "VITE_STARTS_AT" env variable.');
+      console.error('Invalid date for "VITE_STARTS_AT"');
     } else {
       start = date;
     }
@@ -99,7 +99,7 @@ async function getAnswersFromSpreadsheet() {
   )
     return [];
 
-  const values = await getSpreadsheetValues(
+  const values = await getSpreadsheetValues<"Wort">(
     import.meta.env.VITE_SPREADSHEET_ID,
     import.meta.env.VITE_SPREADSHEET_SHEET
   );
