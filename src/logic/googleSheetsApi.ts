@@ -6,7 +6,7 @@ export interface SpreadsheetValues {
 
 export async function getSpreadsheetValues<
   ColumnHeaders extends string = string
->(id: string, sheet: string): Promise<Record<ColumnHeaders, string>[]> {
+>(id: string, sheet: string) {
   let data: SpreadsheetValues | undefined;
 
   try {
