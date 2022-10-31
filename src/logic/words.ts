@@ -8,7 +8,7 @@ export let defaultAnswers: string[] = [];
 
 export async function getAllWords() {
   const { default: allowedGuesses } = await import(
-    "~/data/allowedGuesses-de.json"
+    "~/data/allowedGuesses/de.json"
   );
   const answersFromEnv = getAnswersFromEnv();
   const answersFromSpreadsheet = await getAnswersFromSpreadsheet();
