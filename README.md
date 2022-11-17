@@ -24,7 +24,7 @@ A refactored and extended Vue app of [VVordle](https://github.com/yyx990803/vue-
 
 ## Setup
 
-1. Enable [Corepack](https://github.com/nodejs/corepack) using `corepack enable` (use `npm i -g corepack` for Node.js < 16.10)
+1. Enable [Corepack](https://github.com/nodejs/corepack) using `corepack enable`
 2. Install dependencies using `pnpm install`
 3. Start the development server using `pnpm run dev`
 4. Visit [127.0.0.1:5173](http://127.0.0.1:5173/)
