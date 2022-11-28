@@ -52,7 +52,7 @@ You can make your own one-time Wordle and send it to friends by base64-encoding 
 A custom word list may be set in the app's `.env` file:
 
 ```
-VITE_ANSWERS=birds,pony,umami
+VITE_ANSWERS=birds,floor,umami
 ```
 
 > ℹ️ Remember to set a start date as well.
