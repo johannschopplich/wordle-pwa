@@ -207,7 +207,7 @@ function genResultGrid() {
           v-for="(tile, index) in row"
           :key="index"
           :class="[
-            'w-full relative text-size-[calc(var(--height)*0.1)] font-700 uppercase select-none',
+            'text-size-[calc(var(--height)*0.1)] font-700 relative w-full select-none uppercase',
             tile.letter && 'animate-[zoom] animate-duration-200ms',
           ]"
         >
@@ -258,7 +258,7 @@ function genResultGrid() {
     <h2
       :class="[
         state.gameOver
-          ? 'text-2xl leading-tight text-primary-700 font-heading tracking-wide'
+          ? 'text-primary-700 font-heading text-2xl leading-tight tracking-wide'
           : 'text-sm font-600 truncate',
       ]"
     >
@@ -302,7 +302,7 @@ function genResultGrid() {
 <style scoped>
 .tile-front,
 .tile-back {
-  --at-apply: "absolute inset-0 inline-flex justify-center items-center transition-transform-600 backface-hidden";
+  --at-apply: "transition-transform-600 backface-hidden absolute inset-0 inline-flex items-center justify-center";
   -webkit-backface-visibility: hidden;
 }
 </style>

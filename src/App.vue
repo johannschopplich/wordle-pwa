@@ -19,7 +19,7 @@ watchThrottled(now, tryReset, { immediate: true, throttle: 1000 });
   </div>
 
   <div
-    class="content-empty christmas-pattern -z-1 absolute inset-0 pointer-events-none"
+    class="content-empty christmas-pattern -z-1 pointer-events-none absolute inset-0"
   />
 </template>
 
