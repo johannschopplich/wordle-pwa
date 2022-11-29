@@ -7,7 +7,7 @@ const { umlauts } = defineProps<{
 }>();
 
 defineEmits<{
-  (e: "key", key: string): void;
+  (event: "key", value: string): void;
 }>();
 
 const rows = $computed(() => [
