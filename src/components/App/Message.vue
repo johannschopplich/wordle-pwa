@@ -17,11 +17,11 @@ defineProps<{
         v-if="isOpen"
         :class="[
           'message',
-          'fixed top-23 left-1/2 shadow-sm transition-opacity-250 -translate-x-1/2 translate-z-1 z-20',
+          'top-23 transition-opacity-250 translate-z-1 fixed left-1/2 z-20 -translate-x-1/2 shadow-sm',
           size === 'default' &&
-            'bg-gray-800 text-white px-4 py-2 rounded-full dark:bg-white dark:text-gray-800',
+            'rounded-full bg-gray-800 px-4 py-2 text-white dark:bg-white dark:text-gray-800',
           size === 'large' &&
-            'bg-white text-gray-800 p-6 rounded-xl border-2 border-primary-800',
+            'border-primary-800 rounded-xl border-2 bg-white p-6 text-gray-800',
         ]"
       >
         <div class="space-y-6 text-center">
