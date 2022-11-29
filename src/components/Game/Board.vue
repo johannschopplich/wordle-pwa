@@ -40,7 +40,7 @@ const isMobile = matchMedia("(hover: none)").matches;
 const { share, isSupported: isShareSupported } = useShare();
 const { copy, copied, isSupported: isClipboardSupported } = useClipboard();
 
-useEventListener(window, "keyup", (e: KeyboardEvent) => onKey(e.key));
+useEventListener(window, "keyup", (event) => onKey(event.key));
 
 // Lazily retrieve word/answers and initialize game state
 (async () => {
