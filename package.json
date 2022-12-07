@@ -7,7 +7,7 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "test:types": "vue-tsc --noEmit",
-    "lint": "eslint \"src/**/*.{ts,vue}\" --ignore-path .gitignore",
+    "lint": "eslint . --ignore-path .gitignore",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier --write \"src/**/*.{css,html,json,md,ts,vue,yml}\" --ignore-path .gitignore",
     "prepare": "simple-git-hooks"
