@@ -20,7 +20,7 @@ let answer: string;
 let allWords: string[] = [];
 
 // Set up persistent data
-let state = $(_state);
+const state = $(_state);
 
 // Current active row
 const currentRow = $computed(() => state.board[state.currentRowIndex]);
