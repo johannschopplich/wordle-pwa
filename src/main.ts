@@ -10,7 +10,7 @@ const app = createApp(App);
 
 // Install all modules from `./modules/`
 for (const m of Object.values(
-  import.meta.glob<true, string, { install?: UserModule }>("./modules/*.ts", {
+  import.meta.glob<{ install?: UserModule }>("./modules/*.ts", {
     eager: true,
   })
 )) {
