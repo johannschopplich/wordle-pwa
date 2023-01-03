@@ -18,14 +18,14 @@ watchThrottled(now, tryReset, { immediate: true, throttle: 1000 });
     <AppThemeToggle />
   </div>
 
-  <div
+  <!-- <div
     class="content-empty christmas-pattern -z-1 pointer-events-none absolute inset-0"
-  />
+  /> -->
 </template>
 
 <style scoped>
 .christmas-pattern {
-  background-image: url(/images/christmas-knit-pattern-1.svg);
+  background-image: url(/images/christmas/knit-pattern-1.svg);
   background-position: center calc(100% - 0.5rem);
   background-repeat: repeat-x;
   background-size: auto 1.5rem, auto 1rem;

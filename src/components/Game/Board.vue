@@ -258,7 +258,7 @@ function genResultGrid() {
     <h2
       :class="[
         state.gameOver
-          ? 'text-primary-700 font-heading text-2xl leading-tight tracking-wide'
+          ? 'text-amber-700 font-heading text-2xl leading-tight tracking-wide'
           : 'text-sm font-600 truncate',
       ]"
     >
