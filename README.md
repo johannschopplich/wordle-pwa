@@ -59,7 +59,7 @@ VITE_ANSWERS=birds,floor,umami
 
 #### Words From Google Spreadsheet
 
-Alternatively, the app will fetch words from any public Google spread sheet if the following entries exist in the app's `.env` file:
+Alternatively, the app will fetch words from any public Google spreadsheet if the following entries exist in the app's `.env` file:
 
 ```
 VITE_GOOGLE_API_KEY=...
@@ -69,7 +69,7 @@ VITE_SPREADSHEET_SHEET=Advent 2022
 
 ## License
 
-[MIT](./LICENSE) License © 2022 [Johann Schopplich](https://github.com/johannschopplich)
+[MIT](./LICENSE) License © 2022-2023 [Johann Schopplich](https://github.com/johannschopplich)
 
 [MIT](./LICENSE) License © 2022 [Evan You](https://github.com/yyx990803)
 

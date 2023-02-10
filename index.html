@@ -22,8 +22,6 @@
       ((root) => {
         if (localStorage.getItem("app.color-scheme") === "dark")
           root.classList.add("dark");
-        if (matchMedia("(hover: none)").matches)
-          root.style.setProperty("--vh", `${window.innerHeight * 0.01}px`);
       })(document.documentElement);
     </script>
   </head>

@@ -12,10 +12,6 @@
   src: url("/fonts/VCHenriettaCondensed-Medium.woff2") format("woff2");
 }
 
-:root {
-  --h-screen: calc(100 * var(--vh, 1vh));
-}
-
 html {
   min-width: 320px;
   --at-apply: bg-amber-800 text-gray-800;
@@ -26,7 +22,7 @@ html.dark {
 }
 
 body {
-  --at-apply: "h-$h-screen max-h-screen-lg sm:p-4";
+  --at-apply: "h-[100svh] max-h-screen-lg sm:p-4";
 }
 
 #app {

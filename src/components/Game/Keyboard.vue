@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import type { LetterState } from "~/types";
 
 const { umlauts } = defineProps<{
@@ -10,7 +11,7 @@ defineEmits<{
   (event: "key", value: string): void;
 }>();
 
-const rows = $computed(() => [
+const rows = computed(() => [
   `qwertyuiop${umlauts ? "ü" : ""}`.split(""),
   `asdfghjkl${umlauts ? "öä" : ""}`.split(""),
   ["Enter", ..."zxcvbnm".split(""), "Backspace"],

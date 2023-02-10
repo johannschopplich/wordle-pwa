@@ -15,9 +15,7 @@ export default defineConfig({
   },
 
   plugins: [
-    Vue({
-      reactivityTransform: true,
-    }),
+    Vue(),
 
     // https://github.com/antfu/unplugin-vue-components
     Components({

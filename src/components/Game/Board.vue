@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed, ref } from "vue";
 import {
   promiseTimeout,
   useClipboard,
@@ -7,7 +8,7 @@ import {
 } from "@vueuse/core";
 import { useI18n } from "@leanera/vue-i18n";
 import { getAllWords, getWordOfTheDay } from "~/logic/words";
-import { state as _state, countdown, now } from "~/logic/store";
+import { countdown, now, state } from "~/logic/store";
 import { LetterState } from "~/types";
 
 // Get the translation helper
@@ -19,23 +20,22 @@ let answer: string;
 // All possible words
 let allWords: string[] = [];
 
-// Set up persistent data
-const state = $(_state);
-
 // Current active row
-const currentRow = $computed(() => state.board[state.currentRowIndex]);
+const currentRow = computed(
+  () => state.value.board[state.value.currentRowIndex]
+);
 
 // Feedback state: message and shake
-let message = $ref("");
-let grid = $ref("");
-let shakeRowIndex = $ref(-1);
-let success = $ref(false);
+const message = ref("");
+const grid = ref("");
+const shakeRowIndex = ref(-1);
+const success = ref(false);
 
 // Handle keyboard input
 let allowInput = true;
 
 // Share board grid as text
-let shareText = $ref("");
+const shareText = ref("");
 const isMobile = matchMedia("(hover: none)").matches;
 const { share, isSupported: isShareSupported } = useShare();
 const { copy, copied, isSupported: isClipboardSupported } = useClipboard();
@@ -51,7 +51,7 @@ useEventListener(window, "keyup", (event) => onKey(event.key));
   allWords = await getAllWords();
 
   // Handle already guessed word of the day
-  if (state.gameOver) {
+  if (state.value.gameOver) {
     allowInput = false;
     completeRow();
   }
@@ -69,7 +69,7 @@ function onKey(key: string) {
 }
 
 function fillTile(letter: string) {
-  for (const tile of currentRow) {
+  for (const tile of currentRow.value) {
     if (!tile.letter) {
       tile.letter = letter;
       break;
@@ -78,7 +78,7 @@ function fillTile(letter: string) {
 }
 
 function clearTile() {
-  for (const tile of [...currentRow].reverse()) {
+  for (const tile of [...currentRow.value].reverse()) {
     if (tile.letter) {
       tile.letter = "";
       break;
@@ -87,13 +87,13 @@ function clearTile() {
 }
 
 async function completeRow() {
-  if (!currentRow.every((tile) => tile.letter)) {
+  if (!currentRow.value.every((tile) => tile.letter)) {
     shake();
     showMessage(t("errorMessages.notEnoughLetters"));
     return;
   }
 
-  const guess = currentRow.map((tile) => tile.letter).join("");
+  const guess = currentRow.value.map((tile) => tile.letter).join("");
   if (!allWords.includes(guess) && guess !== answer) {
     shake();
     showMessage(t("errorMessages.notInWordList"));
@@ -103,52 +103,52 @@ async function completeRow() {
   const answerLetters: (string | null)[] = answer.split("");
 
   // First pass: mark correct ones
-  currentRow.forEach((tile, i) => {
+  currentRow.value.forEach((tile, i) => {
     if (answerLetters[i] === tile.letter) {
-      tile.state = state.letterStates[tile.letter] = LetterState.CORRECT;
+      tile.state = state.value.letterStates[tile.letter] = LetterState.CORRECT;
       answerLetters[i] = null;
     }
   });
 
   // Second pass: mark the present
-  currentRow.forEach((tile) => {
+  currentRow.value.forEach((tile) => {
     if (!tile.state && answerLetters.includes(tile.letter)) {
       tile.state = LetterState.PRESENT;
       answerLetters[answerLetters.indexOf(tile.letter)] = null;
-      if (!state.letterStates[tile.letter]) {
-        state.letterStates[tile.letter] = LetterState.PRESENT;
+      if (!state.value.letterStates[tile.letter]) {
+        state.value.letterStates[tile.letter] = LetterState.PRESENT;
       }
     }
   });
 
   // 3rd pass: mark absent
-  currentRow.forEach((tile) => {
+  currentRow.value.forEach((tile) => {
     if (!tile.state) {
       tile.state = LetterState.ABSENT;
-      if (!state.letterStates[tile.letter]) {
-        state.letterStates[tile.letter] = LetterState.ABSENT;
+      if (!state.value.letterStates[tile.letter]) {
+        state.value.letterStates[tile.letter] = LetterState.ABSENT;
       }
     }
   });
 
   allowInput = false;
-  if (!state.gameOver) await promiseTimeout(1600);
+  if (!state.value.gameOver) await promiseTimeout(1600);
 
-  if (currentRow.every((tile) => tile.state === LetterState.CORRECT)) {
+  if (currentRow.value.every((tile) => tile.state === LetterState.CORRECT)) {
     // Yay!
-    grid = genResultGrid();
-    shareText = `${now.value.toLocaleDateString("de-DE")}\n${grid}`;
-    success = state.gameOver = true;
+    grid.value = genResultGrid();
+    shareText.value = `${now.value.toLocaleDateString("de-DE")}\n${grid.value}`;
+    success.value = state.value.gameOver = true;
     // Wait for jump animation to almost finish (1000ms)
     await promiseTimeout(900);
-    showMessage(t(`successMessages[${state.currentRowIndex}]`), -1);
-  } else if (state.currentRowIndex < state.board.length - 1) {
+    showMessage(t(`successMessages[${state.value.currentRowIndex}]`), -1);
+  } else if (state.value.currentRowIndex < state.value.board.length - 1) {
     // Go the next row
-    state.currentRowIndex++;
+    state.value.currentRowIndex++;
     allowInput = true;
   } else {
     // Game over :(
-    state.gameOver = true;
+    state.value.gameOver = true;
     showMessage(
       t("errorMessages.notFound", { label: answer.toUpperCase() }),
       -1
@@ -157,17 +157,17 @@ async function completeRow() {
 }
 
 async function showMessage(msg: string, time = 1250) {
-  message = msg;
+  message.value = msg;
   if (time > 0) {
     await promiseTimeout(time);
-    message = "";
+    message.value = "";
   }
 }
 
 async function shake() {
-  shakeRowIndex = state.currentRowIndex;
+  shakeRowIndex.value = state.value.currentRowIndex;
   await promiseTimeout(1000);
-  shakeRowIndex = -1;
+  shakeRowIndex.value = -1;
 }
 
 const icons = {
@@ -178,8 +178,8 @@ const icons = {
 };
 
 function genResultGrid() {
-  return state.board
-    .slice(0, state.currentRowIndex + 1)
+  return state.value.board
+    .slice(0, state.value.currentRowIndex + 1)
     .map((row) => row.map((tile) => icons[tile.state]).join(""))
     .join("\n");
 }
@@ -190,7 +190,7 @@ function genResultGrid() {
     <div
       class="w-$width h-$height mx-auto grid grid-rows-6 gap-2"
       style="
-        --height: clamp(12rem, calc(var(--h-screen) * 0.5), 26rem);
+        --height: clamp(12rem, 50svh, 26rem);
         --width: calc(var(--height) / 6 * 5);
       "
     >

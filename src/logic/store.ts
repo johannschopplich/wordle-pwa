@@ -1,3 +1,4 @@
+import { computed } from "vue";
 import { useNow, useStorage } from "@vueuse/core";
 import { LetterState } from "~/types";
 
@@ -38,7 +39,7 @@ export const tomorrow = useStorage<Date>(
 );
 
 // Count down to next play day
-export const countdown = $computed(() => {
+export const countdown = computed(() => {
   const diff = tomorrow.value.getTime() - now.value.getTime();
   const hours = Math.floor(diff / (1000 * 60 * 60));
   const minutes = Math.floor((diff / (1000 * 60)) % 60);
