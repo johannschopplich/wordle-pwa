@@ -200,7 +200,7 @@ function genResultGrid() {
         :class="[
           'grid grid-cols-5 gap-2',
           shakeRowIndex === rowIndex &&
-            'animate-[shake] animate-duration-500ms',
+            'animate-duration-500ms animate-[shake]',
         ]"
       >
         <div
@@ -208,7 +208,7 @@ function genResultGrid() {
           :key="index"
           :class="[
             'text-size-[calc(var(--height)*0.1)] font-700 relative w-full select-none uppercase',
-            tile.letter && 'animate-[zoom] animate-duration-200ms',
+            tile.letter && 'animate-duration-200ms animate-[zoom]',
           ]"
         >
           <div
@@ -229,11 +229,11 @@ function genResultGrid() {
               'tile-back',
               tile.state ? 'rotate-x-0' : 'rotate-x-180',
               tile.state === 'correct' &&
-                'outline outline-2 outline-current -outline-offset-4',
+                'outline outline-2 -outline-offset-4 outline-current',
               tile.state,
               success &&
                 state.currentRowIndex === rowIndex &&
-                'animate-[jump] animate-duration-500ms',
+                'animate-duration-500ms animate-[jump]',
             ]"
             :style="{
               transitionDelay: `${index * 300}ms`,
@@ -258,8 +258,8 @@ function genResultGrid() {
     <h2
       :class="[
         state.gameOver
-          ? 'text-amber-700 font-heading text-2xl leading-tight tracking-wide'
-          : 'text-sm font-600 truncate',
+          ? 'font-heading text-2xl leading-tight tracking-wide text-amber-700'
+          : 'font-600 truncate text-sm',
       ]"
     >
       {{ message }}
