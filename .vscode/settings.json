@@ -6,5 +6,6 @@
   "editor.formatOnSave": true,
   "i18n-ally.enabledFrameworks": ["vue"],
   "i18n-ally.localesPaths": ["src/locales"],
-  "i18n-ally.sourceLanguage": "de"
+  "i18n-ally.sourceLanguage": "de",
+  "typescript.tsdk": "./node_modules/typescript/lib"
 }
