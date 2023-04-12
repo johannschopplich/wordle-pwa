@@ -7,7 +7,7 @@
     >
       {{ $t("title") }}
     </h1>
-    <p class="font-500 -mt-1 text-xs uppercase">
+    <p class="text-xs font-500 uppercase -mt-1">
       <span class="text-zinc-400 dark:text-zinc-500">
         {{ $t("header.currentRound") }}
       </span>

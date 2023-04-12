@@ -7,14 +7,14 @@ watchThrottled(now, tryReset, { immediate: true, throttle: 1000 });
 </script>
 
 <template>
-  <div class="children:min-w-0 grid h-full grid-rows-[auto_1fr_auto] gap-4">
+  <div class="grid grid-rows-[auto_1fr_auto] h-full gap-4 children:min-w-0">
     <AppHeader />
 
     <!-- Board will render two fragments -->
     <GameBoard :key="tomorrow.getTime()" />
   </div>
 
-  <div class="absolute top-3 right-3 hidden text-white md:block">
+  <div class="absolute right-3 top-3 hidden text-white md:block">
     <AppThemeToggle />
   </div>
 

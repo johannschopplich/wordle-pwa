@@ -188,7 +188,7 @@ function genResultGrid() {
 <template>
   <div class="flex items-center justify-center">
     <div
-      class="w-$width h-$height mx-auto grid grid-rows-6 gap-2"
+      class="grid grid-rows-6 mx-auto h-$height w-$width gap-2"
       style="
         --height: clamp(12rem, 50svh, 26rem);
         --width: calc(var(--height) / 6 * 5);
@@ -207,9 +207,10 @@ function genResultGrid() {
           v-for="(tile, index) in row"
           :key="index"
           :class="[
-            'text-size-[calc(var(--height)*0.1)] font-700 relative w-full select-none uppercase',
+            'text-size-$size font-700 relative w-full select-none uppercase',
             tile.letter && 'animate-duration-200ms animate-[zoom]',
           ]"
+          style="--size: calc(var(--height) * 0.1)"
         >
           <div
             :class="[
@@ -279,7 +280,7 @@ function genResultGrid() {
 
       <button
         v-show="success && (isShareSupported || isClipboardSupported)"
-        class="button w-full space-x-2 py-3"
+        class="w-full py-3 space-x-2 button"
         @click="
           isShareSupported && isMobile
             ? share({ text: shareText })

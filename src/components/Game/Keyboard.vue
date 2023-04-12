@@ -23,15 +23,15 @@ const rows = computed(() => [
     <div
       v-for="(row, rowIndex) in rows"
       :key="rowIndex"
-      class="mx-auto flex w-full touch-none gap-1"
+      class="mx-auto w-full flex touch-none gap-1"
     >
       <div v-if="!umlauts && rowIndex === 1" style="flex-grow: 0.5" />
 
       <button
         v-for="(key, keyIndex) in row"
         :key="keyIndex"
+        class="h-12 select-none bg-gray-200 p-0 text-base font-600 uppercase text-gray-900 transition-color,background-color-200 transition-delay-1500 dark:bg-zinc-700 hover:bg-gray-200 dark:text-white button"
         :class="[
-          'button font-600 transition-color,background-color-200 transition-delay-1500 h-12 select-none bg-gray-200 p-0 text-base uppercase text-gray-900 hover:bg-gray-200 dark:bg-zinc-700 dark:text-white',
           key.length > 1 && 'px-0.75',
           key.length === 1
             ? 'flex-1'
