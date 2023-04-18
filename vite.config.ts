@@ -7,10 +7,12 @@ import Components from "unplugin-vue-components/vite";
 import { transformerDirectives } from "unocss";
 import UnoCSS from "unocss/vite";
 
+const currentDir = new URL(".", import.meta.url).pathname;
+
 export default defineConfig({
   resolve: {
     alias: {
-      "~/": `${resolve(__dirname, "src")}/`,
+      "~/": `${resolve(currentDir, "src")}/`,
     },
   },
 
