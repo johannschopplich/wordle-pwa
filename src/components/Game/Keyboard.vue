@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import type { LetterState } from "~/types";
 
-const { umlauts } = defineProps<{
+const props = defineProps<{
   letterStates: Record<string, LetterState>;
   umlauts: boolean;
 }>();
@@ -12,8 +12,8 @@ defineEmits<{
 }>();
 
 const rows = computed(() => [
-  `qwertyuiop${umlauts ? "ü" : ""}`.split(""),
-  `asdfghjkl${umlauts ? "öä" : ""}`.split(""),
+  `qwertyuiop${props.umlauts ? "ü" : ""}`.split(""),
+  `asdfghjkl${props.umlauts ? "öä" : ""}`.split(""),
   ["Enter", ..."zxcvbnm".split(""), "Backspace"],
 ]);
 </script>
