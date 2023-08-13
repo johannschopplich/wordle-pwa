@@ -5,7 +5,7 @@ export interface SpreadsheetValues {
 }
 
 export async function getSpreadsheetValues<
-  ColumnHeaders extends string = string
+  ColumnHeaders extends string = string,
 >(id: string, sheet: string) {
   let data: SpreadsheetValues | undefined;
 
@@ -13,7 +13,7 @@ export async function getSpreadsheetValues<
     const response = await fetch(
       `https://sheets.googleapis.com/v4/spreadsheets/${id}/values/${sheet}?key=${
         import.meta.env.VITE_GOOGLE_API_KEY
-      }`
+      }`,
     );
     data = await response.json();
   } catch (e) {

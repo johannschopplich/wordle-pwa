@@ -7,8 +7,8 @@ export const install: UserModule = ({ app }) => {
     Object.entries(
       import.meta.glob<Record<string, any>>("../locales/*.json", {
         eager: true,
-      })
-    ).map(([key, value]) => [key.slice(11, -5), value])
+      }),
+    ).map(([key, value]) => [key.slice(11, -5), value]),
   );
 
   const i18n = createI18n({

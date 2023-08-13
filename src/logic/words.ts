@@ -101,7 +101,7 @@ async function getAnswersFromSpreadsheet() {
 
   const values = await getSpreadsheetValues<"Wort">(
     import.meta.env.VITE_SPREADSHEET_ID,
-    import.meta.env.VITE_SPREADSHEET_SHEET
+    import.meta.env.VITE_SPREADSHEET_SHEET,
   );
 
   const result = values.map((i) => Object.values(i)[0].toLowerCase());

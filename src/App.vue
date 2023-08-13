@@ -28,6 +28,8 @@ watchThrottled(now, tryReset, { immediate: true, throttle: 1000 });
   background-image: url(/images/christmas/knit-pattern-1.svg);
   background-position: center calc(100% - 0.5rem);
   background-repeat: repeat-x;
-  background-size: auto 1.5rem, auto 1rem;
+  background-size:
+    auto 1.5rem,
+    auto 1rem;
 }
 </style>

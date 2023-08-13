@@ -8,7 +8,7 @@ const DEFAULT_BOARD_STATE = {
     Array.from({ length: 5 }, () => ({
       letter: "",
       state: LetterState.INITIAL,
-    }))
+    })),
   ),
 
   // Current active row index
@@ -35,7 +35,7 @@ export const tomorrow = useStorage<Date>(
       read: (v) => new Date(v),
       write: (v) => v.toISOString(),
     },
-  }
+  },
 );
 
 // Count down to next play day
@@ -66,17 +66,20 @@ function deepCopy<T>(source: T): T {
     : source instanceof Date
     ? new Date(source.getTime())
     : source && typeof source === "object"
-    ? Object.getOwnPropertyNames(source).reduce((o, prop) => {
-        Object.defineProperty(
-          o,
-          prop,
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          Object.getOwnPropertyDescriptor(source, prop)!
-        );
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        o[prop] = deepCopy((source as Record<string, any>)[prop]);
-        return o;
-      }, Object.create(Object.getPrototypeOf(source)))
+    ? Object.getOwnPropertyNames(source).reduce(
+        (o, prop) => {
+          Object.defineProperty(
+            o,
+            prop,
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            Object.getOwnPropertyDescriptor(source, prop)!,
+          );
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          o[prop] = deepCopy((source as Record<string, any>)[prop]);
+          return o;
+        },
+        Object.create(Object.getPrototypeOf(source)),
+      )
     : source;
 }
 

@@ -12,7 +12,7 @@ const app = createApp(App);
 for (const m of Object.values(
   import.meta.glob<{ install?: UserModule }>("./modules/*.ts", {
     eager: true,
-  })
+  }),
 )) {
   m.install?.({ app });
 }

@@ -22,7 +22,7 @@ let allWords: string[] = [];
 
 // Current active row
 const currentRow = computed(
-  () => state.value.board[state.value.currentRowIndex]
+  () => state.value.board[state.value.currentRowIndex],
 );
 
 // Feedback state: message and shake
@@ -151,7 +151,7 @@ async function completeRow() {
     state.value.gameOver = true;
     showMessage(
       t("errorMessages.notFound", { label: answer.toUpperCase() }),
-      -1
+      -1,
     );
   }
 }
