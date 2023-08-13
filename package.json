@@ -9,7 +9,8 @@
     "test:types": "vue-tsc --noEmit",
     "lint": "eslint . --ignore-path .gitignore",
     "lint:fix": "npm run lint -- --fix",
-    "format": "prettier --write \"src/**/*.{css,html,json,md,ts,vue,yml}\"",
+    "format": "prettier \"{src,test}/**/*.{css,html,json,md,mjs,ts,vue,yml}\" --write",
+    "format:check": "prettier \"{src,test}/**/*.{css,html,json,md,mjs,ts,vue,yml}\" --check",
     "prepare": "simple-git-hooks"
   },
   "lint-staged": {
