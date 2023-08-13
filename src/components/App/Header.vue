@@ -1,15 +1,21 @@
+<script setup lang="ts">
+import { useI18n } from "@leanera/vue-i18n";
+
+const { t } = useI18n();
+</script>
+
 <template>
   <header
     class="header sticky top-4 z-10 rounded-lg bg-zinc-100 px-4 py-2 dark:bg-zinc-800"
   >
     <h1
-      class="font-heading text-2xl tracking-wide text-amber-700 dark:text-white"
+      class="text-2xl tracking-wide font-heading text-amber-700 dark:text-white"
     >
-      {{ $t("title") }}
+      {{ t("title") }}
     </h1>
     <p class="text-xs font-500 uppercase -mt-1">
       <span class="text-zinc-400 dark:text-zinc-500">
-        {{ $t("header.currentRound") }}
+        {{ t("header.currentRound") }}
       </span>
     </p>
   </header>
