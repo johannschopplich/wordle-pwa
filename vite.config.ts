@@ -6,6 +6,7 @@ import IconsResolver from "unplugin-icons/resolver";
 import Components from "unplugin-vue-components/vite";
 import { transformerDirectives } from "unocss";
 import UnoCSS from "unocss/vite";
+import VueDevTools from "vite-plugin-vue-devtools";
 
 const currentDir = new URL(".", import.meta.url).pathname;
 
@@ -17,6 +18,7 @@ export default defineConfig({
   },
 
   plugins: [
+    VueDevTools(),
     Vue({
       script: {
         propsDestructure: true,
