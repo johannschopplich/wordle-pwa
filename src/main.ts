@@ -4,7 +4,7 @@ import type { UserModule } from "./types";
 
 import "@unocss/reset/tailwind.css";
 import "./main.css";
-import "uno.css";
+import "virtual:uno.css";
 
 const app = createApp(App);
 
