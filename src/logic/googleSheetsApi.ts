@@ -13,11 +13,11 @@ export async function getSpreadsheetValues<
     const response = await fetch(
       `https://sheets.googleapis.com/v4/spreadsheets/${id}/values/${sheet}?key=${
         import.meta.env.VITE_GOOGLE_API_KEY
-      }`
+      }`,
     );
     if (!response.ok) {
       throw new Error(
-        `Response failed with status ${response.status}: ${response.statusText}`
+        `Response failed with status ${response.status}: ${response.statusText}`,
       );
     }
     data = await response.json();
