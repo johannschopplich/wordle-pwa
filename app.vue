@@ -16,13 +16,6 @@ useHead({
       href: '/images/pwa-192x192.png',
     },
     {
-      rel: 'preload',
-      href: '/fonts/VCHenrietta-Medium.woff2',
-      as: 'font',
-      type: 'font/woff2',
-      crossorigin: '',
-    },
-    {
       rel: 'manifest',
       href: '/manifest.webmanifest',
     },
