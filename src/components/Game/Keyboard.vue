@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import type { LetterState } from "~/types";
+import type { LETTER_STATES } from "~/logic/store";
 
 const props = defineProps<{
-  letterStates: Record<string, LetterState>;
+  letterStates: typeof LETTER_STATES;
   umlauts: boolean;
 }>();
 
-defineEmits<{
+const emit = defineEmits<{
   (event: "key", value: string): void;
 }>();
 
@@ -40,7 +40,7 @@ const rows = computed(() => [
             : 'flex-[1.5_1_0%]',
           letterStates[key],
         ]"
-        @click="$emit('key', key)"
+        @click="emit('key', key)"
       >
         <TeenyiconsTickCircleOutline v-if="key === 'Enter'" class="h-7 w-7" />
         <TeenyiconsBackspaceOutline

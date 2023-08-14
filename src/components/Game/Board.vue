@@ -8,8 +8,7 @@ import {
 } from "@vueuse/core";
 import { useI18n } from "@leanera/vue-i18n";
 import { getAllWords, getWordOfTheDay } from "~/logic/words";
-import { countdown, now, state } from "~/logic/store";
-import { LetterState } from "~/types";
+import { LETTER_STATES, countdown, now, state } from "~/logic/store";
 
 // Get the translation helper
 const { t } = useI18n();
@@ -105,7 +104,8 @@ async function completeRow() {
   // First pass: mark correct ones
   currentRow.value.forEach((tile, i) => {
     if (answerLetters[i] === tile.letter) {
-      tile.state = state.value.letterStates[tile.letter] = LetterState.CORRECT;
+      tile.state = state.value.letterStates[tile.letter] =
+        LETTER_STATES.CORRECT;
       answerLetters[i] = null;
     }
   });
@@ -113,10 +113,10 @@ async function completeRow() {
   // Second pass: mark the present
   currentRow.value.forEach((tile) => {
     if (!tile.state && answerLetters.includes(tile.letter)) {
-      tile.state = LetterState.PRESENT;
+      tile.state = LETTER_STATES.PRESENT;
       answerLetters[answerLetters.indexOf(tile.letter)] = null;
       if (!state.value.letterStates[tile.letter]) {
-        state.value.letterStates[tile.letter] = LetterState.PRESENT;
+        state.value.letterStates[tile.letter] = LETTER_STATES.PRESENT;
       }
     }
   });
@@ -124,9 +124,9 @@ async function completeRow() {
   // 3rd pass: mark absent
   currentRow.value.forEach((tile) => {
     if (!tile.state) {
-      tile.state = LetterState.ABSENT;
+      tile.state = LETTER_STATES.ABSENT;
       if (!state.value.letterStates[tile.letter]) {
-        state.value.letterStates[tile.letter] = LetterState.ABSENT;
+        state.value.letterStates[tile.letter] = LETTER_STATES.ABSENT;
       }
     }
   });
@@ -134,7 +134,7 @@ async function completeRow() {
   allowInput = false;
   if (!state.value.gameOver) await promiseTimeout(1600);
 
-  if (currentRow.value.every((tile) => tile.state === LetterState.CORRECT)) {
+  if (currentRow.value.every((tile) => tile.state === LETTER_STATES.CORRECT)) {
     // Yay!
     grid.value = genResultGrid();
     shareText.value = `${now.value.toLocaleDateString("de-DE")}\n${grid.value}`;
@@ -171,10 +171,10 @@ async function shake() {
 }
 
 const icons = {
-  [LetterState.CORRECT]: "🟩",
-  [LetterState.PRESENT]: "🟨",
-  [LetterState.ABSENT]: "⬛️",
-  [LetterState.INITIAL]: null,
+  [LETTER_STATES.CORRECT]: "🟩",
+  [LETTER_STATES.PRESENT]: "🟨",
+  [LETTER_STATES.ABSENT]: "⬛️",
+  [LETTER_STATES.INITIAL]: null,
 };
 
 function genResultGrid() {

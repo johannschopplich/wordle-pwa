@@ -23,6 +23,8 @@
     "@leanera/vue-i18n": "^0.5.0",
     "@unocss/reset": "^0.55.0",
     "@vueuse/core": "^10.3.0",
+    "klona": "^2.0.6",
+    "unres": "^0.2.1",
     "vue": "^3.3.4"
   },
   "devDependencies": {

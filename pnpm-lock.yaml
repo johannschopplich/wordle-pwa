@@ -14,6 +14,12 @@ dependencies:
   '@vueuse/core':
     specifier: ^10.3.0
     version: 10.3.0(vue@3.3.4)
+  klona:
+    specifier: ^2.0.6
+    version: 2.0.6
+  unres:
+    specifier: ^0.2.1
+    version: 0.2.1
   vue:
     specifier: ^3.3.4
     version: 3.3.4
@@ -3770,6 +3776,10 @@ packages:
       webpack-sources: 3.2.3
       webpack-virtual-modules: 0.5.0
     dev: true
+
+  /unres@0.2.1:
+    resolution: {integrity: sha512-8o6AtaMwDQxiZ8pztxIbWNZJpO5PbKPSF/MV9Z6HNFU3mIuIwt66131631FMtQEm1+3J35OWFLzG+HNadA+iLw==}
+    dev: false
 
   /untildify@4.0.0:
     resolution: {integrity: sha512-KK8xQ1mkzZeg9inewmFVDNkg3l5LUhoq9kN6iWYB/CC9YMG8HA+c1Q8HwDe6dEX7kErrEVNVBO3fWsVq5iDgtw==}

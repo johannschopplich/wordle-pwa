@@ -16,8 +16,8 @@ export async function getSpreadsheetValues<
       }`,
     );
     data = await response.json();
-  } catch (e) {
-    console.error("Error fetching spreadsheet data:", e);
+  } catch (error) {
+    console.error("Error fetching spreadsheet data:", error);
   }
 
   const rows: Record<ColumnHeaders, string>[] = [];

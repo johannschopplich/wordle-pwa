@@ -1,13 +1,20 @@
+import { klona } from "klona";
 import { computed } from "vue";
 import { useNow, useStorage } from "@vueuse/core";
-import { LetterState } from "~/types";
+
+export const LETTER_STATES: Record<string, string> = {
+  INITIAL: "",
+  CORRECT: "correct",
+  PRESENT: "present",
+  ABSENT: "absent",
+};
 
 const DEFAULT_BOARD_STATE = {
   // Board state. Each tile is represented as { letter, state }
   board: Array.from({ length: 6 }, () =>
     Array.from({ length: 5 }, () => ({
       letter: "",
-      state: LetterState.INITIAL,
+      state: LETTER_STATES.INITIAL,
     })),
   ),
 
@@ -15,14 +22,14 @@ const DEFAULT_BOARD_STATE = {
   currentRowIndex: 0,
 
   // Keep track of revealed letters for the virtual keyboard
-  letterStates: {} as Record<string, LetterState>,
+  letterStates: {} as typeof LETTER_STATES,
 
   // Indicates if the game is over
   gameOver: false,
 };
 
 // Set up persistent data
-export const state = useStorage("app.state", deepCopy(DEFAULT_BOARD_STATE));
+export const state = useStorage("app.state", klona(DEFAULT_BOARD_STATE));
 
 export const now = useNow();
 
@@ -53,34 +60,11 @@ export const countdown = computed(() => {
 export async function tryReset() {
   if (now.value.getTime() > tomorrow.value.getTime()) {
     // Reset board state to initialize a new game
-    state.value = deepCopy(DEFAULT_BOARD_STATE);
+    state.value = klona(DEFAULT_BOARD_STATE);
 
     // Reset tomorrow date, which also re-renders the board component
     tomorrow.value = getTomorrow(now.value);
   }
-}
-
-function deepCopy<T>(source: T): T {
-  return Array.isArray(source)
-    ? source.map((item) => deepCopy(item))
-    : source instanceof Date
-    ? new Date(source.getTime())
-    : source && typeof source === "object"
-    ? Object.getOwnPropertyNames(source).reduce(
-        (o, prop) => {
-          Object.defineProperty(
-            o,
-            prop,
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            Object.getOwnPropertyDescriptor(source, prop)!,
-          );
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          o[prop] = deepCopy((source as Record<string, any>)[prop]);
-          return o;
-        },
-        Object.create(Object.getPrototypeOf(source)),
-      )
-    : source;
 }
 
 function getTomorrow(date: Date) {

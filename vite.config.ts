@@ -19,11 +19,7 @@ export default defineConfig({
 
   plugins: [
     VueDevTools(),
-    Vue({
-      script: {
-        propsDestructure: true,
-      },
-    }),
+    Vue(),
 
     // https://github.com/antfu/unplugin-vue-components
     Components({
