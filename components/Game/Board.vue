@@ -1,78 +1,77 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import {
-  promiseTimeout,
-  useClipboard,
-  useEventListener,
-  useShare,
-} from "@vueuse/core";
-import { useI18n } from "@leanera/vue-i18n";
-import { LETTER_ICONS, LETTER_STATES } from "~/constants";
-import { getAllWords, getWordOfTheDay } from "~/logic/words";
-import { countdown, now, state } from "~/logic/store";
+import { promiseTimeout } from '@vueuse/core'
+import { LETTER_ICONS, LETTER_STATES } from '~/constants'
+
+// Use the wordle store
+const { countdown, now, state } = useWordle()
 
 // Get the translation helper
-const { t } = useI18n();
+const { t } = useI18n()
 
 // Word of the day
-let answer: string;
+let answer: string
 
 // All possible words
-let allWords: string[] = [];
+let allWords: string[] = []
 
 // Current active row
 const currentRow = computed(
   () => state.value.board[state.value.currentRowIndex],
-);
+)
 
 // Feedback state: message and shake
-const message = ref("");
-const grid = ref("");
-const shakeRowIndex = ref(-1);
-const success = ref(false);
+const message = ref('')
+const grid = ref('')
+const shakeRowIndex = ref(-1)
+const success = ref(false)
 
 // Handle keyboard input
-let allowInput = true;
+let allowInput = true
 
 // Share board grid as text
-const shareText = ref("");
-const isMobile = matchMedia("(hover: none)").matches;
-const { share, isSupported: isShareSupported } = useShare();
-const { copy, copied, isSupported: isClipboardSupported } = useClipboard();
+const shareText = ref('')
+const isMobile = process.client ? matchMedia('(hover: none)').matches : false
+const { share, isSupported: isShareSupported } = useShare()
+const { copy, copied, isSupported: isClipboardSupported } = useClipboard()
 
-useEventListener(window, "keyup", (event) => onKey(event.key));
+if (process.client) {
+  useEventListener(window, 'keyup', (event) => onKey(event.key))
 
-// Lazily retrieve word/answers and initialize game state
-(async () => {
-  // Get word of the day
-  answer = await getWordOfTheDay();
+  // Lazily retrieve word/answers and initialize game state
+  ;(async () => {
+    // Get word of the day
+    answer = await useWordOfTheDay()
 
-  // Get all words
-  allWords = await getAllWords();
+    // Get all words
+    allWords = await useAllWords()
 
-  // Handle already guessed word of the day
-  if (state.value.gameOver) {
-    allowInput = false;
-    completeRow();
-  }
-})();
+    // Handle already guessed word of the day
+    if (state.value.gameOver) {
+      allowInput = false
+      completeRow()
+    }
+  })()
+} else if (process.server) {
+  // Initialize data fetched from Google Sheets on the server
+  await usePrefetchFetchableWords()
+}
 
 function onKey(key: string) {
-  if (!allowInput) return;
+  if (!allowInput) return
   if (/^[\p{Letter}\p{Mark}]$/u.test(key)) {
-    fillTile(key.toLowerCase());
-  } else if (key === "Backspace") {
-    clearTile();
-  } else if (key === "Enter") {
-    completeRow();
+    fillTile(key.toLowerCase())
+  } else if (key === 'Backspace') {
+    clearTile()
+  } else if (key === 'Enter') {
+    completeRow()
   }
 }
 
 function fillTile(letter: string) {
   for (const tile of currentRow.value) {
     if (!tile.letter) {
-      tile.letter = letter;
-      break;
+      tile.letter = letter
+      break
     }
   }
 }
@@ -80,102 +79,101 @@ function fillTile(letter: string) {
 function clearTile() {
   for (const tile of [...currentRow.value].reverse()) {
     if (tile.letter) {
-      tile.letter = "";
-      break;
+      tile.letter = ''
+      break
     }
   }
 }
 
 async function completeRow() {
   if (!currentRow.value.every((tile) => tile.letter)) {
-    shake();
-    showMessage(t("errorMessages.notEnoughLetters"));
-    return;
+    shake()
+    showMessage(t('errorMessages.notEnoughLetters'))
+    return
   }
 
-  const guess = currentRow.value.map((tile) => tile.letter).join("");
+  const guess = currentRow.value.map((tile) => tile.letter).join('')
   if (!allWords.includes(guess) && guess !== answer) {
-    shake();
-    showMessage(t("errorMessages.notInWordList"));
-    return;
+    shake()
+    showMessage(t('errorMessages.notInWordList'))
+    return
   }
 
-  const answerLetters: (string | null)[] = answer.split("");
+  const answerLetters: (string | null)[] = answer.split('')
 
   // First pass: mark correct ones
   currentRow.value.forEach((tile, i) => {
     if (answerLetters[i] === tile.letter) {
-      tile.state = state.value.letterStates[tile.letter] =
-        LETTER_STATES.CORRECT;
-      answerLetters[i] = null;
+      tile.state = state.value.letterStates[tile.letter] = LETTER_STATES.CORRECT
+      answerLetters[i] = null
     }
-  });
+  })
 
   // Second pass: mark the present
   currentRow.value.forEach((tile) => {
     if (!tile.state && answerLetters.includes(tile.letter)) {
-      tile.state = LETTER_STATES.PRESENT;
-      answerLetters[answerLetters.indexOf(tile.letter)] = null;
+      tile.state = LETTER_STATES.PRESENT
+      answerLetters[answerLetters.indexOf(tile.letter)] = null
       if (!state.value.letterStates[tile.letter]) {
-        state.value.letterStates[tile.letter] = LETTER_STATES.PRESENT;
+        state.value.letterStates[tile.letter] = LETTER_STATES.PRESENT
       }
     }
-  });
+  })
 
   // 3rd pass: mark absent
   currentRow.value.forEach((tile) => {
     if (!tile.state) {
-      tile.state = LETTER_STATES.ABSENT;
+      tile.state = LETTER_STATES.ABSENT
       if (!state.value.letterStates[tile.letter]) {
-        state.value.letterStates[tile.letter] = LETTER_STATES.ABSENT;
+        state.value.letterStates[tile.letter] = LETTER_STATES.ABSENT
       }
     }
-  });
+  })
 
-  allowInput = false;
-  if (!state.value.gameOver) await promiseTimeout(1600);
+  allowInput = false
+  if (!state.value.gameOver) await promiseTimeout(1600)
 
   if (currentRow.value.every((tile) => tile.state === LETTER_STATES.CORRECT)) {
     // Yay!
-    grid.value = genResultGrid();
-    shareText.value = `${now.value.toLocaleDateString("de-DE")}\n${grid.value}`;
-    success.value = state.value.gameOver = true;
+    grid.value = genResultGrid()
+    shareText.value = `${now.value.toLocaleDateString('de-DE')}\n${grid.value}`
+    success.value = state.value.gameOver = true
     // Wait for jump animation to almost finish (1000ms)
-    await promiseTimeout(900);
-    showMessage(t(`successMessages[${state.value.currentRowIndex}]`), -1);
+    await promiseTimeout(900)
+    showMessage(t(`successMessages[${state.value.currentRowIndex}]`), -1)
   } else if (state.value.currentRowIndex < state.value.board.length - 1) {
     // Go the next row
-    state.value.currentRowIndex++;
-    allowInput = true;
+    state.value.currentRowIndex++
+    allowInput = true
   } else {
     // Game over :(
-    state.value.gameOver = true;
+    state.value.gameOver = true
     showMessage(
-      t("errorMessages.notFound", { label: answer.toUpperCase() }),
+      t('errorMessages.notFound', { label: answer.toUpperCase() }),
       -1,
-    );
+    )
   }
 }
 
 async function showMessage(msg: string, time = 1250) {
-  message.value = msg;
+  message.value = msg
   if (time > 0) {
-    await promiseTimeout(time);
-    message.value = "";
+    await promiseTimeout(time)
+    message.value = ''
   }
 }
 
 async function shake() {
-  shakeRowIndex.value = state.value.currentRowIndex;
-  await promiseTimeout(1000);
-  shakeRowIndex.value = -1;
+  shakeRowIndex.value = state.value.currentRowIndex
+  await promiseTimeout(1000)
+  shakeRowIndex.value = -1
 }
 
 function genResultGrid() {
   return state.value.board
     .slice(0, state.value.currentRowIndex + 1)
-    .map((row) => row.map((tile) => LETTER_ICONS[tile.state]).join(""))
-    .join("\n");
+    .map((row) => row.map((tile) => LETTER_ICONS[tile.state]).join(''))
+    .join('\n')
 }
 </script>
 
@@ -217,7 +215,9 @@ function genResultGrid() {
             ]"
             :style="{ transitionDelay: `${index * 300}ms` }"
           >
-            {{ tile.letter }}
+            <ClientOnly>
+              {{ tile.letter }}
+            </ClientOnly>
           </div>
           <div
             :class="[
@@ -235,7 +235,9 @@ function genResultGrid() {
               animationDelay: `${index * 100}ms`,
             }"
           >
-            {{ tile.letter }}
+            <ClientOnly>
+              {{ tile.letter }}
+            </ClientOnly>
           </div>
         </div>
       </div>
@@ -265,7 +267,7 @@ function genResultGrid() {
 
       <p class="whitespace-nowrap">
         <span class="text-gray-500">Nächste Runde in</span>
-        {{ " " }}
+        {{ ' ' }}
         <span v-show="countdown.hours > 0" class="font-semibold">
           {{ countdown.hours }}&thinsp;h
         </span>
@@ -282,12 +284,12 @@ function genResultGrid() {
         "
       >
         <template v-if="isShareSupported && isMobile">
-          <TeenyiconsShareSolid />
-          <span>{{ t("actions.share") }}</span>
+          <div class="i-teenyicons:share-solid" />
+          <span>{{ t('actions.share') }}</span>
         </template>
         <template v-else>
-          <TeenyiconsDocumentsSolid v-show="!copied" />
-          <span>{{ !copied ? t("actions.copy") : t("actions.copied") }}</span>
+          <div v-show="!copied" class="i-teenyicons:documents-solid" />
+          <span>{{ !copied ? t('actions.copy') : t('actions.copied') }}</span>
         </template>
       </button>
     </template>
@@ -297,7 +299,7 @@ function genResultGrid() {
 <style scoped>
 .tile-front,
 .tile-back {
-  --at-apply: "transition-transform-600 backface-hidden absolute inset-0 inline-flex items-center justify-center";
+  --at-apply: 'transition-transform-600 backface-hidden absolute inset-0 inline-flex items-center justify-center';
   -webkit-backface-visibility: hidden;
 }
 </style>

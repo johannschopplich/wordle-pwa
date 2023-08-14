@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { useI18n } from "@leanera/vue-i18n";
-
-const { t } = useI18n();
+const { appName } = useRuntimeConfig().public
+const { t } = useI18n()
 </script>
 
 <template>
@@ -11,11 +10,11 @@ const { t } = useI18n();
     <h1
       class="text-2xl tracking-wide font-heading text-amber-700 dark:text-white"
     >
-      {{ t("title") }}
+      {{ appName }}
     </h1>
     <p class="text-xs font-500 uppercase -mt-1">
       <span class="text-zinc-400 dark:text-zinc-500">
-        {{ t("header.currentRound") }}
+        {{ t('header.currentRound') }}
       </span>
     </p>
   </header>
@@ -23,7 +22,7 @@ const { t } = useI18n();
 
 <style scoped>
 .header {
-  background-image: url("/images/header.png");
+  background-image: url('/images/header.png');
   background-position: calc(100% - 0.5rem) bottom;
   background-repeat: no-repeat;
   background-size: 3.5rem auto;

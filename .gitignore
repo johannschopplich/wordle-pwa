@@ -1,8 +1,8 @@
+.nuxt
+.output
 node_modules
-dist
-dist-ssr
-*.local
+*.log
 .DS_Store
 .env
 .eslintcache
-components.d.ts
+nuxt.d.ts

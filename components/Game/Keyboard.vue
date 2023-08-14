@@ -1,21 +1,20 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import type { LETTER_STATES } from "~/constants";
+import type { LETTER_STATES } from '~/constants'
 
 const props = defineProps<{
-  letterStates: typeof LETTER_STATES;
-  umlauts: boolean;
-}>();
+  letterStates: typeof LETTER_STATES
+  umlauts: boolean
+}>()
 
 const emit = defineEmits<{
-  (event: "key", value: string): void;
-}>();
+  (event: 'key', value: string): void
+}>()
 
 const rows = computed(() => [
-  `qwertyuiop${props.umlauts ? "ü" : ""}`.split(""),
-  `asdfghjkl${props.umlauts ? "öä" : ""}`.split(""),
-  ["Enter", ..."zxcvbnm".split(""), "Backspace"],
-]);
+  `qwertyuiop${props.umlauts ? 'ü' : ''}`.split(''),
+  `asdfghjkl${props.umlauts ? 'öä' : ''}`.split(''),
+  ['Enter', ...'zxcvbnm'.split(''), 'Backspace'],
+])
 </script>
 
 <template>
@@ -42,10 +41,13 @@ const rows = computed(() => [
         ]"
         @click="emit('key', key)"
       >
-        <TeenyiconsTickCircleOutline v-if="key === 'Enter'" class="h-7 w-7" />
-        <TeenyiconsBackspaceOutline
+        <div
+          v-if="key === 'Enter'"
+          class="i-teenyicons:tick-circle-outline h-7 w-7"
+        />
+        <div
           v-else-if="key === 'Backspace'"
-          class="h-7 w-7"
+          class="i-teenyicons:backspace-outline h-7 w-7"
         />
         <span v-else>{{ key }}</span>
       </button>

@@ -1,22 +1,22 @@
 export const LETTER_STATES: Record<string, string> = {
-  INITIAL: "",
-  CORRECT: "correct",
-  PRESENT: "present",
-  ABSENT: "absent",
-};
+  INITIAL: '',
+  CORRECT: 'correct',
+  PRESENT: 'present',
+  ABSENT: 'absent',
+}
 
 export const LETTER_ICONS = {
-  [LETTER_STATES.CORRECT]: "🟩",
-  [LETTER_STATES.PRESENT]: "🟨",
-  [LETTER_STATES.ABSENT]: "⬛️",
+  [LETTER_STATES.CORRECT]: '🟩',
+  [LETTER_STATES.PRESENT]: '🟨',
+  [LETTER_STATES.ABSENT]: '⬛️',
   [LETTER_STATES.INITIAL]: null,
-};
+}
 
 export const DEFAULT_BOARD_STATE = {
   // Board state. Each tile is represented as { letter, state }
   board: Array.from({ length: 6 }, () =>
     Array.from({ length: 5 }, () => ({
-      letter: "",
+      letter: '',
       state: LETTER_STATES.INITIAL,
     })),
   ),
@@ -29,4 +29,4 @@ export const DEFAULT_BOARD_STATE = {
 
   // Indicates if the game is over
   gameOver: false,
-};
+}

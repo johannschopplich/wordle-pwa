@@ -38,7 +38,7 @@ A refactored and extended Vue app of [VVordle](https://github.com/yyx990803/vue-
 Especially for a custom word list you probably prefer to start the list by a date of your choice. Wordle PWA will calculate the difference between the current date and the start date and pick the answer at the array index based from the date difference.
 
 ```
-VITE_STARTS_AT=2022-12-01
+NUXT_PUBLIC_STARTS_AT=2022-12-01
 ```
 
 ### Base64
@@ -52,7 +52,7 @@ You can make your own one-time Wordle and send it to friends by base64-encoding 
 A custom word list may be set in the app's `.env` file:
 
 ```
-VITE_ANSWERS=birds,floor,umami
+NUXT_PUBLIC_ANSWERS=birds,floor,umami
 ```
 
 > ℹ️ Remember to set a start date as well.
@@ -62,9 +62,9 @@ VITE_ANSWERS=birds,floor,umami
 Alternatively, the app will fetch words from any public Google spreadsheet if the following entries exist in the app's `.env` file:
 
 ```
-VITE_GOOGLE_API_KEY=...
-VITE_SPREADSHEET_ID=1nO4y9FBuOr4_lA50rIldeWUAvqKYpcJYf5h1tpBybZU
-VITE_SPREADSHEET_SHEET=Advent 2022
+NUXT_GOOGLE_API_KEY=...
+NUXT_PUBLIC_GOOGLE_SHEETS_ID=1nO4y9FBuOr4_lA50rIldeWUAvqKYpcJYf5h1tpBybZU
+NUXT_PUBLIC_GOOGLE_SHEETS_TABLE=Advent 2022
 ```
 
 ## License

@@ -1,15 +1,15 @@
 @font-face {
-  font-family: "Henrietta";
+  font-family: 'Henrietta';
   font-weight: 400;
   font-style: normal;
-  src: url("/fonts/VCHenrietta-Medium.woff2") format("woff2");
+  src: url('/fonts/VCHenrietta-Medium.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: "Henrietta Condensed";
+  font-family: 'Henrietta Condensed';
   font-weight: 400;
   font-style: normal;
-  src: url("/fonts/VCHenriettaCondensed-Medium.woff2") format("woff2");
+  src: url('/fonts/VCHenriettaCondensed-Medium.woff2') format('woff2');
 }
 
 html {
@@ -22,23 +22,23 @@ html.dark {
 }
 
 body {
-  --at-apply: "h-[100svh] max-h-screen-lg sm:p-4";
+  --at-apply: 'h-[100svh] max-h-screen-lg sm:p-4';
 }
 
-#app {
-  --at-apply: "mx-auto h-full max-w-screen-sm bg-white px-4 pt-4 pb-[max(env(safe-area-inset-bottom),1rem)] dark:bg-zinc-900 sm:rounded-md sm:shadow-sm dark:sm:border-2 dark:sm:border-zinc-800";
+#__nuxt {
+  --at-apply: 'mx-auto h-full max-w-screen-sm bg-white px-4 pt-4 pb-[max(env(safe-area-inset-bottom),1rem)] dark:bg-zinc-900 sm:rounded-md sm:shadow-sm dark:sm:border-2 dark:sm:border-zinc-800';
 }
 
 .correct {
-  --at-apply: "!bg-lime-600 !text-white";
+  --at-apply: '!bg-lime-600 !text-white';
 }
 
 .present {
-  --at-apply: "!bg-yellow-500 !text-gray-900";
+  --at-apply: '!bg-yellow-500 !text-gray-900';
 }
 
 .absent {
-  --at-apply: "!bg-gray-500 !text-white !dark:bg-zinc-400 !dark:text-zinc-900";
+  --at-apply: '!bg-gray-500 !text-white !dark:bg-zinc-400 !dark:text-zinc-900';
 }
 
 @keyframes zoom {

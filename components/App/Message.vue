@@ -1,8 +1,8 @@
 <script setup lang="ts">
 defineProps<{
-  isOpen: boolean;
-  size: "default" | "large";
-}>();
+  isOpen: boolean
+  size: 'default' | 'large'
+}>()
 </script>
 
 <template>
