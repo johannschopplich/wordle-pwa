@@ -1,32 +1,7 @@
 import { klona } from "klona";
 import { computed } from "vue";
 import { useNow, useStorage } from "@vueuse/core";
-
-export const LETTER_STATES: Record<string, string> = {
-  INITIAL: "",
-  CORRECT: "correct",
-  PRESENT: "present",
-  ABSENT: "absent",
-};
-
-const DEFAULT_BOARD_STATE = {
-  // Board state. Each tile is represented as { letter, state }
-  board: Array.from({ length: 6 }, () =>
-    Array.from({ length: 5 }, () => ({
-      letter: "",
-      state: LETTER_STATES.INITIAL,
-    })),
-  ),
-
-  // Current active row index
-  currentRowIndex: 0,
-
-  // Keep track of revealed letters for the virtual keyboard
-  letterStates: {} as typeof LETTER_STATES,
-
-  // Indicates if the game is over
-  gameOver: false,
-};
+import { DEFAULT_BOARD_STATE } from "~/constants";
 
 // Set up persistent data
 export const state = useStorage("app.state", klona(DEFAULT_BOARD_STATE));

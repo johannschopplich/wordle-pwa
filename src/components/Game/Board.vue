@@ -7,8 +7,9 @@ import {
   useShare,
 } from "@vueuse/core";
 import { useI18n } from "@leanera/vue-i18n";
+import { LETTER_ICONS, LETTER_STATES } from "~/constants";
 import { getAllWords, getWordOfTheDay } from "~/logic/words";
-import { LETTER_STATES, countdown, now, state } from "~/logic/store";
+import { countdown, now, state } from "~/logic/store";
 
 // Get the translation helper
 const { t } = useI18n();
@@ -170,17 +171,10 @@ async function shake() {
   shakeRowIndex.value = -1;
 }
 
-const icons = {
-  [LETTER_STATES.CORRECT]: "🟩",
-  [LETTER_STATES.PRESENT]: "🟨",
-  [LETTER_STATES.ABSENT]: "⬛️",
-  [LETTER_STATES.INITIAL]: null,
-};
-
 function genResultGrid() {
   return state.value.board
     .slice(0, state.value.currentRowIndex + 1)
-    .map((row) => row.map((tile) => icons[tile.state]).join(""))
+    .map((row) => row.map((tile) => LETTER_ICONS[tile.state]).join(""))
     .join("\n");
 }
 </script>
