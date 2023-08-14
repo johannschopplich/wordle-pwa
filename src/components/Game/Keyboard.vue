@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import type { LETTER_STATES } from "~/logic/store";
+import type { LETTER_STATES } from "~/constants";
 
 const props = defineProps<{
   letterStates: typeof LETTER_STATES;
@@ -25,7 +25,7 @@ const rows = computed(() => [
       :key="rowIndex"
       class="mx-auto w-full flex touch-none gap-1"
     >
-      <div v-if="!umlauts && rowIndex === 1" style="flex-grow: 0.5" />
+      <div v-if="!umlauts && rowIndex === 1" class="grow-[0.5]" />
 
       <button
         v-for="(key, keyIndex) in row"
@@ -50,7 +50,7 @@ const rows = computed(() => [
         <span v-else>{{ key }}</span>
       </button>
 
-      <div v-if="!umlauts && rowIndex === 1" style="flex-grow: 0.5" />
+      <div v-if="!umlauts && rowIndex === 1" class="grow-[0.5]" />
     </div>
   </div>
 </template>
