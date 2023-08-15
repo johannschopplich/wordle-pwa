@@ -43,6 +43,12 @@ export default defineNuxtConfig({
     strategy: 'no_prefix',
   },
 
+  nitro: {
+    prerender: {
+      routes: ['/manifest.webmanifest'],
+    },
+  },
+
   experimental: {
     payloadExtraction: true,
     inlineSSRStyles: false,
