@@ -4,7 +4,6 @@ import {
   presetWind,
   transformerDirectives,
 } from 'unocss'
-import { theme } from '@unocss/preset-wind'
 import type { Theme } from '@unocss/preset-wind'
 
 const control =
@@ -28,8 +27,15 @@ export default defineConfig<Theme>({
       },
     },
     fontFamily: {
-      heading: `Henrietta,${theme.fontFamily!.sans}`,
-      'heading-condensed': `Henrietta Condensed,${theme.fontFamily!.sans}`,
+      heading: ['Henrietta', 'ui-sans-serif', 'system-ui', 'sans-serif'].join(
+        ',',
+      ),
+      'heading-condensed': [
+        'Henrietta Condensed',
+        'ui-sans-serif',
+        'system-ui',
+        'sans-serif',
+      ].join(','),
     },
   },
   shortcuts: {
