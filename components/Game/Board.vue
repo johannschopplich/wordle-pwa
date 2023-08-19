@@ -51,9 +51,6 @@ if (process.client) {
       completeRow()
     }
   })()
-} else if (process.server) {
-  // Initialize data fetched from Google Sheets on the server
-  await usePrefetchFetchableWords()
 }
 
 function onKey(key: string) {
@@ -255,7 +252,7 @@ function genResultGrid() {
     <h2
       :class="[
         state.gameOver
-          ? 'font-heading text-2xl leading-tight tracking-wide text-amber-700'
+          ? 'font-heading text-2xl leading-tight tracking-wide text-primary-700'
           : 'font-600 truncate text-sm',
       ]"
     >

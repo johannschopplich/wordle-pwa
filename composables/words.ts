@@ -1,33 +1,24 @@
 const DEFAULT_MESSAGE = 'Using word of the day instead.'
 
-let answersFromEnv: string[] | undefined
-let answersFromSpreadsheet: string[] | undefined
-let defaultAnswers: string[] = []
+const answerProviders = new Map<'env' | 'googleSheets', string[]>()
 
 export async function useAllWords() {
   const { default: allowedGuesses } = await import(
     '~/data/allowedGuesses/de.json'
   )
-  const answersFromEnv = getAnswersFromEnv()
-  const answersFromSpreadsheet = await getAnswersFromSpreadsheet()
+  const words = [
+    ...getAnswersFromEnv(),
+    ...(await getAnswersFromGoogleSheets()),
+  ]
 
-  if (!answersFromEnv.length && !answersFromSpreadsheet.length) {
-    const { default: answers } = await import('~/data/answers.json')
-    defaultAnswers = answers
+  if (!words.length) {
+    words.push(...(await getDefaultAnswers()))
   }
 
-  const collection = new Set([
-    ...defaultAnswers,
-    ...answersFromEnv,
-    ...answersFromSpreadsheet,
-    ...allowedGuesses,
-  ])
-  return Array.from(collection)
+  return Array.from(new Set([...words, ...allowedGuesses]))
 }
 
 export async function useWordOfTheDay() {
-  const { startsAt } = useRuntimeConfig().public
-
   if (process.client && window.location.search) {
     try {
       const query = atob(location.search.slice(1))
@@ -41,7 +32,8 @@ export async function useWordOfTheDay() {
     }
   }
 
-  let start = new Date(new Date().getFullYear(), 0, 1)
+  let start = new Date(`${new Date().getFullYear()}-01-01`)
+  const { startsAt } = useAppConfig()
 
   if (startsAt) {
     const date = new Date(startsAt)
@@ -59,43 +51,46 @@ export async function useWordOfTheDay() {
     word = getWordFromList(answersFromEnv, start)
   }
 
-  const answersFromSpreadsheet = await getAnswersFromSpreadsheet()
-  if (answersFromSpreadsheet.length) {
-    word = getWordFromList(answersFromSpreadsheet, start)
+  const answersFromGoogleSheets = await getAnswersFromGoogleSheets()
+  if (answersFromGoogleSheets.length) {
+    word = getWordFromList(answersFromGoogleSheets, start)
   }
 
   if (!word) {
-    const { default: answers } = await import('~/data/answers.json')
-    word = getWordFromList(answers, start)
+    const defaultAnswers = await getDefaultAnswers()
+    word = getWordFromList(defaultAnswers, start)
   }
 
   return word
 }
 
-export async function usePrefetchFetchableWords() {
-  await getAnswersFromSpreadsheet()
+async function getDefaultAnswers() {
+  const { default: answers } = await import('~/data/answers.json')
+  return answers
 }
 
 function getAnswersFromEnv() {
   const { answers } = useRuntimeConfig().public
-  answersFromEnv ??= answers?.split(',').map((i) => i.toLowerCase()) ?? []
-  return answersFromEnv
+
+  let result = answerProviders.get('env')
+
+  if (!result) {
+    result = answers?.split(',').map((i) => i.toLowerCase()) ?? []
+    answerProviders.set('env', result)
+  }
+
+  return result
 }
 
-async function getAnswersFromSpreadsheet() {
-  if (answersFromSpreadsheet) return answersFromSpreadsheet
+async function getAnswersFromGoogleSheets() {
+  let result = answerProviders.get('googleSheets')
 
-  const { googleSheetsId, googleSheetsTable } = useRuntimeConfig().public
+  if (!result) {
+    const values = (await useGoogleSheetsConfig())?.['Wort des Tages'] ?? []
+    result = values.filter((i): i is string => Boolean(i))
+    answerProviders.set('googleSheets', result)
+  }
 
-  if (!googleSheetsId || !googleSheetsTable) return []
-
-  const values = await getGoogleSpreadsheetValues<'Wort'>(
-    googleSheetsId,
-    googleSheetsTable,
-  )
-
-  const result = values.map((i) => Object.values(i)[0].toLowerCase())
-  answersFromSpreadsheet = result
   return result
 }
 

@@ -1,10 +1,24 @@
 export default defineNuxtConfig({
   modules: [
-    '@unocss/nuxt',
     '@leanera/nuxt-i18n',
+    '@unocss/nuxt',
     '@vueuse/nuxt',
     'nuxt-api-party',
   ],
+
+  $production: {
+    routeRules: {
+      '/manifest.webmanifest': { swr: 3600 },
+    },
+  },
+
+  appConfig: {
+    title: process.env.NUXT_PUBLIC_TITLE || 'Wortspiel',
+    themeColor: process.env.NUXT_PUBLIC_THEME_COLOR || '#f59e0b',
+    /** @default First day of the year */
+    startsAt:
+      process.env.NUXT_PUBLIC_STARTS_AT || `${new Date().getFullYear()}-01-01`,
+  },
 
   runtimeConfig: {
     google: {
@@ -12,11 +26,13 @@ export default defineNuxtConfig({
     },
 
     public: {
-      appName: 'Wortspiel',
-      startsAt: '',
+      // title: '',
+      // themeColor: '',
       answers: '',
-      googleSheetsId: '',
-      googleSheetsTable: '',
+      google: {
+        sheetsId: '',
+        sheetsTable: '',
+      },
     },
   },
 

@@ -1,34 +1,43 @@
-export interface GoogleSheetsResponse {
+import type { FetchError } from 'ofetch'
+
+interface GoogleSpreadSheetsValues {
   majorDimension: 'DIMENSION_UNSPECIFIED' | 'ROWS' | 'COLUMNS'
   range: string
   values: string[][]
 }
 
-export async function getGoogleSpreadsheetValues<
-  ColumnHeaders extends string = string,
->(id: string, sheet: string) {
-  let data: GoogleSheetsResponse | undefined
+export async function getGoogleSheetsValues<Header extends string[] = string[]>(
+  id: string,
+  sheet: string,
+) {
+  let data: GoogleSpreadSheetsValues | undefined
 
   try {
-    data = await $sheets<GoogleSheetsResponse>(`${id}/values/${sheet}`, {
+    data = await $sheets<GoogleSpreadSheetsValues>(`${id}/values/${sheet}`, {
       cache: true,
     })
   } catch (error) {
-    console.error('Error fetching spreadsheet data:', error)
+    console.error(
+      'Failed to fetch Google Sheets data',
+      (error as FetchError).data,
+    )
   }
 
-  const rows: Record<ColumnHeaders, string>[] = []
-  const rawRows: string[][] = data?.values || [[]]
-  const headers: string[] = rawRows.shift() || []
+  return parseGoogleSheetsValues<Header>(data)
+}
 
-  for (const row of rawRows) {
-    const rowData = row.reduce<Record<string, string>>((acc, cell, index) => {
-      acc[headers[index]] = cell
+export function parseGoogleSheetsValues<Header extends string[] = string[]>(
+  data?: GoogleSpreadSheetsValues,
+) {
+  const headers = (data?.values?.[0] ?? []) as Header
+  const rows = data?.values?.slice(1) ?? []
+
+  return headers.reduce(
+    (acc, header, index) => {
+      const values = rows.map((row) => row[index])
+      acc[header as Header[number]] = values
       return acc
-    }, {})
-
-    rows.push(rowData)
-  }
-
-  return rows
+    },
+    {} as Record<Header[number], (string | null)[]>,
+  )
 }

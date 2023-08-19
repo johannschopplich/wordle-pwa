@@ -1,10 +1,23 @@
 <script setup lang="ts">
 import '~/assets/css/main.css'
 
-const { appName } = useRuntimeConfig().public
+const appConfig = useAppConfig()
+const sheetsConfig = await useGoogleSheetsConfig()
+const { now, tomorrow, tryReset } = useWordle()
 
-useHead({
-  title: appName,
+// Parse custom app config on the server
+const customTitle = sheetsConfig?.['App-Titel']?.[0]
+if (customTitle) appConfig.title = customTitle
+
+const customThemeColor = sheetsConfig?.['Primärfarbe']?.[0]
+if (customThemeColor) appConfig.themeColor = customThemeColor
+
+const customStartsAt = sheetsConfig?.['Startet am']?.[0]
+if (customStartsAt) appConfig.startsAt = customStartsAt
+
+// Server-only head tags for improved performance
+useServerHead({
+  title: appConfig.title,
   link: [
     {
       rel: 'icon',
@@ -23,7 +36,16 @@ useHead({
   meta: [
     {
       name: 'theme-color',
-      content: '#92400E',
+      content: appConfig.themeColor,
+    },
+  ],
+  style: [
+    {
+      innerHTML: `
+:root {
+  ${generateColorsStyleheet(getColors(appConfig.themeColor), 'primary')}
+}
+`.trimStart(),
     },
   ],
   script: [
@@ -38,11 +60,18 @@ useHead({
   ],
 })
 
-const { now, tomorrow, tryReset } = useWordle()
-
 if (process.client) {
   // Reset the app when tomorrow is already reached
   watchThrottled(now, tryReset, { immediate: true, throttle: 1000 })
+}
+
+function generateColorsStyleheet(colors: Record<string, string>, prefix = '') {
+  return Object.entries(colors)
+    .map(([key, value]) => {
+      const cssVar = `--un-color${prefix ? `-${prefix}` : ''}-${key}`
+      return `${cssVar}: ${value};`
+    })
+    .join('\n')
 }
 </script>
 
@@ -59,7 +88,7 @@ if (process.client) {
   </div>
 
   <!-- <div
-    class="content-empty christmas-pattern -z-1 pointer-events-none absolute inset-0"
+    class="christmas-pattern pointer-events-none absolute inset-0 content-empty -z-1"
   /> -->
 </template>
 

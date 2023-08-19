@@ -14,7 +14,7 @@
 
 html {
   min-width: 320px;
-  --at-apply: bg-amber-800 text-gray-800;
+  --at-apply: bg-primary-800 text-gray-800;
 }
 
 html.dark {
