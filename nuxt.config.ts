@@ -22,16 +22,14 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     google: {
-      apiKey: '',
+      apiKey: process.env.NUXT_GOOGLE_API_KEY || '',
     },
 
     public: {
-      // title: '',
-      // themeColor: '',
-      answers: '',
+      answers: process.env.NUXT_PUBLIC_ANSWERS || '',
       google: {
-        sheetsId: '',
-        sheetsTable: '',
+        sheetsId: process.env.NUXT_PUBLIC_GOOGLE_SHEETS_ID || '',
+        sheetsTable: process.env.NUXT_PUBLIC_GOOGLE_SHEETS_TABLE || '',
       },
     },
   },
