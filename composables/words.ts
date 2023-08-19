@@ -1,4 +1,6 @@
+const DEFAULT_STARTS_AT = new Date(`${new Date().getFullYear()}-01-01`)
 const DEFAULT_MESSAGE = 'Using word of the day instead.'
+const MILLISECONDS_IN_A_DAY = 1000 * 60 * 60 * 24
 
 const answerProviders = new Map<'env' | 'googleSheets', string[]>()
 
@@ -32,7 +34,7 @@ export async function useWordOfTheDay() {
     }
   }
 
-  let start = new Date(`${new Date().getFullYear()}-01-01`)
+  let start = DEFAULT_STARTS_AT
   const { startsAt } = useAppConfig()
 
   if (startsAt) {
@@ -95,11 +97,12 @@ async function getAnswersFromGoogleSheets() {
 }
 
 function getWordFromList(answers: string[], start: Date) {
-  const diff = Date.now() - start.getTime()
-  let day = Math.floor(diff / (1000 * 60 * 60 * 24))
-  while (day > answers.length) {
-    day -= answers.length
-  }
+  // Convert timezone offset from minutes to milliseconds
+  const timezoneOffset = start.getTimezoneOffset() * 60 * 1000
+  const localStart = new Date(start.getTime() + timezoneOffset)
+  const diff = Date.now() - localStart.getTime()
+  const day = Math.floor(diff / MILLISECONDS_IN_A_DAY)
+  const index = day % answers.length
 
-  return answers[day]
+  return answers[index]
 }

@@ -62,7 +62,7 @@ useServerHead({
 
 if (process.client) {
   // Reset the app when tomorrow is already reached
-  watchThrottled(now, tryReset, { immediate: true, throttle: 1000 })
+  watchThrottled(now, tryReset, { immediate: true, throttle: 1000 * 60 * 60 })
 }
 
 function generateColorsStyleheet(colors: Record<string, string>, prefix = '') {
