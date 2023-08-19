@@ -89,7 +89,9 @@ async function getAnswersFromGoogleSheets() {
 
   if (!result) {
     const values = (await useGoogleSheetsConfig())?.['Wort des Tages'] ?? []
-    result = values.filter((i): i is string => Boolean(i))
+    result = values
+      .filter((i): i is string => Boolean(i))
+      .map((i) => i.toLowerCase())
     answerProviders.set('googleSheets', result)
   }
 
