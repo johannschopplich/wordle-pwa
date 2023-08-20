@@ -9,7 +9,7 @@ const { state, tomorrow } = useWordleStore()
 const { t } = useI18n()
 
 // Word of the day
-let answer: string
+let answer: string = ''
 
 // All possible words
 let allWords: string[] = []
@@ -46,24 +46,25 @@ const isMobile = process.client ? matchMedia('(hover: none)').matches : false
 const { share, isSupported: isShareSupported } = useShare()
 const { copy, copied, isSupported: isClipboardSupported } = useClipboard()
 
-if (process.client) {
+// Re-render when state has been read from localStorage,
+// otherwise classes won't be hydrated correctly
+const forceRenderKey = ref(0)
+
+onMounted(async () => {
+  forceRenderKey.value++
+
   useEventListener(window, 'keyup', (event) => onKey(event.key))
 
-  // Lazily retrieve word/answers and initialize game state
-  ;(async () => {
-    // Get word of the day
-    answer = await useWordOfTheDay()
+  // Lazily retrieve word/answers
+  answer = await useWordOfTheDay()
+  allWords = await useAllWords()
 
-    // Get all words
-    allWords = await useAllWords()
-
-    // Handle already guessed word of the day
-    if (state.value.gameOver) {
-      allowInput = false
-      completeRow()
-    }
-  })()
-}
+  // Handle already guessed word of the day
+  if (state.value.gameOver) {
+    allowInput = false
+    completeRow()
+  }
+})
 
 function onKey(key: string) {
   if (!allowInput) return
@@ -189,6 +190,7 @@ function genResultGrid() {
 <template>
   <div class="flex items-center justify-center">
     <div
+      :key="forceRenderKey"
       class="grid grid-rows-6 mx-auto h-$height w-$width gap-2"
       style="
         --height: clamp(12rem, 50svh, 26rem);
@@ -251,6 +253,7 @@ function genResultGrid() {
   </div>
 
   <GameKeyboard
+    :key="forceRenderKey"
     class="-mx-3 sm:mx-0"
     :letter-states="state.letterStates"
     :umlauts="true"

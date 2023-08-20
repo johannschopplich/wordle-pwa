@@ -52,17 +52,11 @@ useServerHead({
 })
 
 const { tomorrow, tryReset } = useProvideWordleStore()
-const forceRenderKey = ref(0)
 
 if (process.client) {
   // Reset the app when tomorrow is already reached
   useIntervalFn(tryReset, 1000)
 }
-
-onMounted(() => {
-  // Force re-render when state has been read from localStorage
-  forceRenderKey.value++
-})
 
 function generateColorsStyleheet(colors: Record<string, string>, prefix = '') {
   return Object.entries(colors)
@@ -79,7 +73,7 @@ function generateColorsStyleheet(colors: Record<string, string>, prefix = '') {
     <AppHeader />
 
     <!-- Board will render two fragments -->
-    <GameBoard :key="tomorrow.getTime() + forceRenderKey" />
+    <GameBoard :key="tomorrow.getTime()" />
   </div>
 
   <div class="absolute right-3 top-3 hidden text-white md:block">
