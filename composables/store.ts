@@ -3,12 +3,15 @@ import { DEFAULT_BOARD_STATE } from '~/constants'
 
 const [useProvideWordleStore, _useWordleStore] = createInjectionState(() => {
   // Set up persistent data
-  const state = useLocalStorage('app.state', klona(DEFAULT_BOARD_STATE))
+  const state = useLocalStorage('app.state', {
+    ...klona(DEFAULT_BOARD_STATE),
+    currentRowIndex: -1,
+  })
 
   const tomorrow = useLocalStorage('app.next', getTomorrow(new Date()), {
     serializer: {
-      read: (v) => fromISOStringWithOffset(v),
-      write: (v) => toISOStringWithOffset(v),
+      read: (v) => new Date(v),
+      write: (v) => v.toISOString(),
     },
   })
 
@@ -41,18 +44,6 @@ function useWordleStore() {
 }
 
 export { useProvideWordleStore, useWordleStore }
-
-function toISOStringWithOffset(date: Date): string {
-  const timezoneOffset = date.getTimezoneOffset() * 60 * 1000
-  const adjustedDate = new Date(date.getTime() - timezoneOffset)
-  return adjustedDate.toISOString()
-}
-
-function fromISOStringWithOffset(s: string): Date {
-  const date = new Date(s)
-  const timezoneOffset = date.getTimezoneOffset() * 60 * 1000
-  return new Date(date.getTime() + timezoneOffset)
-}
 
 function getTomorrow(date: Date) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1)

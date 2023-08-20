@@ -198,8 +198,8 @@ function genResultGrid() {
       <div
         v-for="(row, rowIndex) in state.board"
         :key="rowIndex"
+        class="grid grid-cols-5 gap-2"
         :class="[
-          'grid grid-cols-5 gap-2',
           shakeRowIndex === rowIndex &&
             'animate-duration-500ms animate-[shake]',
         ]"
@@ -207,16 +207,13 @@ function genResultGrid() {
         <div
           v-for="(tile, index) in row"
           :key="index"
-          :class="[
-            'text-size-$size font-700 relative w-full select-none uppercase',
-            tile.letter && 'animate-duration-200ms animate-[zoom]',
-          ]"
+          class="relative w-full select-none text-size-$size font-700 uppercase"
+          :class="[tile.letter && 'animate-duration-200ms animate-[zoom]']"
           style="--size: calc(var(--height) * 0.1)"
         >
           <div
+            class="tile-front border-2"
             :class="[
-              'tile-front',
-              'border-2',
               tile.letter
                 ? 'border-gray-400 dark:border-zinc-500'
                 : 'border-gray-300 dark:border-zinc-600',
@@ -264,8 +261,8 @@ function genResultGrid() {
     <h2
       :class="[
         state.gameOver
-          ? 'font-heading text-2xl leading-tight tracking-wide text-primary-700'
-          : 'font-600 truncate text-sm',
+          ? 'text-2xl leading-tight tracking-wide font-heading text-primary-700'
+          : 'truncate text-sm font-600',
       ]"
     >
       {{ message }}

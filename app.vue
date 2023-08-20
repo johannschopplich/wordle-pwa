@@ -42,9 +42,10 @@ useServerHead({
     {
       innerHTML: `
 ((root) => {
-  if (localStorage.getItem("app.color-scheme") === "dark")
-    root.classList.add("dark");
-})(document.documentElement);
+  if (localStorage.getItem('app.color-scheme') === 'dark') {
+    root.classList.add('dark')
+  }
+})(document.documentElement)
 `.trimStart(),
     },
   ],
@@ -59,17 +60,16 @@ if (process.client) {
 }
 
 onMounted(() => {
-  // Force re-render to update the letter states when state has been
-  // restored from localStorage
+  // Force re-render when state has been read from localStorage
   forceRenderKey.value++
 })
 
 function generateColorsStyleheet(colors: Record<string, string>, prefix = '') {
   return Object.entries(colors)
-    .map(([key, value]) => {
-      const cssVar = `--un-color${prefix ? `-${prefix}` : ''}-${key}`
-      return `${cssVar}: ${value};`
-    })
+    .map(
+      ([key, value]) =>
+        `--un-color${prefix ? `-${prefix}` : ''}-${key}: ${value};`,
+    )
     .join('\n')
 }
 </script>
