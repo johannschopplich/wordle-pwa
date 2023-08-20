@@ -2,14 +2,14 @@
   font-family: 'Henrietta';
   font-weight: 400;
   font-style: normal;
-  src: url('/fonts/VCHenrietta-Medium.woff2') format('woff2');
+  src: url('~/assets/fonts/VCHenrietta-Medium.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'Henrietta Condensed';
   font-weight: 400;
   font-style: normal;
-  src: url('/fonts/VCHenriettaCondensed-Medium.woff2') format('woff2');
+  src: url('~/assets/fonts/VCHenriettaCondensed-Medium.woff2') format('woff2');
 }
 
 html {

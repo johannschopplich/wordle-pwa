@@ -87,7 +87,7 @@ function generateColorsStyleheet(colors: Record<string, string>, prefix = '') {
 
 <style scoped>
 .christmas-pattern {
-  background-image: url(/images/christmas/knit-pattern-1.svg);
+  background-image: url(~/assets/images/christmas/knit-pattern-1.svg);
   background-position: center calc(100% - 0.5rem);
   background-repeat: repeat-x;
   background-size:

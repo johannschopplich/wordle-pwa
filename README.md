@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./public/images/header.png" alt="Logo of Wordle PWA" width="128" height="128">
+  <img src="./assets/images/header.png" alt="Logo of Wordle PWA" width="128" height="128">
 </p>
 
 <h3 align="center">Wordle PWA</h3>

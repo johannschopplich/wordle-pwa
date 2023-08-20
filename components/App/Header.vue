@@ -22,7 +22,7 @@ const { t } = useI18n()
 
 <style scoped>
 .header {
-  background-image: url('/images/header.png');
+  background-image: url('~/assets/images/header.png');
   background-position: calc(100% - 0.5rem) bottom;
   background-repeat: no-repeat;
   background-size: 3.5rem auto;
