@@ -1,4 +1,5 @@
 import { parseGoogleSheetsValues } from '../../utils/googleSheetsApi'
+import type { FetchError } from 'ofetch'
 
 export default defineEventHandler(async () => {
   const { google } = useRuntimeConfig().public
@@ -7,16 +8,23 @@ export default defineEventHandler(async () => {
   let themeColor = appConfig.themeColor
 
   if (google.sheetsId && google.sheetsTable) {
-    const response = await $sheets(
-      `${google.sheetsId}/values/${google.sheetsTable}`,
-    )
-    const sheetsConfig = parseGoogleSheetsValues(response)
+    try {
+      const response = await $sheets(
+        `${google.sheetsId}/values/${google.sheetsTable}`,
+      )
+      const sheetsConfig = parseGoogleSheetsValues(response)
 
-    const customTitle = sheetsConfig?.['App-Titel']?.[0]
-    if (customTitle) title = customTitle
+      const customTitle = sheetsConfig?.['App-Titel']?.[0]
+      if (customTitle) title = customTitle
 
-    const customThemeColor = sheetsConfig?.['Primärfarbe']?.[0]
-    if (customThemeColor) themeColor = customThemeColor
+      const customThemeColor = sheetsConfig?.['Primärfarbe']?.[0]
+      if (customThemeColor) themeColor = customThemeColor
+    } catch (error) {
+      console.error(
+        'Failed to fetch Google Sheets data',
+        (error as FetchError).data,
+      )
+    }
   }
 
   return {

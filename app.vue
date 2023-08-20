@@ -3,17 +3,7 @@ import '~/assets/css/main.css'
 
 const appConfig = useAppConfig()
 const sheetsConfig = await useGoogleSheetsConfig()
-const { now, tomorrow, tryReset } = useWordle()
-
-// Parse custom app config on the server
-const customTitle = sheetsConfig?.['App-Titel']?.[0]
-if (customTitle) appConfig.title = customTitle
-
-const customThemeColor = sheetsConfig?.['Primärfarbe']?.[0]
-if (customThemeColor) appConfig.themeColor = customThemeColor
-
-const customStartsAt = sheetsConfig?.['Startet am']?.[0]
-if (customStartsAt) appConfig.startsAt = customStartsAt
+mergeIntoAppConfig(appConfig, { sheetsConfig })
 
 // Server-only head tags for improved performance
 useServerHead({
@@ -60,10 +50,19 @@ useServerHead({
   ],
 })
 
+const { tomorrow, tryReset } = useProvideWordleStore()
+const forceRenderKey = ref(0)
+
 if (process.client) {
   // Reset the app when tomorrow is already reached
-  watchThrottled(now, tryReset, { immediate: true, throttle: 1000 * 60 * 60 })
+  useIntervalFn(tryReset, 1000)
 }
+
+onMounted(() => {
+  // Force re-render to update the letter states when state has been
+  // restored from localStorage
+  forceRenderKey.value++
+})
 
 function generateColorsStyleheet(colors: Record<string, string>, prefix = '') {
   return Object.entries(colors)
@@ -80,7 +79,7 @@ function generateColorsStyleheet(colors: Record<string, string>, prefix = '') {
     <AppHeader />
 
     <!-- Board will render two fragments -->
-    <GameBoard :key="tomorrow.getTime()" />
+    <GameBoard :key="tomorrow.getTime() + forceRenderKey" />
   </div>
 
   <div class="absolute right-3 top-3 hidden text-white md:block">

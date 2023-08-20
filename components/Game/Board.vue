@@ -3,7 +3,7 @@ import { promiseTimeout } from '@vueuse/core'
 import { LETTER_ICONS, LETTER_STATES } from '~/constants'
 
 // Use the wordle store
-const { countdown, now, state } = useWordle()
+const { state, tomorrow } = useWordleStore()
 
 // Get the translation helper
 const { t } = useI18n()
@@ -24,6 +24,18 @@ const message = ref('')
 const grid = ref('')
 const shakeRowIndex = ref(-1)
 const success = ref(false)
+
+// Count down to next play day
+const now = useNow()
+const countdown = computed(() => {
+  const diff = tomorrow.value.getTime() - now.value.getTime()
+  const hours = Math.floor(diff / (1000 * 60 * 60))
+  const minutes = Math.floor((diff / (1000 * 60)) % 60)
+  return {
+    hours,
+    minutes,
+  }
+})
 
 // Handle keyboard input
 let allowInput = true
@@ -133,7 +145,7 @@ async function completeRow() {
   if (currentRow.value.every((tile) => tile.state === LETTER_STATES.CORRECT)) {
     // Yay!
     grid.value = genResultGrid()
-    shareText.value = `${now.value.toLocaleDateString('de-DE')}\n${grid.value}`
+    shareText.value = `${new Date().toLocaleDateString('de-DE')}\n${grid.value}`
     success.value = state.value.gameOver = true
     // Wait for jump animation to almost finish (1000ms)
     await promiseTimeout(900)

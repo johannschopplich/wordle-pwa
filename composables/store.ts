@@ -1,47 +1,57 @@
 import { klona } from 'klona'
 import { DEFAULT_BOARD_STATE } from '~/constants'
 
-// Set up persistent data
-const state = useLocalStorage('app.state', klona(DEFAULT_BOARD_STATE))
+const [useProvideWordleStore, _useWordleStore] = createInjectionState(() => {
+  // Set up persistent data
+  const state = useLocalStorage('app.state', klona(DEFAULT_BOARD_STATE))
 
-const now = useNow()
-const tomorrow = useLocalStorage<Date>('app.next', getTomorrow(now.value), {
-  serializer: {
-    read: (v) => new Date(v),
-    write: (v) => v.toISOString(),
-  },
-})
+  const tomorrow = useLocalStorage('app.next', getTomorrow(new Date()), {
+    serializer: {
+      read: (v) => fromISOStringWithOffset(v),
+      write: (v) => toISOStringWithOffset(v),
+    },
+  })
 
-// Count down to next play day
-const countdown = computed(() => {
-  const diff = tomorrow.value.getTime() - now.value.getTime()
-  const hours = Math.floor(diff / (1000 * 60 * 60))
-  const minutes = Math.floor((diff / (1000 * 60)) % 60)
-  return {
-    hours,
-    minutes,
+  // Reset the app when tomorrow is already reached
+  async function tryReset() {
+    const now = new Date()
+    if (now.getTime() > tomorrow.value.getTime()) {
+      // Reset board state to initialize a new game
+      state.value = klona(DEFAULT_BOARD_STATE)
+
+      // Reset tomorrow date, which also re-renders the board component
+      tomorrow.value = getTomorrow(now)
+    }
   }
-})
 
-// Reset the app when tomorrow is already reached
-async function tryReset() {
-  if (now.value.getTime() > tomorrow.value.getTime()) {
-    // Reset board state to initialize a new game
-    state.value = klona(DEFAULT_BOARD_STATE)
-
-    // Reset tomorrow date, which also re-renders the board component
-    tomorrow.value = getTomorrow(now.value)
-  }
-}
-
-export function useWordle() {
   return {
     state,
-    now,
     tomorrow,
-    countdown,
     tryReset,
   }
+})
+
+function useWordleStore() {
+  const store = _useWordleStore()
+  if (!store)
+    throw new Error(
+      'Initialize the store by calling "useProvideWordleStore" first',
+    )
+  return store
+}
+
+export { useProvideWordleStore, useWordleStore }
+
+function toISOStringWithOffset(date: Date): string {
+  const timezoneOffset = date.getTimezoneOffset() * 60 * 1000
+  const adjustedDate = new Date(date.getTime() - timezoneOffset)
+  return adjustedDate.toISOString()
+}
+
+function fromISOStringWithOffset(s: string): Date {
+  const date = new Date(s)
+  const timezoneOffset = date.getTimezoneOffset() * 60 * 1000
+  return new Date(date.getTime() + timezoneOffset)
 }
 
 function getTomorrow(date: Date) {
