@@ -2,11 +2,7 @@ import { klona } from 'klona'
 import { DEFAULT_BOARD_STATE } from '~/constants'
 
 const [useProvideWordleStore, _useWordleStore] = createInjectionState(() => {
-  // Set up persistent data
-  const state = useLocalStorage('app.state', {
-    ...klona(DEFAULT_BOARD_STATE),
-    currentRowIndex: -1,
-  })
+  const state = useLocalStorage('app.state', klona(DEFAULT_BOARD_STATE))
 
   const tomorrow = useLocalStorage('app.next', getTomorrow(new Date()), {
     serializer: {
