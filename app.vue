@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import '~/assets/css/main.css'
+import headScript from '~/assets/js/head?raw'
 
 const appConfig = useAppConfig()
 const sheetsConfig = await useGoogleSheetsConfig()
@@ -40,13 +41,7 @@ useServerHead({
   ],
   script: [
     {
-      innerHTML: `
-((root) => {
-  if (localStorage.getItem('app.color-scheme') === 'dark') {
-    root.classList.add('dark')
-  }
-})(document.documentElement)
-`.trimStart(),
+      innerHTML: headScript,
     },
   ],
 })
@@ -55,7 +50,8 @@ const { tomorrow, tryReset } = useProvideWordleStore()
 
 if (process.client) {
   // Reset the app when tomorrow is already reached
-  useIntervalFn(tryReset, 1000, { immediate: true })
+  useIntervalFn(tryReset, 1000)
+  tryReset()
 }
 
 function generateColorsStyleheet(colors: Record<string, string>, prefix = '') {
