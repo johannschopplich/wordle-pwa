@@ -55,7 +55,7 @@ const { tomorrow, tryReset } = useProvideWordleStore()
 
 if (process.client) {
   // Reset the app when tomorrow is already reached
-  useIntervalFn(tryReset, 1000)
+  useIntervalFn(tryReset, 1000, { immediate: true })
 }
 
 function generateColorsStyleheet(colors: Record<string, string>, prefix = '') {
