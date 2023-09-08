@@ -1,10 +1,5 @@
 export default defineNuxtConfig({
-  modules: [
-    '@leanera/nuxt-i18n',
-    '@unocss/nuxt',
-    '@vueuse/nuxt',
-    'nuxt-api-party',
-  ],
+  modules: ['@nuxtjs/i18n', '@unocss/nuxt', '@vueuse/nuxt', 'nuxt-api-party'],
 
   $production: {
     routeRules: {
@@ -51,9 +46,14 @@ export default defineNuxtConfig({
 
   i18n: {
     defaultLocale: 'de',
-    locales: ['de'],
-    langImports: true,
+    locales: [
+      {
+        code: 'de',
+        file: 'de.json',
+      },
+    ],
     lazy: true,
+    langDir: 'locales',
     strategy: 'no_prefix',
   },
 
