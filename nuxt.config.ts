@@ -55,6 +55,10 @@ export default defineNuxtConfig({
     lazy: true,
     langDir: 'locales',
     strategy: 'no_prefix',
+    bundle: {
+      fullInstall: false,
+      dropMessageCompiler: true,
+    },
   },
 
   experimental: {
