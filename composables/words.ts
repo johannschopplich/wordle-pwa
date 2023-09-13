@@ -5,9 +5,13 @@ const MILLISECONDS_IN_A_DAY = 1000 * 60 * 60 * 24
 const answerProviders = new Map<'env' | 'googleSheets', string[]>()
 
 export async function useAllWords() {
-  const { default: allowedGuesses } = await import(
-    '~/data/allowedGuesses/de.json'
-  )
+  // Auto-load allowed guesses
+  const allowedGuesses = Object.values(
+    import.meta.glob<Record<string, any>>('../data/allowedGuesses/*.json', {
+      eager: true,
+    }),
+  ).flatMap((i) => i.default)
+
   const words = [
     ...getAnswersFromEnv(),
     ...(await getAnswersFromGoogleSheets()),
