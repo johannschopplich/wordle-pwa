@@ -3,7 +3,7 @@ import type { LETTER_STATES } from '~/constants'
 
 const props = defineProps<{
   letterStates: typeof LETTER_STATES
-  umlauts: boolean
+  umlauts?: boolean
 }>()
 
 const emit = defineEmits<{

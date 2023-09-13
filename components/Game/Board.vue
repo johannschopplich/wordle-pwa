@@ -256,7 +256,6 @@ function genResultGrid() {
     :key="forceRenderKey"
     class="-mx-3 sm:mx-0"
     :letter-states="state.letterStates"
-    :umlauts="true"
     @key="onKey"
   />
 
