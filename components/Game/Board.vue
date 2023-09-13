@@ -68,8 +68,12 @@ onMounted(async () => {
 
 function onKey(key: string) {
   if (!allowInput) return
-  if (/^[\p{Letter}\p{Mark}]$/u.test(key)) {
-    fillTile(key.toLowerCase())
+
+  // Remove accents before filling the tile
+  const sanitizedKey = removeAccents(key)
+
+  if (/^[\p{Letter}\p{Mark}]$/u.test(sanitizedKey)) {
+    fillTile(sanitizedKey.toLowerCase())
   } else if (key === 'Backspace') {
     clearTile()
   } else if (key === 'Enter') {
@@ -103,6 +107,7 @@ async function completeRow() {
   }
 
   const guess = currentRow.value.map((tile) => tile.letter).join('')
+
   if (!allWords.includes(guess) && guess !== answer) {
     shake()
     showMessage(t('errorMessages.notInWordList'))

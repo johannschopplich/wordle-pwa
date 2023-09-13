@@ -15,11 +15,14 @@
 
 A refactored and extended Vue app of [VVordle](https://github.com/yyx990803/vue-wordle) by Evan You, which itself is a implementation of the original [Wordle game](https://www.nytimes.com/games/wordle/index.html).
 
+Built with [Nuxt](https://nuxt.com).
+
 ## Key Features
 
 - 🐤 Beautiful interface
 - 🎞 Custom answer sources (environment variables or Google Spreadsheet)
 - ⌨️ Optional `umlauts` keyboard layout
+- 🇫🇷 Supports french by sanitizing accented characters
 - 💆‍♀️ Styled with [UnoCSS](https://github.com/unocss/unocss)
 
 ## Setup
@@ -69,7 +72,7 @@ NUXT_PUBLIC_GOOGLE_SHEETS_TABLE=Advent 2022
 
 ## License
 
-[MIT](./LICENSE) License © 2022-2023 [Johann Schopplich](https://github.com/johannschopplich)
+[MIT](./LICENSE) License © 2022-PRESENT [Johann Schopplich](https://github.com/johannschopplich)
 
 [MIT](./LICENSE) License © 2022 [Evan You](https://github.com/yyx990803)
 

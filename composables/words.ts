@@ -25,7 +25,11 @@ export async function useAllWords() {
     words.push(...(await getDefaultAnswers()))
   }
 
-  return Array.from(new Set([...words, ...allowedGuesses.flat()]))
+  const dedupedWords = Array.from(new Set([...words, ...allowedGuesses.flat()]))
+
+  const sanitizedWords = dedupedWords.map(removeAccents)
+
+  return sanitizedWords
 }
 
 export async function useWordOfTheDay() {
@@ -35,7 +39,7 @@ export async function useWordOfTheDay() {
       if (query.length !== 5) {
         alert(`Incorrect word length from encoded query. ${DEFAULT_MESSAGE}`)
       } else {
-        return query.toLowerCase()
+        return removeAccents(query.toLowerCase())
       }
     } catch (e) {
       alert(`Malformed encoded word query. ${DEFAULT_MESSAGE}`)
@@ -71,7 +75,7 @@ export async function useWordOfTheDay() {
     word = getWordFromList(defaultAnswers, start)
   }
 
-  return word
+  return removeAccents(word)
 }
 
 async function getDefaultAnswers() {
