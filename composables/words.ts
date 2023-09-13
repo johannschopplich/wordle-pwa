@@ -6,11 +6,15 @@ const answerProviders = new Map<'env' | 'googleSheets', string[]>()
 
 export async function useAllWords() {
   // Auto-load allowed guesses
-  const allowedGuesses = Object.values(
-    import.meta.glob<Record<string, any>>('../data/allowedGuesses/*.json', {
-      eager: true,
+  const modules = import.meta.glob<{ default: string[] }>(
+    '../data/allowedGuesses/*.json',
+  )
+  const allowedGuesses = await Promise.all(
+    Object.values(modules).flatMap(async (mod) => {
+      const { default: answers } = await mod()
+      return answers
     }),
-  ).flatMap((i) => i.default)
+  )
 
   const words = [
     ...getAnswersFromEnv(),
@@ -21,7 +25,7 @@ export async function useAllWords() {
     words.push(...(await getDefaultAnswers()))
   }
 
-  return Array.from(new Set([...words, ...allowedGuesses]))
+  return Array.from(new Set([...words, ...allowedGuesses.flat()]))
 }
 
 export async function useWordOfTheDay() {
