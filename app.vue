@@ -48,7 +48,7 @@ useServerHead({
 
 const { tomorrow, tryReset } = useProvideWordleStore()
 
-if (process.client) {
+if (import.meta.client) {
   // Reset the app when tomorrow is already reached
   useIntervalFn(tryReset, 1000)
   tryReset()

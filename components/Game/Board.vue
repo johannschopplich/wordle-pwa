@@ -42,7 +42,9 @@ let allowInput = true
 
 // Share board grid as text
 const shareText = ref('')
-const isMobile = process.client ? matchMedia('(hover: none)').matches : false
+const isMobile = import.meta.client
+  ? matchMedia('(hover: none)').matches
+  : false
 const { share, isSupported: isShareSupported } = useShare()
 const { copy, copied, isSupported: isClipboardSupported } = useClipboard()
 

@@ -33,7 +33,7 @@ export async function useAllWords() {
 }
 
 export async function useWordOfTheDay() {
-  if (process.client && window.location.search) {
+  if (import.meta.client && window.location.search) {
     try {
       const query = atob(location.search.slice(1))
       if (query.length !== 5) {
