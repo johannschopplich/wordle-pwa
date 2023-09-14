@@ -32,7 +32,8 @@ Built with [Nuxt](https://nuxt.com).
 3. Start the development server using `pnpm run dev`
 4. Visit [127.0.0.1:5173](http://127.0.0.1:5173/)
 
-> ℹ️ Enable [Take Over Mode](https://vuejs.org/guide/typescript/overview.html#takeover-mode) in Visual Studio Code.
+> [!NOTE]
+> Enable [Take Over Mode](https://vuejs.org/guide/typescript/overview.html#takeover-mode) in Visual Studio Code.
 
 ## Usage
 
@@ -40,8 +41,8 @@ Built with [Nuxt](https://nuxt.com).
 
 Especially for a custom word list you probably prefer to start the list by a date of your choice. Wordle PWA will calculate the difference between the current date and the start date and pick the answer at the array index based from the date difference.
 
-```
-NUXT_PUBLIC_STARTS_AT=2022-12-01
+```ini
+NUXT_PUBLIC_STARTS_AT=2023-12-01
 ```
 
 ### Base64
@@ -54,20 +55,21 @@ You can make your own one-time Wordle and send it to friends by base64-encoding 
 
 A custom word list may be set in the app's `.env` file:
 
-```
+```ini
 NUXT_PUBLIC_ANSWERS=birds,floor,umami
 ```
 
-> ℹ️ Remember to set a start date as well.
+> [!NOTE]
+> Remember to set a start date as well.
 
 #### Words From Google Spreadsheet
 
 Alternatively, the app will fetch words from any public Google spreadsheet if the following entries exist in the app's `.env` file:
 
-```
+```ini
 NUXT_GOOGLE_API_KEY=...
 NUXT_PUBLIC_GOOGLE_SHEETS_ID=1nO4y9FBuOr4_lA50rIldeWUAvqKYpcJYf5h1tpBybZU
-NUXT_PUBLIC_GOOGLE_SHEETS_TABLE=Advent 2022
+NUXT_PUBLIC_GOOGLE_SHEETS_TABLE=Wordle 2023
 ```
 
 ## License

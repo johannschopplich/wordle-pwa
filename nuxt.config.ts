@@ -9,6 +9,7 @@ export default defineNuxtConfig({
 
   appConfig: {
     title: process.env.NUXT_PUBLIC_TITLE || 'Wortspiel',
+    description: process.env.NUXT_PUBLIC_DESCRIPTION || '',
     themeColor: process.env.NUXT_PUBLIC_THEME_COLOR || '#f59e0b',
     /** @default First day of the year */
     startsAt:

@@ -14,7 +14,7 @@ const { t } = useI18n()
     </h1>
     <p class="text-xs font-500 uppercase -mt-1">
       <span class="text-zinc-400 dark:text-zinc-500">
-        {{ t('header.currentRound') }}
+        {{ appConfig.description || t('header.currentRound') }}
       </span>
     </p>
   </header>
