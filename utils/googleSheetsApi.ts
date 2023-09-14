@@ -14,7 +14,7 @@ export async function getGoogleSheetsValues<Header extends string[] = string[]>(
 
   try {
     data = await $sheets<GoogleSpreadSheetsValues>(`${id}/values/${sheet}`, {
-      cache: true,
+      cache: !import.meta.dev,
     })
   } catch (error) {
     console.error(
