@@ -1,5 +1,5 @@
-import { parseGoogleSheetsValues } from '../../utils/googleSheetsApi'
 import type { FetchError } from 'ofetch'
+import { parseGoogleSheetsValues } from '../../utils/googleSheetsApi'
 
 export default defineEventHandler(async () => {
   const { google } = useRuntimeConfig().public
