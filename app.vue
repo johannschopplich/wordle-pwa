@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import '~/assets/css/main.css'
+import { getColors } from '@byjohann/ui/utils'
 import headScript from '~/assets/js/head?raw'
 
 const appConfig = useAppConfig()

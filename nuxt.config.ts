@@ -62,6 +62,10 @@ export default defineNuxtConfig({
     },
   },
 
+  build: {
+    transpile: ['@byjohann/ui'],
+  },
+
   experimental: {
     typescriptBundlerResolution: true,
     payloadExtraction: true,
