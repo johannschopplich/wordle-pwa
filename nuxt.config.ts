@@ -1,5 +1,11 @@
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/i18n', '@unocss/nuxt', '@vueuse/nuxt', 'nuxt-api-party'],
+  modules: [
+    '@byjohann/ui/nuxt',
+    '@nuxtjs/i18n',
+    '@unocss/nuxt',
+    '@vueuse/nuxt',
+    'nuxt-api-party',
+  ],
 
   $production: {
     routeRules: {
@@ -60,10 +66,6 @@ export default defineNuxtConfig({
       fullInstall: false,
       dropMessageCompiler: true,
     },
-  },
-
-  build: {
-    transpile: ['@byjohann/ui'],
   },
 
   experimental: {
