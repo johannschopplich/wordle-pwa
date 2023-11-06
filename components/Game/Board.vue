@@ -235,8 +235,8 @@ function genResultGrid() {
             </ClientOnly>
           </div>
           <div
+            class="tile-back"
             :class="[
-              'tile-back',
               tile.state ? 'rotate-x-0' : 'rotate-x-180',
               tile.state === 'correct' &&
                 'outline outline-2 -outline-offset-4 outline-current',
