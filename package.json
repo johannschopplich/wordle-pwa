@@ -1,6 +1,6 @@
 {
   "private": true,
-  "packageManager": "pnpm@8.8.0",
+  "packageManager": "pnpm@8.10.2",
   "scripts": {
     "dev": "nuxi dev",
     "build": "nuxi build",
@@ -20,25 +20,25 @@
     "pre-commit": "npx lint-staged"
   },
   "devDependencies": {
-    "@byjohann/eslint-config": "^0.2.2",
-    "@byjohann/ui": "^0.4.8",
+    "@byjohann/eslint-config": "^0.3.0",
+    "@byjohann/ui": "^0.5.5",
     "@iconify-json/teenyicons": "^1.1.6",
     "@nuxtjs/i18n": "8.0.0-rc.4",
-    "@types/node": "^20.7.0",
-    "@unocss/eslint-config": "^0.56.4",
-    "@unocss/nuxt": "^0.56.4",
-    "@unocss/preset-wind": "^0.56.4",
-    "@unocss/reset": "^0.56.4",
-    "@vueuse/nuxt": "^10.4.1",
-    "eslint": "^8.50.0",
+    "@types/node": "^20.8.10",
+    "@unocss/eslint-config": "^0.57.2",
+    "@unocss/nuxt": "^0.57.2",
+    "@unocss/preset-wind": "^0.57.2",
+    "@unocss/reset": "^0.57.2",
+    "@vueuse/nuxt": "^10.5.0",
+    "eslint": "^8.53.0",
     "klona": "^2.0.6",
-    "lint-staged": "^14.0.1",
-    "nuxt": "^3.7.4",
-    "nuxt-api-party": "^0.20.1",
+    "lint-staged": "^15.0.2",
+    "nuxt": "^3.8.1",
+    "nuxt-api-party": "^0.21.2",
     "prettier": "^3.0.3",
     "simple-git-hooks": "^2.9.0",
     "typescript": "^5.2.2",
-    "unocss": "^0.56.4",
-    "vue-tsc": "^1.8.15"
+    "unocss": "^0.57.2",
+    "vue-tsc": "^1.8.22"
   }
 }

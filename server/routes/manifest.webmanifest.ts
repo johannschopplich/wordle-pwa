@@ -31,6 +31,7 @@ export default defineEventHandler(async () => {
     name: title,
     short_name: title,
     start_url: '/',
+    scope: '/',
     display: 'standalone',
     background_color: themeColor,
     theme_color: themeColor,
