@@ -1,4 +1,7 @@
-name = "wordle"
+name = "advent"
+account_id = "3cc1e237ff00d9abd8aa145c3d419b86"
+# Disable `*.workers.dev` subdomain
+workers_dev = false
 main = "./.output/server/index.mjs"
 compatibility_date = "2023-08-14"
 

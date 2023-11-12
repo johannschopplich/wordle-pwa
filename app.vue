@@ -13,8 +13,8 @@ useServerHead({
   link: [
     {
       rel: 'icon',
-      type: 'image/png',
-      href: '/images/favicon.png',
+      type: 'image/svg+xml',
+      href: '/images/favicon.svg',
     },
     {
       rel: 'apple-touch-icon',

@@ -5,15 +5,13 @@ const { t } = useI18n()
 
 <template>
   <header
-    class="header sticky top-4 z-10 rounded-lg bg-zinc-100 px-4 py-2 dark:bg-zinc-800"
+    class="header sticky top-4 z-10 rounded-lg bg-primary px-4 py-2 dark:bg-zinc-800"
   >
-    <h1
-      class="text-2xl text-primary-700 tracking-wide font-heading dark:text-white"
-    >
+    <h1 class="text-2xl text-white tracking-wide font-heading dark:text-white">
       {{ appConfig.title }}
     </h1>
     <p class="text-xs font-500 uppercase -mt-1">
-      <span class="text-zinc-400 dark:text-zinc-500">
+      <span class="text-white text-opacity-50 dark:text-zinc-500">
         {{ appConfig.description || t('header.currentRound') }}
       </span>
     </p>
@@ -22,9 +20,9 @@ const { t } = useI18n()
 
 <style scoped>
 .header {
-  background-image: url('~/assets/images/header.png');
-  background-position: calc(100% - 0.5rem) bottom;
+  background-image: url('/images/favicon.svg');
+  background-position: calc(100% - 1rem) calc(100% + 0.6rem);
   background-repeat: no-repeat;
-  background-size: 3.5rem auto;
+  background-size: 3rem auto;
 }
 </style>
