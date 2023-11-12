@@ -14,11 +14,11 @@
 
 html {
   min-width: 320px;
-  --at-apply: bg-primary-800 text-gray-800;
+  --at-apply: 'bg-primary-800 text-gray-800';
 }
 
 html.dark {
-  --at-apply: bg-zinc-900 text-white;
+  --at-apply: 'bg-zinc-900 text-white';
 }
 
 body {
