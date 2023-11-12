@@ -20,7 +20,7 @@ const { t } = useI18n()
 
 <style scoped>
 .header {
-  background-image: url('/images/favicon.svg');
+  background-image: url('/images/finanzfluss-logo-christmas.svg');
   background-position: calc(100% - 1rem) calc(100% + 0.6rem);
   background-repeat: no-repeat;
   background-size: 3rem auto;
