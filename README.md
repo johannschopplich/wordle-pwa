@@ -6,7 +6,7 @@
 
 <p align="center">
   Customizable Wordle app for your friends and family<br>
-  <a href="https://wordle.jhnn.workers.dev"><strong>Explore the demo »</strong></a>
+  <a href="https://wordle.byjohann.workers.dev"><strong>Explore the demo »</strong></a>
 </p>
 
 <br>
@@ -47,7 +47,7 @@ NUXT_PUBLIC_STARTS_AT=2023-12-01
 
 ### Base64
 
-You can make your own one-time Wordle and send it to friends by base64-encoding a word and include it as the URL query, e.g. [`wordle.jhnn.workers.dev/?anVsaWE=`](https://wordle.jhnn.workers.dev/?anVsaWE=). This will also allow words that are not in the dictionary.
+You can make your own one-time Wordle and send it to friends by base64-encoding a word and include it as the URL query, e.g. [`wordle.byjohann.workers.dev/?anVsaWE=`](https://wordle.byjohann.workers.dev/?anVsaWE=). This will also allow words that are not in the dictionary.
 
 ### Custom Word List
 
