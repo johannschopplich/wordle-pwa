@@ -35,8 +35,8 @@ const rows = computed(() => [
           key.length === 1
             ? 'flex-1'
             : umlauts
-            ? 'flex-[2_1_0%]'
-            : 'flex-[1.5_1_0%]',
+              ? 'flex-[2_1_0%]'
+              : 'flex-[1.5_1_0%]',
           letterStates[key],
         ]"
         @click="emit('key', key)"
