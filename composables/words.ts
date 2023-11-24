@@ -37,11 +37,13 @@ export async function useWordOfTheDay() {
     try {
       const query = atob(location.search.slice(1))
       if (query.length !== 5) {
+        // eslint-disable-next-line no-alert
         alert(`Incorrect word length from encoded query. ${DEFAULT_MESSAGE}`)
       } else {
         return removeAccents(query.toLowerCase())
       }
     } catch (e) {
+      // eslint-disable-next-line no-alert
       alert(`Malformed encoded word query. ${DEFAULT_MESSAGE}`)
     }
   }
