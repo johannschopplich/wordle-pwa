@@ -29,7 +29,7 @@ const rows = computed(() => [
       <button
         v-for="(key, keyIndex) in row"
         :key="keyIndex"
-        class="h-12 select-none bg-gray-200 p-0 text-base font-600 uppercase text-gray-900 transition-color,background-color-200 transition-delay-1500 dark:bg-zinc-700 hover:bg-gray-200 dark:text-white button dark:hover:bg-zinc-700"
+        class="h-12 select-none bg-gray-200 p-0 text-base text-gray-900 font-600 uppercase transition-color,background-color-200 transition-delay-1500 dark:bg-zinc-700 hover:bg-gray-200 dark:text-white button dark:hover:bg-zinc-700"
         :class="[
           key.length > 1 && 'px-0.75',
           key.length === 1
