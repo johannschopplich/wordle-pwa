@@ -68,11 +68,8 @@ export default defineNuxtConfig({
     },
   },
 
-  experimental: {
+  future: {
     typescriptBundlerResolution: true,
-    payloadExtraction: true,
-    inlineSSRStyles: false,
-    headNext: true,
   },
 
   typescript: {
