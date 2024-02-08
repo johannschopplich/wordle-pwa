@@ -37,20 +37,14 @@ export default defineEventHandler(async () => {
     theme_color: themeColor,
     icons: [
       {
-        src: '/images/pwa-192x192.png',
+        src: '/icon-192x192.png',
         sizes: '192x192',
         type: 'image/png',
       },
       {
-        src: '/images/pwa-512x512.png',
+        src: '/icon-512x512.png',
         sizes: '512x512',
         type: 'image/png',
-      },
-      {
-        src: '/images/pwa-512x512.png',
-        sizes: '512x512',
-        type: 'image/png',
-        purpose: 'any maskable',
       },
     ],
   }

@@ -7,28 +7,25 @@ const appConfig = useAppConfig()
 const sheetsConfig = await useGoogleSheetsConfig()
 mergeIntoAppConfig(appConfig, { sheetsConfig })
 
-// Server-only head tags for improved performance
-useServerHead({
+useServerSeoMeta({
   title: appConfig.title,
+  themeColor: appConfig.themeColor,
+})
+
+useServerHead({
   link: [
     {
       rel: 'icon',
-      type: 'image/png',
-      href: '/images/favicon.png',
+      href: '/favicon.ico',
+      sizes: '32x32',
     },
     {
       rel: 'apple-touch-icon',
-      href: '/images/pwa-192x192.png',
+      href: '/apple-touch-icon.png',
     },
     {
       rel: 'manifest',
       href: '/manifest.webmanifest',
-    },
-  ],
-  meta: [
-    {
-      name: 'theme-color',
-      content: appConfig.themeColor,
     },
   ],
   style: [
