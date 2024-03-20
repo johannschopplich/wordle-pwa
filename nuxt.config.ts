@@ -67,9 +67,4 @@ export default defineNuxtConfig({
       dropMessageCompiler: true,
     },
   },
-
-  typescript: {
-    typeCheck: 'build',
-    shim: false,
-  },
 })
