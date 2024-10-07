@@ -1,10 +1,10 @@
+import type { Theme } from '@unocss/preset-wind'
 import {
   defineConfig,
   presetIcons,
   presetWind,
   transformerDirectives,
 } from 'unocss'
-import type { Theme } from '@unocss/preset-wind'
 
 const control =
   'appearance-none border rounded-md px-3 py-2 text-base leading-4 shadow-sm sm:text-sm focus:outline-none'

@@ -1,4 +1,5 @@
 import type { FetchError } from 'ofetch'
+import type { GoogleSpreadSheetsValues } from '../../utils/googleSheetsApi'
 import { parseGoogleSheetsValues } from '../../utils/googleSheetsApi'
 
 export default defineEventHandler(async () => {
@@ -9,7 +10,7 @@ export default defineEventHandler(async () => {
 
   if (google.sheetsId && google.sheetsTable) {
     try {
-      const response = await $sheets(
+      const response = await $sheets<GoogleSpreadSheetsValues>(
         `${google.sheetsId}/values/${google.sheetsTable}`,
       )
       const sheetsConfig = parseGoogleSheetsValues(response)

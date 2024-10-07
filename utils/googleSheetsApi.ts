@@ -1,6 +1,6 @@
-import type { FetchError } from 'ofetch'
+import type { NuxtError } from '#app'
 
-interface GoogleSpreadSheetsValues {
+export interface GoogleSpreadSheetsValues {
   majorDimension: 'DIMENSION_UNSPECIFIED' | 'ROWS' | 'COLUMNS'
   range: string
   values: string[][]
@@ -19,7 +19,7 @@ export async function getGoogleSheetsValues<Header extends string[] = string[]>(
   } catch (error) {
     console.error(
       'Failed to fetch Google Sheets data',
-      (error as FetchError).data,
+      (error as NuxtError).data,
     )
   }
 

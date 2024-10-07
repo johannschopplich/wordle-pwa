@@ -1,4 +1,8 @@
+import process from 'node:process'
+
 export default defineNuxtConfig({
+  compatibilityDate: '2024-04-03',
+
   modules: [
     '@byjohann/ui/nuxt',
     '@nuxtjs/i18n',

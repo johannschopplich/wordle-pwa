@@ -42,7 +42,7 @@ export async function useWordOfTheDay() {
       } else {
         return removeAccents(query.toLowerCase())
       }
-    } catch (e) {
+    } catch {
       // eslint-disable-next-line no-alert
       alert(`Malformed encoded word query. ${DEFAULT_MESSAGE}`)
     }
